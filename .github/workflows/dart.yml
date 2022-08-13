@@ -3,7 +3,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: Flutter
 
 on:
   push:
@@ -12,9 +12,32 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build_ios:
     runs-on: macos-latest
 
+    steps:
+      - uses: actions/checkout@v3
+          
+      - uses: subosito/flutter-action@v2.6.1
+        with:
+          channel: 'stable'
+          architecture: x64
+
+      - name: Install dependencies
+        run: flutter pub get
+        
+      - name: Build iOS
+        run: flutter build ios --no-codesign
+        
+      - name: Upload Build
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: caravaneering-ios-${{github.run_number}}
+          path: build
+        
+  build_apk:
+    runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v3
 
@@ -37,5 +60,9 @@ jobs:
       - name: Build APK
         run: flutter build apk
         
-      - name: Build iOS
-        run: flutter build ios --no-codesign
+      - name: Upload Build
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: caravaneering-android-${{github.run_number}}
+          path: build
+      
