@@ -38,4 +38,4 @@ jobs:
         run: flutter build apk
         
       - name: Build iOS
-        run: flutter build ios
+        run: flutter build ios --no-codesign
