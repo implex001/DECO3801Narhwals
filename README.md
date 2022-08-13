@@ -15,6 +15,11 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Current Build Status
+[![Flutter](https://github.com/implex001/DECO3801Narhwals/actions/workflows/dart.yml/badge.svg)](https://github.com/implex001/DECO3801Narhwals/actions/workflows/dart.yml)
+
+[Download the nightly main builds](https://github.com/implex001/DECO3801Narhwals/actions/workflows/dart.yml)
+
 ## Setting up for Android Development
 Ensure when setting up, use API 30 (Android 11) as SDK. Recommend using Android 
 Studio as it guides you through the SDK installation
