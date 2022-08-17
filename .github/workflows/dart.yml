@@ -51,6 +51,14 @@ jobs:
           channel: 'stable'
           architecture: x64
 
+      - name: Set up keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYPROPS_BASE64: ${{ secrets.KEYPROPS_BASE64 }}
+        run: |
+          echo $KEYSTORE_BASE64 | base64 -d > $GITHUB_WORKSPACE/android/develop.jks
+          echo $KEYPROPS_BASE64 | base64 -d > $GITHUB_WORKSPACE/android/key.properties
+
       - name: Install dependencies
         run: flutter pub get
 
@@ -64,5 +72,5 @@ jobs:
         uses: actions/upload-artifact@v3.1.0
         with:
           name: caravaneering-android-${{github.run_number}}
-          path: build
+          path: build/app/outputs
       
