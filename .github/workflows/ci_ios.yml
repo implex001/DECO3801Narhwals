@@ -1,0 +1,34 @@
+
+name: Flutter iOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+
+jobs:
+  build_ios:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2.6.1
+        with:
+          channel: 'stable'
+          architecture: x64
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build iOS
+        run: flutter build ios --no-codesign
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: caravaneering-ios-${{github.run_number}}
+          path: build
