@@ -24,14 +24,14 @@ samples, guidance on mobile development, and a full API reference.
 To interface with the platform level components, pigeon is used to create a typesafe method to 
 communicate. The command to generate the interface files is:
 ```shell
-flutter pub run pigeon \ 
-    --input pigeon/fit_interface.dart \ 
-    --dart_out lib/model/fit/FitApi.dart \ 
-    --objc_header_out ios/Runner/FitApi.h \ 
-    --objc_source_out ios/Runner/FitApi.m \ 
-    --experimental_swift_out ios/Runner/FitApi.swift \
-    --java_out ./android/app/src/main/java/com/digitalnarwhals/caravaneering/fitapi/FitApi.java \
-    --java_package "com.digitalnarwhals.caravaneering.fitapi"
+flutter pub run pigeon \
+  --input pigeon/fit_interface.dart \
+  --dart_out lib/model/fit/FitInterface.dart \ 
+  --objc_header_out ios/Runner/FitInterface.h \
+  --objc_source_out ios/Runner/FitInterface.m \
+  --experimental_swift_out ios/Runner/FitInterface.swift \
+  --java_out ./android/app/src/main/java/com/digitalnarwhals/caravaneering/fitapi/FitInterface.java \
+  --java_package "com.digitalnarwhals.caravaneering.fitapi"
 ```
 
 ## Setting up for Android Development
