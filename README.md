@@ -20,18 +20,18 @@ samples, guidance on mobile development, and a full API reference.
 
 [Download the nightly main builds](https://github.com/implex001/DECO3801Narhwals/actions/workflows/dart.yml)
 
-## Fit Api Setup
+## Health Api Setup
 To interface with the platform level components, pigeon is used to create a typesafe method to 
 communicate. The command to generate the interface files is:
 ```shell
 flutter pub run pigeon \
-  --input pigeon/fit_interface.dart \
-  --dart_out lib/model/fit/FitInterface.dart \ 
-  --objc_header_out ios/Runner/FitInterface.h \
-  --objc_source_out ios/Runner/FitInterface.m \
-  --experimental_swift_out ios/Runner/FitInterface.swift \
-  --java_out ./android/app/src/main/java/com/digitalnarwhals/caravaneering/fitapi/FitInterface.java \
-  --java_package "com.digitalnarwhals.caravaneering.fitapi"
+  --input pigeon/pigeon_health_interface.dart \
+  --dart_out lib/model/fit/health_interface.dart \ 
+  --objc_header_out ios/Runner/HealthInterface.h \
+  --objc_source_out ios/Runner/HealthInterface.m \
+  --experimental_swift_out ios/Runner/HealthInterface.swift \
+  --java_out ./android/app/src/main/java/com/digitalnarwhals/caravaneering/healthapi/HealthInterface.java \
+  --java_package "com.digitalnarwhals.caravaneering.healthapi"
 ```
 
 ## Setting up for Android Development

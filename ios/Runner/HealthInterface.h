@@ -8,22 +8,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class FitDateRange;
+@class HealthDateRange;
 
-@interface FitDateRange : NSObject
+@interface HealthDateRange : NSObject
 + (instancetype)makeWithFromDate:(nullable NSString *)fromDate
     toDate:(nullable NSString *)toDate;
 @property(nonatomic, copy, nullable) NSString * fromDate;
 @property(nonatomic, copy, nullable) NSString * toDate;
 @end
 
-/// The codec used by FitApi.
-NSObject<FlutterMessageCodec> *FitApiGetCodec(void);
+/// The codec used by HealthApi.
+NSObject<FlutterMessageCodec> *HealthApiGetCodec(void);
 
-@protocol FitApi
-- (void)getStepsDateRange:(FitDateRange *)dateRange completion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
+@protocol HealthApi
+- (void)getStepsDateRange:(HealthDateRange *)dateRange completion:(void(^)(NSNumber *_Nullable, FlutterError *_Nullable))completion;
 @end
 
-extern void FitApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<FitApi> *_Nullable api);
+extern void HealthApiSetup(id<FlutterBinaryMessenger> binaryMessenger, NSObject<HealthApi> *_Nullable api);
 
 NS_ASSUME_NONNULL_END

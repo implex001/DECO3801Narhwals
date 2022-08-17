@@ -7,15 +7,15 @@ import Flutter
 /// Generated class from Pigeon.
 
 /// Generated class from Pigeon that represents data sent in messages.
-struct FitDateRange {
+struct HealthDateRange {
   var fromDate: String? = nil
   var toDate: String? = nil
 
-  static func fromMap(_ map: [String: Any?]) -> FitDateRange? {
+  static func fromMap(_ map: [String: Any?]) -> HealthDateRange? {
     let fromDate = map["fromDate"] as? String 
     let toDate = map["toDate"] as? String 
 
-    return FitDateRange(
+    return HealthDateRange(
       fromDate: fromDate,
       toDate: toDate
     )
@@ -28,20 +28,20 @@ struct FitDateRange {
   }
 }
 
-private class FitApiCodecReader: FlutterStandardReader {
+private class HealthApiCodecReader: FlutterStandardReader {
   override func readValue(ofType type: UInt8) -> Any? {
     switch type {
       case 128:
-        return FitDateRange.fromMap(self.readValue() as! [String: Any])      
+        return HealthDateRange.fromMap(self.readValue() as! [String: Any])      
       default:
         return super.readValue(ofType: type)
       
     }
   }
 }
-private class FitApiCodecWriter: FlutterStandardWriter {
+private class HealthApiCodecWriter: FlutterStandardWriter {
   override func writeValue(_ value: Any) {
-    if let value = value as? FitDateRange {
+    if let value = value as? HealthDateRange {
       super.writeByte(128)
       super.writeValue(value.toMap())
     } else {
@@ -50,36 +50,36 @@ private class FitApiCodecWriter: FlutterStandardWriter {
   }
 }
 
-private class FitApiCodecReaderWriter: FlutterStandardReaderWriter {
+private class HealthApiCodecReaderWriter: FlutterStandardReaderWriter {
   override func reader(with data: Data) -> FlutterStandardReader {
-    return FitApiCodecReader(data: data)
+    return HealthApiCodecReader(data: data)
   }
 
   override func writer(with data: NSMutableData) -> FlutterStandardWriter {
-    return FitApiCodecWriter(data: data)
+    return HealthApiCodecWriter(data: data)
   }
 }
 
-class FitApiCodec: FlutterStandardMessageCodec {
-  static let shared = FitApiCodec(readerWriter: FitApiCodecReaderWriter())
+class HealthApiCodec: FlutterStandardMessageCodec {
+  static let shared = HealthApiCodec(readerWriter: HealthApiCodecReaderWriter())
 }
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol FitApi {
-  func getSteps(dateRange: FitDateRange, completion: @escaping (Int32) -> Void)
+protocol HealthApi {
+  func getSteps(dateRange: HealthDateRange, completion: @escaping (Int32) -> Void)
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class FitApiSetup {
-  /// The codec used by FitApi.
-  static var codec: FlutterStandardMessageCodec { FitApiCodec.shared }
-  /// Sets up an instance of `FitApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: FitApi?) {
-    let getStepsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.FitApi.getSteps", binaryMessenger: binaryMessenger, codec: codec)
+class HealthApiSetup {
+  /// The codec used by HealthApi.
+  static var codec: FlutterStandardMessageCodec { HealthApiCodec.shared }
+  /// Sets up an instance of `HealthApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: HealthApi?) {
+    let getStepsChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.HealthApi.getSteps", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       getStepsChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
-        let dateRangeArg = args[0] as! FitDateRange
+        let dateRangeArg = args[0] as! HealthDateRange
         api.getSteps(dateRange: dateRangeArg) { result in
           reply(wrapResult(result))
         }

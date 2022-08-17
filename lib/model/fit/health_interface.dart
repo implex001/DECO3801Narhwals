@@ -7,8 +7,8 @@ import 'dart:typed_data' show Uint8List, Int32List, Int64List, Float64List;
 import 'package:flutter/foundation.dart' show WriteBuffer, ReadBuffer;
 import 'package:flutter/services.dart';
 
-class FitDateRange {
-  FitDateRange({
+class HealthDateRange {
+  HealthDateRange({
     this.fromDate,
     this.toDate,
   });
@@ -23,20 +23,20 @@ class FitDateRange {
     return pigeonMap;
   }
 
-  static FitDateRange decode(Object message) {
+  static HealthDateRange decode(Object message) {
     final Map<Object?, Object?> pigeonMap = message as Map<Object?, Object?>;
-    return FitDateRange(
+    return HealthDateRange(
       fromDate: pigeonMap['fromDate'] as String?,
       toDate: pigeonMap['toDate'] as String?,
     );
   }
 }
 
-class _FitApiCodec extends StandardMessageCodec {
-  const _FitApiCodec();
+class _HealthApiCodec extends StandardMessageCodec {
+  const _HealthApiCodec();
   @override
   void writeValue(WriteBuffer buffer, Object? value) {
-    if (value is FitDateRange) {
+    if (value is HealthDateRange) {
       buffer.putUint8(128);
       writeValue(buffer, value.encode());
     } else 
@@ -48,7 +48,7 @@ class _FitApiCodec extends StandardMessageCodec {
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
       case 128:       
-        return FitDateRange.decode(readValue(buffer)!);
+        return HealthDateRange.decode(readValue(buffer)!);
       
       default:      
         return super.readValueOfType(type, buffer);
@@ -57,19 +57,19 @@ class _FitApiCodec extends StandardMessageCodec {
   }
 }
 
-class FitApi {
-  /// Constructor for [FitApi].  The [binaryMessenger] named argument is
+class HealthApi {
+  /// Constructor for [HealthApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  FitApi({BinaryMessenger? binaryMessenger}) : _binaryMessenger = binaryMessenger;
+  HealthApi({BinaryMessenger? binaryMessenger}) : _binaryMessenger = binaryMessenger;
 
   final BinaryMessenger? _binaryMessenger;
 
-  static const MessageCodec<Object?> codec = _FitApiCodec();
+  static const MessageCodec<Object?> codec = _HealthApiCodec();
 
-  Future<int> getSteps(FitDateRange arg_dateRange) async {
+  Future<int> getSteps(HealthDateRange arg_dateRange) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.FitApi.getSteps', codec, binaryMessenger: _binaryMessenger);
+        'dev.flutter.pigeon.HealthApi.getSteps', codec, binaryMessenger: _binaryMessenger);
     final Map<Object?, Object?>? replyMap =
         await channel.send(<Object?>[arg_dateRange]) as Map<Object?, Object?>?;
     if (replyMap == null) {
