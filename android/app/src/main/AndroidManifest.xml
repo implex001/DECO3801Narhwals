@@ -2,6 +2,9 @@
     package="com.digitalnarwhals.caravaneering.caravaneering"
     android:versionCode="1"
     android:versionName="TODO">
+
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+
    <application
         android:label="caravaneering"
         android:name="${applicationName}"
