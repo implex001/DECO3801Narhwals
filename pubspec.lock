@@ -136,7 +136,7 @@ packages:
     source: sdk
     version: "0.0.0"
   health:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: health
       url: "https://pub.dartlang.org"
@@ -192,7 +192,7 @@ packages:
     source: hosted
     version: "1.8.1"
   pedometer:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: pedometer
       url: "https://pub.dartlang.org"
