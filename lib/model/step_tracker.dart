@@ -5,16 +5,15 @@ class StepTracker {
 
   final HealthFactory health;
   Stream<StepCount> stepStream;
-  int liveSteps;
+  int liveSteps = 0;
+  int lastPedometer = -1;
 
   StepTracker()
       : health = HealthFactory(),
-        liveSteps = 0,
-        stepStream = Pedometer.stepCountStream
-  {
-    stepStream.listen(_onStepCount);
-  }
+        stepStream = Pedometer.stepCountStream;
 
+  // Returns the AppleHealthKit or Google Fit step data between the specified
+  // times as an integer.
   Future<int?> getBackgroundStepData(DateTime startTime, DateTime endTime) async {
     var types = [HealthDataType.STEPS];
     var permissions = [HealthDataAccess.READ];
@@ -23,12 +22,21 @@ class StepTracker {
         types, permissions: permissions);
 
     if (authorised) {
-      return await health.getTotalStepsInInterval(startTime, endTime);
+      int? steps = await health.getTotalStepsInInterval(startTime, endTime);
+      return steps;
     }
     return null;
   }
 
-  void _onStepCount(StepCount event) {
-    liveSteps += event.steps;
+  // Returns a stream of the number of steps taken starting from 0
+  Stream<int> getStepStream() async* {
+    await for (final event in stepStream) {
+      if (lastPedometer != -1) {
+        liveSteps += event.steps - lastPedometer;
+      }
+      lastPedometer = event.steps;
+      yield liveSteps;
+    }
   }
+
 }
