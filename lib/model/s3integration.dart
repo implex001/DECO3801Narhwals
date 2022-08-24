@@ -13,7 +13,7 @@ import 'package:amplify_storage_s3/amplify_storage_s3.dart';
  * https://docs.amplify.aws/start/getting-started/installation/q/integration/flutter/
  * - Make sure NOT to add the configuration file to git
  */
-// import 'package:caravaneering/model/amplifyconfiguration.dart';
+// import 'package:caravaneering/amplifyconfiguration.dart';
 dynamic amplifyconfig;
 
 class S3Integration {
