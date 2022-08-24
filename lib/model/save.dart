@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:path_provider/path_provider.dart';
 import 'package:platform_device_id/platform_device_id.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 import 'package:caravaneering/model/s3integration.dart';
 
 class SaveState {
   static const String saveFilename = "save";
   final S3Integration _s3Instance = S3Integration();
-  bool _cloudSave = false;
+
   // Values below are stored in state, add more as required.
   // Note: must be in JSON format
   // Possible future values include: Last date of step taken, coins, gems,
@@ -23,7 +24,7 @@ class SaveState {
   // Saves the state
   Future<void> save() async {
     Future localDone = createLocalSave();
-    if (_cloudSave) {
+    if (GlobalConfiguration().getValue("cloudSaveOn")) {
       Future cloudDone = createCloudSave();
       Future.wait([localDone, cloudDone]);
     } else {
@@ -70,11 +71,6 @@ class SaveState {
       return false;
     }
     return true;
-  }
-
-  // Turns cloud saving on or off
-  void toggleCloudSaving(bool toggleValue) {
-    _cloudSave = toggleValue;
   }
 
   // Configures the Amplify plugin for the S3 instance
