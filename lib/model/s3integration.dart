@@ -5,7 +5,16 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 
-import 'package:caravaneering/model/amplifyconfiguration.dart';
+/**
+ * HOW TO TURN ON CLOUDSAVING:
+ * - Uncomment the import line below for the amplifyconfiguration.dart
+ * - Comment comment line "dynamic amplifyconfig;" below
+ * - Install Amplify by going to:
+ * https://docs.amplify.aws/start/getting-started/installation/q/integration/flutter/
+ * - Make sure NOT to add the configuration file to git
+ */
+// import 'package:caravaneering/model/amplifyconfiguration.dart';
+dynamic amplifyconfig;
 
 class S3Integration {
   // Configures the S3 bucket instance
