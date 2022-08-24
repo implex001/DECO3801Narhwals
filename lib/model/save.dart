@@ -8,28 +8,23 @@ import 'package:global_configuration/global_configuration.dart';
 import 'package:caravaneering/model/s3integration.dart';
 
 class SaveState {
-  static const String saveFilename = "save";
+  static const String _saveFilename = "save";
   final S3Integration _s3Instance = S3Integration();
+  String _deviceId = "";
 
-  // Values below are stored in state, add more as required.
-  // Note: must be in JSON format
-  // Possible future values include: Last date of step taken, coins, gems,
-  // equipped items, pets, mounts, caravans, story unlocked, achievements, skills
-  Map<String, dynamic> _state = {
-    'username': '',
-    'deviceId': '',
-    'coins': 0,
-  };
+  // Loads the default state values from app_settings.json file. If you would
+  // like more items added to the state then please add it into the
+  // app_settings.json file.
+  Map<String, dynamic> _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
 
   // Saves the state
-  Future<void> save() async {
+  Future<bool> save() async {
     Future localDone = createLocalSave();
     if (GlobalConfiguration().getValue("cloudSaveOn")) {
       Future cloudDone = createCloudSave();
       Future.wait([localDone, cloudDone]);
-    } else {
-      Future.wait([localDone]);
     }
+    return await localDone;
   }
 
   // Loads the state from local storage (will overwrite current state)
@@ -73,6 +68,11 @@ class SaveState {
     return true;
   }
 
+  // Resets the state data. Note this does not delete the local or cloud file
+  void resetData() {
+    _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
+  }
+
   // Configures the Amplify plugin for the S3 instance
   Future<void> initialiseS3() async {
     await _s3Instance.configureAmplify();
@@ -87,7 +87,7 @@ class SaveState {
   // Important: Run check username exists first to check if file exists
   Future<bool> checkForDeviceIdMatch() async {
     String userPreviousState = await _s3Instance.downloadFile(_state["username"]);
-    return jsonDecode(userPreviousState)['deviceId'] == _state["deviceId"];
+    return jsonDecode(userPreviousState)['deviceId'] == _deviceId;
   }
 
   // Create the cloud save file
@@ -114,7 +114,7 @@ class SaveState {
     if (result == null) {
       return false;
     }
-    _state["deviceId"] = result;
+    _deviceId = result;
     return true;
   }
 
@@ -125,11 +125,6 @@ class SaveState {
     }
   }
 
-  // Maps the
-  // Map<String, dynamic> toJson() => {
-  //   return state
-  // };
-
   // Get the path to the app location folder on the device
   Future<String> get _localPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -139,7 +134,15 @@ class SaveState {
   // Get the current save file
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/$saveFilename');
+    return File('$path/$_saveFilename');
+  }
+
+  // Getter for device ID
+  String get deviceId => _deviceId;
+
+  // Setter for device ID
+  set deviceId(String value) {
+    _deviceId = value;
   }
 
   // Getter for state variable
