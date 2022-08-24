@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:global_configuration/global_configuration.dart';
 
-import 'package:caravaneering/model/s3integration.dart';
+import 'package:caravaneering/model/s3_integration.dart';
 
 class SaveState {
   static const String _saveFilename = "save";
