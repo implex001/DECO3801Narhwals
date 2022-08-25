@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 
-void main() {
+void main() async {
+  // Fixes an issue where the bindings don't initiate successfully before running app
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Loads the global config file
+  await GlobalConfiguration().loadFromAsset("app_settings");
+
   runApp(const MyApp());
 }
 
