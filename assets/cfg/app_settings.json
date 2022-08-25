@@ -1,0 +1,7 @@
+{
+  "cloudSaveOn": false,
+  "stateDefaults": {
+      "username": "",
+      "coins": 0
+  }
+}

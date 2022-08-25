@@ -1,9 +1,15 @@
 import 'package:caravaneering/views/caravan_view.dart';
 
 import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 
+void main() async {
+  // Fixes an issue where the bindings don't initiate successfully before running app
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  // Loads the global config file
+  await GlobalConfiguration().loadFromAsset("app_settings");
+  
   runApp(const MyApp());
 }
 
