@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 
 void main() {
-  runApp(const CaravanView(title: 'Flutter Demo Home Page'));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

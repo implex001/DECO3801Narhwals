@@ -1,4 +1,5 @@
 import 'package:caravaneering/games/caravan_game.dart';
+import 'package:caravaneering/views/overlays/caravan_bar_overlay.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,16 @@ class _MyHomePageState extends State<CaravanView> {
 
   @override
   Widget build(BuildContext context) {
-    return GameWidget(game: _game);
+    return SafeArea(
+      child:
+        GameWidget(
+            game: _game,
+            overlayBuilderMap: const {
+              "Bar": caravanBarOverlay
+            },
+            initialActiveOverlays: const ['Bar']
+        ),
+    );
   }
 
 }
