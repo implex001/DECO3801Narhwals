@@ -13,7 +13,13 @@ class _ShopState extends State<ShopView> {
 
   SaveModel? save;
 
+  static const int x1 = 0;
+  static const int y1 = 1;
+  static const int x2 = 2;
+  static const int y2 = 3;
+
   static const horseKey = "horse";
+  static const diffKey = "diff";
 
   Map<String, List<String>> shopItemsDefaults = {
     horseKey: [
@@ -21,17 +27,34 @@ class _ShopState extends State<ShopView> {
       "horse-blue.png", "horse-dark-blue.png", "horse-light-green.png",
       "horse-dark-green.png", "horse-pink.png", "horse-purple.png",
     ],
+    diffKey: [
+      "horse-blue.png", "horse-dark-blue.png", "horse-light-green.png",
+      "horse-dark-green.png", "horse-pink.png", "horse-purple.png",
+      "horse-pink.png", "horse-dark-grey.png", "horse-light-grey.png",
+    ],
   };
 
   Map<String, List<String>> shopItems = {};
 
   Map<String, String> shopSoldOutVisual = {
     horseKey: "horse-sold-out.png",
+    diffKey: "horse-sold-out.png",
   };
+
+
+
+  static const Map<String, List<int>> menuItems = {
+    // List elements are: X coord1, Y coord1, X coord2, Y coord2
+    horseKey: [0, 0, 200, 175],
+    diffKey: [0, 175, 200, 250],
+  };
+
+  String activeShop = "";
 
   @override
   void initState() {
     super.initState();
+    activeShop = horseKey;
     setItemsToLoading();
     if (save == null) {
       save = SaveModel();
@@ -81,8 +104,34 @@ class _ShopState extends State<ShopView> {
             save?.addHorse(item);
             save?.saveState();
           }
+          break;
+        case diffKey:
+          if (save != null) {
+            save?.addHorse(item);
+            save?.saveState();
+          }
+          break;
       }
     });
+  }
+
+  void onTapShopMenuItem(TapDownDetails details) {
+    double x = details.localPosition.dx;
+    double y = details.localPosition.dy;
+
+    print("Tap coordinates are: $x, $y");
+    for (String type in menuItems.keys) {
+      List<int> coordBounds = menuItems[type]!;
+      if (x > coordBounds[x1] && x < coordBounds[x2] &&
+          y > coordBounds[y1] && y < coordBounds[y2]) {
+        print("Shop tab $type selected!");
+        setState(() {
+            activeShop = type;
+            setItemsToLoading();
+            setUpItems(save!);
+        });
+      }
+    }
   }
 
   void temporaryFunctionDeleteSaveData() async {
@@ -132,18 +181,18 @@ class _ShopState extends State<ShopView> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               ShopShelf(
-                                type: horseKey,
-                                items: [shopItems[horseKey]![0], shopItems[horseKey]![1], shopItems[horseKey]![2]],
+                                type: activeShop,
+                                items: [shopItems[activeShop]![0], shopItems[activeShop]![1], shopItems[activeShop]![2]],
                                 purchaseFunction: purchaseItem,
                               ),
                               ShopShelf(
-                                type: horseKey,
-                                items: [shopItems[horseKey]![3], shopItems[horseKey]![4], shopItems[horseKey]![5]],
+                                type: activeShop,
+                                items: [shopItems[activeShop]![3], shopItems[activeShop]![4], shopItems[activeShop]![5]],
                                 purchaseFunction: purchaseItem,
                               ),
                               ShopShelf(
-                                type: horseKey,
-                                items: [shopItems[horseKey]![6], shopItems[horseKey]![7], shopItems[horseKey]![8]],
+                                type: activeShop,
+                                items: [shopItems[activeShop]![6], shopItems[activeShop]![7], shopItems[activeShop]![8]],
                                 purchaseFunction: purchaseItem,
                               ),
                             ]
@@ -155,7 +204,7 @@ class _ShopState extends State<ShopView> {
                 )
               )
             ),
-            ShopNav(),
+            ShopNav(onTapFunction: onTapShopMenuItem),
           ],
         ),
       ),
@@ -171,18 +220,24 @@ class _ShopState extends State<ShopView> {
 }
 
 class ShopNav extends StatelessWidget {
-  const ShopNav({Key? key}) : super(key: key);
+  const ShopNav({Key? key, required this.onTapFunction}) : super(key: key);
+
+  final Function onTapFunction;
+
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       flex: 4,
-      child: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/shop/bg-shop-right.png'),
-            fit: BoxFit.cover,
-          )
+      child: GestureDetector(
+        onTapDown: (TapDownDetails details) => onTapFunction(details),
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/shop/bg-shop-right.png'),
+              fit: BoxFit.cover,
+            )
+          ),
         ),
       ),
     );
