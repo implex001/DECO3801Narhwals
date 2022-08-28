@@ -1,6 +1,3 @@
-import 'package:caravaneering/games/caravan_game.dart';
-import 'package:caravaneering/views/overlays/caravan_bar_overlay.dart';
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
 class ShopView extends StatefulWidget {
@@ -33,7 +30,7 @@ class _ShopState extends State<ShopView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              flex: 20,
+              flex: 10,
               child: Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -58,15 +55,9 @@ class _ShopState extends State<ShopView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              ShopShelf(
-                                  items: ["horse-yellow.png", "horse-sold-out.png", "horse-sold-out.png", "horse-sold-out.png"]
-                              ),
-                              ShopShelf(
-                                  items: ["horse-sold-out.png", "horse-dark-grey.png", "horse-sold-out.png", "horse-sold-out.png"]
-                              ),
-                              ShopShelf(
-                                  items: ["horse-sold-out.png", "horse-sold-out.png", "horse-sold-out.png", "horse-light-grey.png"]
-                              )
+                              ShopShelf(items: ["horse-yellow.png", "horse-sold-out.png", "horse-sold-out.png"]),
+                              ShopShelf(items: ["horse-sold-out.png", "horse-dark-grey.png", "horse-sold-out.png"]),
+                              ShopShelf(items: ["horse-sold-out.png", "horse-sold-out.png", "horse-light-grey.png"])
                             ]
                           ),
                         ),
@@ -90,9 +81,9 @@ class ShopNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 7,
+      flex: 4,
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/shop/bg-shop-right.png'),
             fit: BoxFit.cover,
@@ -105,21 +96,40 @@ class ShopNav extends StatelessWidget {
 
 
 
-class ShopItem extends StatelessWidget {
+class ShopItem extends StatefulWidget {
   const ShopItem({Key? key, required this.item}) : super(key: key);
 
   final String item;
 
   @override
+  State<ShopItem> createState() => _ShopItemState();
+}
+
+
+
+class _ShopItemState extends State<ShopItem> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void itemClicked() {
+    //TODO: If in inventory then sold out
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/shop/$item'),
-              fit: BoxFit.contain,
-            )
+      child: GestureDetector(
+        onTap: () {itemClicked();},
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/shop/${widget.item}'),
+                fit: BoxFit.contain,
+              )
+          ),
         ),
       ),
     );
@@ -169,7 +179,7 @@ class _ShopShelfState extends State<ShopShelf> {
             ),
             Container(
               height: 10,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/shop/bg-shelf-base.png'),
                   fit: BoxFit.fitWidth,
