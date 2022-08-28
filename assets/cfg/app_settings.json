@@ -1,7 +1,9 @@
 {
   "cloudSaveOn": false,
   "stateDefaults": {
+      "version": 1,
       "username": "",
-      "coins": 0
+      "coins": 0,
+      "savedate": null
   }
 }
