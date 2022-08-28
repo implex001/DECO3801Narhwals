@@ -33,42 +33,50 @@ class _ShopState extends State<ShopView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              flex: 1,
+              flex: 20,
               child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.red[900],
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/shop/bg-curtain.png'),
+                      fit: BoxFit.cover,
+                    )
                   ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      ShopShelf(),
-                      ShopShelf(),
-                      ShopShelf()
-                    ]
-                  ),
+                child: Column(
+                  children: [
+                    Image.asset('assets/images/shop/bg-rack-top-bar.png'),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/shop/bg-rack-ropes.png'),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              ShopShelf(
+                                  items: ["horse-yellow.png", "horse-sold-out.png", "horse-sold-out.png", "horse-sold-out.png"]
+                              ),
+                              ShopShelf(
+                                  items: ["horse-sold-out.png", "horse-dark-grey.png", "horse-sold-out.png", "horse-sold-out.png"]
+                              ),
+                              ShopShelf(
+                                  items: ["horse-sold-out.png", "horse-sold-out.png", "horse-sold-out.png", "horse-light-grey.png"]
+                              )
+                            ]
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               )
             ),
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      color: Colors.blue[100],
-                    ),
-                  ),
-                  ShopNav(),
-                ]
-              )
-            ),
+            ShopNav(),
           ],
         ),
       ),
@@ -82,9 +90,13 @@ class ShopNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      flex: 7,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.blue[200],
+          image: DecorationImage(
+            image: AssetImage('assets/images/shop/bg-shop-right.png'),
+            fit: BoxFit.cover,
+          )
         ),
       ),
     );
@@ -94,7 +106,9 @@ class ShopNav extends StatelessWidget {
 
 
 class ShopItem extends StatelessWidget {
-  const ShopItem({Key? key}) : super(key: key);
+  const ShopItem({Key? key, required this.item}) : super(key: key);
+
+  final String item;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +116,10 @@ class ShopItem extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
         decoration: BoxDecoration(
-          color: Colors.red[500],
+            image: DecorationImage(
+              image: AssetImage('assets/images/shop/$item'),
+              fit: BoxFit.contain,
+            )
         ),
       ),
     );
@@ -111,7 +128,9 @@ class ShopItem extends StatelessWidget {
 
 
 class ShopShelf extends StatefulWidget {
-  const ShopShelf({Key? key}) : super(key: key);
+  const ShopShelf({Key? key, required this.items}) : super(key: key);
+
+  final List<String> items;
 
   @override
   State<ShopShelf> createState() => _ShopShelfState();
@@ -126,43 +145,39 @@ class _ShopShelfState extends State<ShopShelf> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-        child: Container(
-          height: 100,
-          decoration: BoxDecoration(
-            color: Colors.red[100],
-          ),
-          child: Column(
-            children: <Widget>[
-              Expanded(
+      child: Container(
+        height: 100,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
                 child: Container(
                   height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.red[200],
-                  ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                     child: Row(
                       children: [
-                        ShopItem(),
-                        ShopItem(),
-                        ShopItem(),
-                        ShopItem(),
+                        ShopItem(item: widget.items[0]),
+                        ShopItem(item: widget.items[1]),
+                        ShopItem(item: widget.items[2]),
                       ],
                     ),
                   ),
                 ),
               ),
-              Container(
-                height: 10,
-                decoration: BoxDecoration(
-                  color: Colors.red[300],
-                ),
-              )
-            ]
-          )
-        ),
+            ),
+            Container(
+              height: 10,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/shop/bg-shelf-base.png'),
+                  fit: BoxFit.fitWidth,
+                )
+              ),
+            )
+          ]
+        )
       ),
     );
   }
