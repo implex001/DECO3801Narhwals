@@ -1,12 +1,15 @@
 import 'package:caravaneering/views/caravan_view.dart';
+import 'package:caravaneering/views/shop_view.dart';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 void main() async {
   // Fixes an issue where the bindings don't initiate successfully before running app
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.landscapeLeft]);
   // Loads the global config file
   await GlobalConfiguration().loadFromAsset("app_settings");
   
@@ -23,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CaravanView(title: 'Flutter Demo Home Page'),
+      home: const ShopView(),
     );
   }
 }
