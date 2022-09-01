@@ -1,6 +1,6 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
-import 'package:caravaneering/views/shop_view.dart';
+import 'package:caravaneering/views/shop/shop_view.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';

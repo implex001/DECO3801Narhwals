@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+
+import 'package:caravaneering/views/shop/shop_item.dart';
+
+class ShopShelf extends StatefulWidget {
+  const ShopShelf({Key? key, required this.type, required this.items, required this.purchaseFunction}) : super(key: key);
+
+  final String type;
+  final List<String> items;
+  final Function purchaseFunction;
+
+  @override
+  State<ShopShelf> createState() => _ShopShelfState();
+}
+
+class _ShopShelfState extends State<ShopShelf> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+          height: 100,
+          child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                    child: Container(
+                      height: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        child: Row(
+                          children: [
+                            ShopItem(
+                              type: widget.type,
+                              item: widget.items[0],
+                              purchaseFunction: widget.purchaseFunction,
+                            ),
+                            ShopItem(
+                              type: widget.type,
+                              item: widget.items[1],
+                              purchaseFunction: widget.purchaseFunction,
+                            ),
+                            ShopItem(
+                              type: widget.type,
+                              item: widget.items[2],
+                              purchaseFunction: widget.purchaseFunction,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 10,
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/shop/bg-shelf-base.png'),
+                        fit: BoxFit.fitWidth,
+                      )
+                  ),
+                )
+              ]
+          )
+      ),
+    );
+  }
+}
