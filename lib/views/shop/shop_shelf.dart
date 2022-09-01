@@ -28,14 +28,14 @@ class _ShopShelfState extends State<ShopShelf> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
+      child: SizedBox(
           height: 100,
           child: Column(
               children: <Widget>[
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
-                    child: Container(
+                    child: SizedBox(
                       height: 50,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),

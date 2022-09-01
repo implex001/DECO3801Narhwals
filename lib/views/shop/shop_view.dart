@@ -101,7 +101,7 @@ class _ShopState extends State<ShopView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(preferredSize: Size.fromHeight(40.0),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(40.0),
           child: AppBar(
             title: const Text("GAME MENU WILL GO HERE"),
             backgroundColor: Colors.orange[200],
@@ -115,7 +115,7 @@ class _ShopState extends State<ShopView> {
             Expanded(
               flex: 10,
               child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/shop/bg-curtain.png'),
                       fit: BoxFit.cover,
@@ -126,7 +126,7 @@ class _ShopState extends State<ShopView> {
                     Image.asset('assets/images/shop/bg-rack-top-bar.png'),
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           image: DecorationImage(
                             image: AssetImage('assets/images/shop/bg-rack-ropes.png'),
                             fit: BoxFit.fitWidth,
