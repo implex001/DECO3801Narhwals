@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:caravaneering/views/shop/shop_item.dart';
 
+/*
+ * Creates a single shelf within the shop page
+ */
 class ShopShelf extends StatefulWidget {
   const ShopShelf({Key? key, required this.type, required this.items, required this.purchaseFunction}) : super(key: key);
 
+  // The shop type
   final String type;
+  // The items to display on the shelf
   final List<String> items;
+  // The function to run if the user clicks on an item
   final Function purchaseFunction;
 
   @override

@@ -6,6 +6,9 @@ import 'package:caravaneering/model/shop/shop_items.dart';
 import 'package:caravaneering/views/shop/shop_shelf.dart';
 import 'package:caravaneering/views/shop/shop_nav.dart';
 
+/*
+ * Creates the shop page
+ */
 class ShopView extends StatefulWidget {
   const ShopView({Key? key}) : super(key: key);
 
@@ -15,28 +18,34 @@ class ShopView extends StatefulWidget {
 
 class _ShopState extends State<ShopView> {
 
+  // Used in indexing lists for code readability
   static const int x1 = 0;
   static const int y1 = 1;
   static const int x2 = 2;
   static const int y2 = 3;
 
+  // The different menu icon hotspots on the right side of the shop
   static const Map<String, List<int>> menuItems = {
     // List elements are: X coord1, Y coord1, X coord2, Y coord2
     ShopItems.horseKey: [0, 0, 200, 175],
     ShopItems.diffKey: [0, 175, 200, 250],
   };
 
+  // The save state
   SaveModel? save;
+  // The instance of the shop
   Shop shop = Shop();
 
   @override
   void initState() {
     super.initState();
+    // Set the active shop
     shop.activeShop = ShopItems.horseKey;
     shop.setItemsToLoading();
     if (save == null) {
       save = SaveModel();
       shop.save = save;
+      // After initialising the save then set up the shop items
       save?.init().then((s) {
         setState(() {
           shop.setUpItems();
@@ -48,23 +57,30 @@ class _ShopState extends State<ShopView> {
     }
   }
 
+  // Attempts to purchase an item
   void purchaseFunction(String type, String item) {
     setState(() {
       shop.purchaseItem(type, item);
     });
   }
 
+  // Check what coordinates were clicked on. If clicked on a shop icon then switch
+  // to that shop type
   void onTapShopMenuItem(TapDownDetails details) {
     double x = details.localPosition.dx;
     double y = details.localPosition.dy;
 
     print("Tap coordinates are: $x, $y");
+    // Check through all the menu coordinates
     for (String type in menuItems.keys) {
       List<int> coordBounds = menuItems[type]!;
+      // If the click was within the coordinate boundaries then switch to that
+      // shop type
       if (x > coordBounds[x1] && x < coordBounds[x2] &&
           y > coordBounds[y1] && y < coordBounds[y2]) {
         print("Shop tab $type selected!");
         shop.activeShop = type;
+        // Setup the items for the new shop type
         setState(() {
           shop.setItemsToLoading();
           shop.setUpItems();
@@ -73,6 +89,7 @@ class _ShopState extends State<ShopView> {
     }
   }
 
+  // DELETE before release. This function is to test out deleting the save data
   void temporaryFunctionDeleteSaveData() async {
     await save?.eraseSave();
     setState(() {
