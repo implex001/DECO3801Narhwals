@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:global_configuration/global_configuration.dart';
 
+import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/s3_integration.dart';
 
 class SaveState {
@@ -71,6 +72,7 @@ class SaveState {
   // Resets the state data. Note this does not delete the local or cloud file
   void resetData() {
     _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
+    _state[SaveKeysV1.horses] = [];
   }
 
   // Configures the Amplify plugin for the S3 instance
