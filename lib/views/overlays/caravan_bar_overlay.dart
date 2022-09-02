@@ -18,7 +18,12 @@ class CaravanBarOverlay extends StatelessWidget {
       return Row (
           children: [
             TextButton(onPressed: (){} , child: Text("Menu")),
-            TextButton(onPressed: (){}, child: Text("Shop")),
+            TextButton(
+                onPressed: (){
+                  Navigator.pushNamed(context, '/shop');
+                },
+                child: Text("Shop")
+            ),
             TextButton(onPressed: (){}, child: Text("Skills")),
             TextButton(onPressed: (){}, child: Text("Caravan")),
             const Spacer(),
