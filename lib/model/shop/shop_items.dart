@@ -5,6 +5,7 @@ class ShopItems{
   // text should not be displayed anywhere on the app
   static const horseKey = "horse";
   static const diffKey = "diff";
+  static const defaultKey = horseKey;
 
   // The current items in the shop for each shop type
   static const Map<String, List<String>> shopItemsDefaults = {
