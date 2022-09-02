@@ -16,7 +16,7 @@ class ShopItems{
     diffKey: [
       "horse-blue.png", "horse-dark-blue.png", "horse-light-green.png",
       "horse-dark-green.png", "horse-pink.png", "horse-purple.png",
-      "horse-pink.png", "horse-dark-grey.png", "horse-light-grey.png",
+      "horse-yellow.png", "horse-dark-grey.png", "horse-light-grey.png",
     ],
   };
 
