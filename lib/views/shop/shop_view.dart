@@ -34,35 +34,34 @@ class _ShopState extends State<ShopView> {
   };
 
   // The instance of the shop
-  late Shop shop;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Set the active shop and set as loading images
-    shop = Shop();
-    shop.activeShop = ShopItems.horseKey;
-    shop.setItemsToLoading();
-  }
+  Shop? shop;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    shop.save = Provider.of<SaveModel>(context);
-    shop.setUpItems();
+    if (shop == null) {
+      shop = Shop(Provider.of<SaveModel>(context));
+      shop!.setUpItems();
+    }
   }
 
   // Attempts to purchase an item
-  void purchaseFunction(String type, String item) {
+  void purchaseItem(String type, String item) {
+    if (shop == null) {
+      return;
+    }
     setState(() {
-      shop.purchaseItem(type, item);
+      shop!.purchaseItem(type, item);
     });
   }
 
   // Check what coordinates were clicked on. If clicked on a shop icon then switch
   // to that shop type
   void onTapShopMenuItem(TapDownDetails details) {
+    if (shop == null) {
+      return;
+    }
+
     double x = details.localPosition.dx;
     double y = details.localPosition.dy;
 
@@ -76,9 +75,9 @@ class _ShopState extends State<ShopView> {
           y > coordBounds[y1] && y < coordBounds[y2]) {
         print("Shop tab $type selected!");
         // Setup the items for the new shop type
-        shop.activeShop = type;
+        shop!.activeShop = type;
         setState(() {
-          shop.setUpItems();
+          shop!.setUpItems();
         });
       }
     }
@@ -86,10 +85,12 @@ class _ShopState extends State<ShopView> {
 
   // DELETE before release. This function is to test out deleting the save data
   void temporaryFunctionDeleteSaveData() async {
-    await shop.save?.eraseSave();
+    if (shop == null) {
+      return;
+    }
+    await shop!.save.eraseSave();
     setState(() {
-      shop.setItemsToLoading();
-      shop.setUpItems();
+      shop!.setUpItems();
     });
   }
 
@@ -141,20 +142,20 @@ class _ShopState extends State<ShopView> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
-                              ShopShelf(
-                                type: shop.activeShop,
-                                items: shop.getShopItems(1, 3),
-                                purchaseFunction: purchaseFunction,
+                              (shop == null) ? Container() : ShopShelf(
+                                type: shop!.activeShop,
+                                items: shop!.getShopItems(1, 3),
+                                purchaseFunction: purchaseItem,
                               ),
-                              ShopShelf(
-                                type: shop.activeShop,
-                                items: shop.getShopItems(4, 6),
-                                purchaseFunction: purchaseFunction,
+                              (shop == null) ? Container() : ShopShelf(
+                                type: shop!.activeShop,
+                                items: shop!.getShopItems(4, 6),
+                                purchaseFunction: purchaseItem,
                               ),
-                              ShopShelf(
-                                type: shop.activeShop,
-                                items: shop.getShopItems(7, 9),
-                                purchaseFunction: purchaseFunction,
+                              (shop == null) ? Container() : ShopShelf(
+                                type: shop!.activeShop,
+                                items: shop!.getShopItems(7, 9),
+                                purchaseFunction: purchaseItem,
                               ),
                             ]
                           ),
