@@ -14,7 +14,7 @@ void main() async {
       [DeviceOrientation.landscapeLeft]);
   // Loads the global config file
   await GlobalConfiguration().loadFromAsset("app_settings");
-  
+
   runApp(
       ChangeNotifierProvider(
         create: (context) => SaveModel(),
@@ -33,7 +33,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const ShopView(),
+      initialRoute: '/caravan',
+      routes: {
+        '/caravan': (context) => const CaravanView(title: 'Flutter Demo Home Page'),
+        '/shop': (context) => const ShopView(),
+      },
     );
   }
 }

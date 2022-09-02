@@ -100,7 +100,21 @@ class _ShopState extends State<ShopView> {
           child: AppBar(
             title: const Text("GAME MENU WILL GO HERE"),
             backgroundColor: Colors.orange[200],
-        )
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text("Home")
+              ),
+              TextButton(
+                  onPressed: () {
+                    temporaryFunctionDeleteSaveData();
+                  },
+                  child: Text("Delete Save")
+              ),
+            ]
+          )
       ),
       body: Center(
         child: Row(
@@ -160,13 +174,6 @@ class _ShopState extends State<ShopView> {
             ShopNav(onTapFunction: onTapShopMenuItem),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          temporaryFunctionDeleteSaveData();
-          },
-        tooltip: 'Erase Save',
-        child: const Icon(Icons.recycling),
       ),
     );
   }
