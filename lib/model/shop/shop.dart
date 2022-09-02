@@ -33,6 +33,7 @@ class Shop {
 
   // Populates all the items in the shop. Checks whether an item has already in
   // the save file and displays sold out image instead.
+  // Note: Will throw a runtime exception is save is null
   void setUpItems() {
     for (String shopType in ShopItems.shopItemsDefaults.keys) {
       for (int i = 0; i < ShopItems.shopItemsDefaults[shopType]!.length; i++) {
@@ -48,6 +49,7 @@ class Shop {
 
   // If the item can be bought, then adds item to save state and changes to the
   // sold out image.
+  // Note: Will throw a runtime exception is save is null
   bool purchaseItem(String type, String item) {
     // If the item is sold out then return early
     if (item == ShopItems.shopSoldOutVisual[type]!) {
@@ -58,17 +60,13 @@ class Shop {
     switch (type) {
       // If it was a horse that was purchased, add horse to save
       case ShopItems.horseKey:
-        if (save != null) {
-          save?.addHorse(item);
-          save?.saveState();
-        }
+        save!.addHorse(item);
+        save!.saveState();
         break;
       // If it was a XXX that was purchased, add XXX to save
       case ShopItems.diffKey:
-        if (save != null) {
-          save?.addHorse(item);
-          save?.saveState();
-        }
+        save!.addHorse(item);
+        save!.saveState();
         break;
     }
     // The item was purchased

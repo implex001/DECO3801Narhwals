@@ -103,12 +103,6 @@ class _ShopState extends State<ShopView> {
             actions: [
               TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text("Home")
-              ),
-              TextButton(
-                  onPressed: () {
                     temporaryFunctionDeleteSaveData();
                   },
                   child: Text("Delete Save")
