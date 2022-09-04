@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:caravaneering/games/minigame.dart';
 import 'package:caravaneering/model/jump_tracker.dart';
+import 'package:flutter/material.dart';
 
 class JumpMiniGame extends MiniGame{
 
@@ -16,7 +17,8 @@ class JumpMiniGame extends MiniGame{
   ];
 
   late Timer timeLimit;
-  int score = 0;
+  ValueNotifier<int> score = ValueNotifier(0);
+  ValueNotifier<bool> isStopped = ValueNotifier(false);
   JumpPrompt? currentPrompt;
 
 
@@ -42,16 +44,16 @@ class JumpMiniGame extends MiniGame{
     AudioCache.instance.loadAll(prompts.map((e) => e.path).toList());
 
     // Set initial jump prompt
-    currentPrompt = getRandomPrompt();
+    currentPrompt = _getRandomPrompt();
     _playSound(currentPrompt!.path);
 
     jumpStream = _tracker.getJumpStream().listen((event) {
       if (currentPrompt?.requiredType == event.type) {
-        score++;
+        score.value++;
         currentPrompt = null;
         _playSound("audio/sineup.mp3");
         Timer(const Duration(seconds: 3), () {
-          currentPrompt = getRandomPrompt();
+          currentPrompt = _getRandomPrompt();
           _playSound(currentPrompt!.path);
         }
         );
@@ -62,9 +64,10 @@ class JumpMiniGame extends MiniGame{
   @override
   void stop() {
     jumpStream.cancel();
+    isStopped.value = true;
   }
 
-  JumpPrompt getRandomPrompt() {
+  JumpPrompt _getRandomPrompt() {
     return prompts[Random().nextInt(prompts.length)];
   }
 

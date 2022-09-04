@@ -21,7 +21,7 @@ class MiniGameList extends StatelessWidget {
           children: <Widget>[
             TextButton(
                 onPressed: (){
-                  game.startJumpMiniGame();
+                  Navigator.pushNamed(context, "/minigames/jump");
                 },
                 child: Text("Minigame 1")
             ),
