@@ -1,6 +1,8 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
+import 'package:caravaneering/views/shop/shop_view.dart';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
@@ -8,10 +10,11 @@ import 'package:provider/provider.dart';
 void main() async {
   // Fixes an issue where the bindings don't initiate successfully before running app
   WidgetsFlutterBinding.ensureInitialized();
-
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.landscapeLeft]);
   // Loads the global config file
   await GlobalConfiguration().loadFromAsset("app_settings");
-  
+
   runApp(
       ChangeNotifierProvider(
         create: (context) => SaveModel(),
@@ -30,7 +33,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CaravanView(title: 'Flutter Demo Home Page'),
+      initialRoute: '/caravan',
+      routes: {
+        '/caravan': (context) => const CaravanView(title: 'Flutter Demo Home Page'),
+        '/shop': (context) => const ShopView(),
+      },
     );
   }
 }

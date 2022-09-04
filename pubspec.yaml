@@ -74,7 +74,17 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/cfg/
+    - assets/images/General/Sky.png
+    - assets/images/General/Midground.png
+    - assets/images/General/Details.png
+    - assets/images/General/Cart1.png
+    - assets/images/General/Foreground.png
     - assets/images/placeholders/T1.png
+    - assets/images/General/Details.png
+    - assets/images/General/Clouds.png
+    - assets/images/General/HorseCartFinal.png
+    - assets/images/General/MainCharacterFinal.png
+    - assets/images/shop/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -30,6 +30,18 @@ class SaveModel extends ChangeNotifier {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) - number);
   }
 
+  void addHorse(String horse) {
+    addToMiscList(SaveKeysV1.horses, horse);
+  }
+
+  List<String> getHorses() {
+    return List<String>.from(save.state[SaveKeysV1.horses]);
+  }
+
+  bool checkIfHorseOwned(String horse) {
+    return save.state[SaveKeysV1.horses].contains(horse);
+  }
+
   Timer? startAutoSave() {
     autoSave ??= Timer.periodic(
           const Duration(seconds: 10), (timer) => saveState());
@@ -56,5 +68,16 @@ class SaveModel extends ChangeNotifier {
     save.state[key] = value;
     hasChanged = true;
     notifyListeners();
+  }
+
+  void addToMiscList(String key, dynamic value) {
+    save.state[key].add(value);
+    hasChanged = true;
+    notifyListeners();
+  }
+
+  Future<void> eraseSave() async {
+    save.resetData();
+    await save.save();
   }
 }
