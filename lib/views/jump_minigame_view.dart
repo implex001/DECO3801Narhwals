@@ -1,4 +1,5 @@
 import 'package:caravaneering/games/caravan_game.dart';
+import 'package:caravaneering/games/jump_minigame.dart';
 import 'package:caravaneering/model/jump_tracker.dart';
 import 'package:flutter/material.dart';
 
@@ -16,18 +17,14 @@ class JumpMiniGameView extends StatefulWidget {
 
 class _JumpMiniGameState extends State<JumpMiniGameView> {
 
-  late final CaravanGame _game;
   JumpTracker tracker = JumpTracker();
   int jumpCount = 0;
+  JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 60));
 
   @override
   void initState() {
     super.initState();
-    tracker.getJumpStream().listen((event) {
-      setState(() {
-        jumpCount++;
-      });
-    });
+    jumpMiniGame.start();
 
   }
 

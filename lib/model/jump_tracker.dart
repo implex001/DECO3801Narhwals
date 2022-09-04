@@ -1,15 +1,23 @@
 import 'dart:async';
 import 'package:sensors_plus/sensors_plus.dart';
 
-enum JumpPhase{
+enum JumpPhase {
   idle,
   rising,
   cool
 }
 
+enum JumpType {
+  up,
+  left,
+  right
+}
+
 
 class JumpEvent {
+  final JumpType type;
 
+  JumpEvent(this.type);
 }
 
 class JumpTracker {
@@ -41,7 +49,7 @@ class JumpTracker {
           _jumpReset = null;
           jumpPhase = JumpPhase.cool;
           Timer(const Duration(milliseconds: 500), ()=> jumpPhase = JumpPhase.idle);
-          yield JumpEvent();
+          yield JumpEvent(JumpType.up);
         }
       }
     }
