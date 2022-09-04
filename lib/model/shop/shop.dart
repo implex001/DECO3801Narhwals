@@ -6,11 +6,13 @@ import 'package:caravaneering/model/shop/shop_items.dart';
  */
 class Shop {
   // The current save
-  SaveModel? save;
+  SaveModel save;
   // The current shop items in the shop
   Map<String, List<String>> shopItems = {};
   // Which shop is currently being displayed
-  String activeShop = "";
+  String activeShop = ShopItems.defaultKey;
+
+  Shop(this.save);
 
   // Gets a list of shop items between two index ranges
   List<String> getShopItems(int startIndex, int endIndex) {
@@ -21,27 +23,18 @@ class Shop {
     return result;
   }
 
-  // Changes all the shop item images to loading images
-  void setItemsToLoading() {
-    for (String shopType in ShopItems.shopItemsDefaults.keys) {
-      shopItems[shopType] = [];
-      for (int i = 0; i < ShopItems.shopItemsDefaults[shopType]!.length; i++) {
-        shopItems[shopType]!.add("loading-item.png");
-      }
-    }
-  }
-
   // Populates all the items in the shop. Checks whether an item has already in
   // the save file and displays sold out image instead.
   // Note: Will throw a runtime exception is save is null
   void setUpItems() {
     for (String shopType in ShopItems.shopItemsDefaults.keys) {
+      shopItems[shopType] = <String>[];
       for (int i = 0; i < ShopItems.shopItemsDefaults[shopType]!.length; i++) {
-        String horse = ShopItems.shopItemsDefaults[shopType]![i];
-        if (save!.checkIfHorseOwned(horse)) {
-          shopItems[shopType]![i] = ShopItems.shopSoldOutVisual[shopType]!;
+        String item = ShopItems.shopItemsDefaults[shopType]![i];
+        if (save.checkIfHorseOwned(item)) {
+          shopItems[shopType]!.add(ShopItems.shopSoldOutVisual[shopType]!);
         } else {
-          shopItems[shopType]![i] = ShopItems.shopItemsDefaults[shopType]![i];
+          shopItems[shopType]!.add(ShopItems.shopItemsDefaults[shopType]![i]);
         }
       }
     }
@@ -60,13 +53,13 @@ class Shop {
     switch (type) {
       // If it was a horse that was purchased, add horse to save
       case ShopItems.horseKey:
-        save!.addHorse(item);
-        save!.saveState();
+        save.addHorse(item);
+        save.saveState();
         break;
       // If it was a XXX that was purchased, add XXX to save
       case ShopItems.diffKey:
-        save!.addHorse(item);
-        save!.saveState();
+        save.addHorse(item);
+        save.saveState();
         break;
     }
     // The item was purchased
