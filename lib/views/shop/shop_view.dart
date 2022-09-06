@@ -25,6 +25,9 @@ class _ShopState extends State<ShopView> {
   static const int y1 = 1;
   static const int x2 = 2;
   static const int y2 = 3;
+  static const double navImageRatio = (72/41);
+
+
 
   // The different menu icon hotspots on the right side of the shop
   static const Map<String, List<int>> menuItems = {
@@ -36,9 +39,19 @@ class _ShopState extends State<ShopView> {
   // The instance of the shop
   Shop? shop;
 
+  // Dimensions of the navigation image
+  double navImageHeight = 0;
+  double navImageWidth = 0;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    // Set the navigation image dimensions
+    if (navImageHeight == 0) {
+      navImageHeight = 2 * (MediaQuery.of(context).size.height/5);
+      navImageWidth = navImageHeight * navImageRatio;
+    }
+    // Initialise the shop
     if (shop == null) {
       shop = Shop(Provider.of<SaveModel>(context));
       shop!.setUpItems();
@@ -117,7 +130,6 @@ class _ShopState extends State<ShopView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Expanded(
-              flex: 10,
               child: Container(
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -166,7 +178,23 @@ class _ShopState extends State<ShopView> {
                 )
               )
             ),
-            ShopNav(onTapFunction: onTapShopMenuItem),
+            Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    width: navImageWidth,
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/shop/bg-shop-person.png'),
+                          fit: BoxFit.cover,
+                        )
+                    ),
+                  ),
+                ),
+                ShopNav(navImageHeight: navImageHeight, navImageWidth: navImageWidth, onTapFunction: onTapShopMenuItem),
+              ]
+            )
+
           ],
         ),
       ),
