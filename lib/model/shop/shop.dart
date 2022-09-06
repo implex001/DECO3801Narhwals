@@ -56,11 +56,9 @@ class Shop {
   bool purchaseItem(Map<String, dynamic> item) {
     // If the item is sold out then return early
     if (!isItemAvailable(item)) {
-      print("Item not available");
       return false;
     }
     String type = item["type"];
-    print("Item is available");
     int purchaseIndex = shopItems[type]!.indexOf(item);
     shopItems[type]![purchaseIndex] = ShopItems.shopSoldOutVisual[type]!;
     switch (type) {

@@ -251,10 +251,20 @@ class ItemDescriptionPanel extends StatelessWidget {
       children: <Widget>[
         Image(
           image: AssetImage(item["location"]),
-          height: 65,
+          height: 50,
         ),
         const SizedBox(
-          height: 10,
+          height: 3,
+        ),
+        Text(
+          item["name"],
+          style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.orange[200],
+          ),
+        ),
+        const SizedBox(
+          height: 3,
         ),
         Text(
           item["description"],
