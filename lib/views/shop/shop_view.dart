@@ -30,15 +30,7 @@ class _ShopState extends State<ShopView> {
   static const double navImageRatio = (72/41);
 
   // The different menu icon hotspots on the right side of the shop
-  Map<String, List<int>> menuItems = {
-    // List elements are: X coord1, Y coord1, X coord2, Y coord2
-    ItemDetails.horseKey: [0, 0, 0, 0],
-    ItemDetails.caravanKey: [0, 0, 0, 0],
-    ItemDetails.accessoryKey: [0, 0, 0, 0],
-    ItemDetails.weaponKey: [0, 0, 0, 0],
-    ItemDetails.petKey: [0, 0, 0, 0],
-    ItemDetails.coinKey: [0, 0, 0, 0],
-  };
+  Map<String, List<double>> menuItems = {};
 
   // The instance of the shop
   Shop? shop;
@@ -47,8 +39,13 @@ class _ShopState extends State<ShopView> {
   double navImageHeight = 0;
   double navImageWidth = 0;
 
+  // Whether the item description is currently shown
   bool showItemDescription = false;
+
+  // What panel is being displayed in the top right corner
   String topRightPanelImage = shopKeeperImage;
+
+  // What item is currently being shown in the item description panel
   Map<String, dynamic> itemShowing = {};
 
   @override
@@ -58,16 +55,47 @@ class _ShopState extends State<ShopView> {
     if (navImageHeight == 0) {
       navImageHeight = 2 * (MediaQuery.of(context).size.height/5);
       navImageWidth = navImageHeight * navImageRatio;
+
+      calculateHotspots();
     }
     // Initialise the shop
     if (shop == null) {
       shop = Shop(Provider.of<SaveModel>(context));
-      //shop!.save.save.resetData();
       shop!.setUpItems();
     }
   }
 
+  // Calculates the click hotspots for the shop navigation
+  void calculateHotspots() {
+    int largeShieldBufferX = 35;
+    int largeShieldBufferY = 35;
+    int smallShieldBufferX = 35;
+    int smallShieldBufferY = 25;
+    // The different menu icon hotspots on the right side of the shop
+    menuItems = {
+      // List elements are: X coord1, Y coord1, X coord2, Y coord2
+      ItemDetails.horseKey: [
+        navImageWidth/1.23 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/1.23 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
+      ],
+      ItemDetails.caravanKey: [
+        navImageWidth/2.41 - smallShieldBufferX, navImageHeight/1.2 - smallShieldBufferY, navImageWidth/2.41 + smallShieldBufferX, navImageHeight/1.2 + 20
+      ],
+      ItemDetails.accessoryKey: [
+        navImageWidth/5.75 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/5.75 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
+      ],
+      ItemDetails.weaponKey: [
+        navImageWidth/1.92 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/1.92 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
+      ],
+      ItemDetails.petKey: [
+        navImageWidth/5.75 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/5.75 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
+      ],
+      ItemDetails.coinKey: [
+        navImageWidth/1.50 - smallShieldBufferX, navImageHeight/1.2 - smallShieldBufferY, navImageWidth/1.50 + smallShieldBufferX, navImageHeight/1.2 + 20
+      ],
+    };
+  }
 
+  // When an item is clicked it shows/removes the description panel
   void itemClicked(Map<String, dynamic> item) {
     if (shop == null) {
       return;
@@ -94,7 +122,7 @@ class _ShopState extends State<ShopView> {
       return;
     }
     setState(() {
-      if (shop!.purchaseItem(item)) {
+      if (shop!.purchaseItem(shop!.activeShop, item)) {
         itemShowing = {};
         showItemDescription = false;
         topRightPanelImage = shopKeeperImage;
@@ -108,14 +136,14 @@ class _ShopState extends State<ShopView> {
     if (shop == null) {
       return;
     }
-
     double x = details.localPosition.dx;
     double y = details.localPosition.dy;
 
     print("Tap coordinates are: $x, $y");
     // Check through all the menu coordinates
     for (String type in menuItems.keys) {
-      List<int> coordBounds = menuItems[type]!;
+      List<double> coordBounds = menuItems[type]!;
+      print(coordBounds);
       // If the click was within the coordinate boundaries then switch to that
       // shop type
       if (x > coordBounds[x1] && x < coordBounds[x2] &&
