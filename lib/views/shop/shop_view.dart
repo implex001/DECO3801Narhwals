@@ -25,9 +25,9 @@ class _ShopState extends State<ShopView> {
   static const int y1 = 1;
   static const int x2 = 2;
   static const int y2 = 3;
+  static const String shopKeeperImage = "assets/images/shop/bg-shop-person.png";
+  static const String blankPanelImage = "assets/images/shop/bg-item-descript.png";
   static const double navImageRatio = (72/41);
-
-
 
   // The different menu icon hotspots on the right side of the shop
   static const Map<String, List<int>> menuItems = {
@@ -42,6 +42,10 @@ class _ShopState extends State<ShopView> {
   // Dimensions of the navigation image
   double navImageHeight = 0;
   double navImageWidth = 0;
+
+  bool showItemDescription = false;
+  String topRightPanelImage = shopKeeperImage;
+  String itemShowing = "";
 
   @override
   void didChangeDependencies() {
@@ -58,6 +62,28 @@ class _ShopState extends State<ShopView> {
     }
   }
 
+
+  void itemClicked(String type, String item) {
+    if (shop == null) {
+      return;
+    }
+    if (!shop!.isItemAvailable(type, item)) {
+      return;
+    }
+    print(itemShowing);
+    setState(() {
+      if (itemShowing == item) {
+        itemShowing = "";
+        showItemDescription = false;
+        topRightPanelImage = shopKeeperImage;
+      } else {
+        itemShowing = item;
+        showItemDescription = true;
+        topRightPanelImage = blankPanelImage;
+      }
+    });
+  }
+  
   // Attempts to purchase an item
   void purchaseItem(String type, String item) {
     if (shop == null) {
@@ -89,7 +115,10 @@ class _ShopState extends State<ShopView> {
         print("Shop tab $type selected!");
         // Setup the items for the new shop type
         shop!.activeShop = type;
+        itemShowing = "";
+        showItemDescription = false;
         setState(() {
+          topRightPanelImage = shopKeeperImage;
           shop!.setUpItems();
         });
       }
@@ -157,17 +186,17 @@ class _ShopState extends State<ShopView> {
                               (shop == null) ? Container() : ShopShelf(
                                 type: shop!.activeShop,
                                 items: shop!.getShopItems(1, 3),
-                                purchaseFunction: purchaseItem,
+                                itemClickFunction: itemClicked,
                               ),
                               (shop == null) ? Container() : ShopShelf(
                                 type: shop!.activeShop,
                                 items: shop!.getShopItems(4, 6),
-                                purchaseFunction: purchaseItem,
+                                itemClickFunction: itemClicked,
                               ),
                               (shop == null) ? Container() : ShopShelf(
                                 type: shop!.activeShop,
                                 items: shop!.getShopItems(7, 9),
-                                purchaseFunction: purchaseItem,
+                                itemClickFunction: itemClicked,
                               ),
                             ]
                           ),
@@ -183,12 +212,13 @@ class _ShopState extends State<ShopView> {
                 Expanded(
                   child: Container(
                     width: navImageWidth,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/images/shop/bg-shop-person.png'),
+                          image: AssetImage(topRightPanelImage),
                           fit: BoxFit.cover,
                         )
                     ),
+                    child: (!showItemDescription) ? null : itemDescript(item: itemShowing),
                   ),
                 ),
                 ShopNav(navImageHeight: navImageHeight, navImageWidth: navImageWidth, onTapFunction: onTapShopMenuItem),
@@ -201,3 +231,69 @@ class _ShopState extends State<ShopView> {
     );
   }
 }
+
+class itemDescript extends StatelessWidget {
+  const itemDescript({Key? key, required this.item}) : super(key: key);
+
+  // The item to display
+  final String item;
+  final String itemLocation = "assets/images/shop/horse-pink.png";
+  final String description = "The best horse money can buy!";
+  final int cost = 100;
+  final String currency = "assets/images/shop/coin.png";
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image(
+          image: AssetImage(itemLocation),
+          height: 65,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          description,
+          style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.grey[300],
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextButton(
+          style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all(const Size(120, 40)),
+            backgroundColor: MaterialStateProperty.all(Colors.brown[400]),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget> [
+              Text(
+                cost.toString(),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey[300],
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Image(
+                image: AssetImage(currency),
+                height: 30,
+              ),
+            ],
+          ),
+          onPressed: (){},
+        )
+      ],
+    );
+  }
+}
+

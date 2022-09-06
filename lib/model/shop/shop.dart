@@ -40,12 +40,20 @@ class Shop {
     }
   }
 
+  // Returns whether the item is sold out
+  bool isItemAvailable(String type, String item) {
+    if (item == ShopItems.shopSoldOutVisual[type]!) {
+      return false;
+    }
+    return true;
+  }
+
   // If the item can be bought, then adds item to save state and changes to the
   // sold out image.
   // Note: Will throw a runtime exception is save is null
   bool purchaseItem(String type, String item) {
     // If the item is sold out then return early
-    if (item == ShopItems.shopSoldOutVisual[type]!) {
+    if (!isItemAvailable(type, item)) {
       return false;
     }
     int purchaseIndex = shopItems[type]!.indexOf(item);

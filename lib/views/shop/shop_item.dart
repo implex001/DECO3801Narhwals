@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
  * Displays a shop item
  */
 class ShopItem extends StatefulWidget {
-  const ShopItem({Key? key, required this.type, required this.item, required this.purchaseFunction}) : super(key: key);
+  const ShopItem({Key? key, required this.type, required this.item, required this.itemClickFunction}) : super(key: key);
 
   // The type of the shop
   final String type;
   // The item to display
   final String item;
   // The function to run if the user clicks on an item
-  final Function purchaseFunction;
+  final Function itemClickFunction;
 
   @override
   State<ShopItem> createState() => _ShopItemState();
@@ -25,7 +25,7 @@ class _ShopItemState extends State<ShopItem> {
 
   // If this widget is clicked then run the purchase function
   void itemClicked() {
-    widget.purchaseFunction(widget.type, widget.item);
+    widget.itemClickFunction(widget.type, widget.item);
   }
 
   @override
