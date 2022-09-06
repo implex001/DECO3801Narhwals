@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/shop/shop.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/shop/shop_items.dart';
@@ -32,8 +33,8 @@ class _ShopState extends State<ShopView> {
   // The different menu icon hotspots on the right side of the shop
   static const Map<String, List<int>> menuItems = {
     // List elements are: X coord1, Y coord1, X coord2, Y coord2
-    ShopItems.horseKey: [0, 0, 200, 175],
-    ShopItems.diffKey: [0, 175, 200, 250],
+    ItemDetails.horseKey: [0, 0, 200, 175],
+    ItemDetails.diffKey: [0, 175, 200, 250],
   };
 
   // The instance of the shop
@@ -45,7 +46,7 @@ class _ShopState extends State<ShopView> {
 
   bool showItemDescription = false;
   String topRightPanelImage = shopKeeperImage;
-  String itemShowing = "";
+  Map<String, dynamic> itemShowing = {};
 
   @override
   void didChangeDependencies() {
@@ -63,7 +64,7 @@ class _ShopState extends State<ShopView> {
   }
 
 
-  void itemClicked(String type, String item) {
+  void itemClicked(String type, Map<String, dynamic> item) {
     if (shop == null) {
       return;
     }
@@ -73,7 +74,7 @@ class _ShopState extends State<ShopView> {
     print(itemShowing);
     setState(() {
       if (itemShowing == item) {
-        itemShowing = "";
+        itemShowing = {};
         showItemDescription = false;
         topRightPanelImage = shopKeeperImage;
       } else {
@@ -85,7 +86,7 @@ class _ShopState extends State<ShopView> {
   }
   
   // Attempts to purchase an item
-  void purchaseItem(String type, String item) {
+  void purchaseItem(String type, Map<String, dynamic> item) {
     if (shop == null) {
       return;
     }
@@ -115,7 +116,7 @@ class _ShopState extends State<ShopView> {
         print("Shop tab $type selected!");
         // Setup the items for the new shop type
         shop!.activeShop = type;
-        itemShowing = "";
+        itemShowing = {};
         showItemDescription = false;
         setState(() {
           topRightPanelImage = shopKeeperImage;
@@ -236,11 +237,7 @@ class itemDescript extends StatelessWidget {
   const itemDescript({Key? key, required this.item}) : super(key: key);
 
   // The item to display
-  final String item;
-  final String itemLocation = "assets/images/shop/horse-pink.png";
-  final String description = "The best horse money can buy!";
-  final int cost = 100;
-  final String currency = "assets/images/shop/coin.png";
+  final Map<String, dynamic> item;
 
   @override
   Widget build(BuildContext context) {
@@ -249,14 +246,14 @@ class itemDescript extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Image(
-          image: AssetImage(itemLocation),
+          image: AssetImage(item["location"]),
           height: 65,
         ),
         const SizedBox(
           height: 10,
         ),
         Text(
-          description,
+          item["description"],
           style: TextStyle(
             fontSize: 16.0,
             color: Colors.grey[300],
@@ -275,7 +272,7 @@ class itemDescript extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
               Text(
-                cost.toString(),
+                item["cost"].toString(),
                 style: TextStyle(
                   fontSize: 16.0,
                   color: Colors.grey[300],
@@ -285,7 +282,7 @@ class itemDescript extends StatelessWidget {
                 width: 10,
               ),
               Image(
-                image: AssetImage(currency),
+                image: AssetImage(item["purchaseCurrency"]),
                 height: 30,
               ),
             ],

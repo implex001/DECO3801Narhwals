@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:caravaneering/model/shop/shop_items.dart';
+
 
 /*
  * Displays a shop item
@@ -9,7 +11,7 @@ class ShopItem extends StatefulWidget {
   // The type of the shop
   final String type;
   // The item to display
-  final String item;
+  final Map<String, dynamic> item;
   // The function to run if the user clicks on an item
   final Function itemClickFunction;
 
@@ -37,7 +39,9 @@ class _ShopItemState extends State<ShopItem> {
           margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
           decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/shop/${widget.item}'),
+                image: AssetImage(
+                    widget.item["location"] ?? ShopItems.shopSoldOutVisual[widget.type]!["Location"]
+                ),
                 fit: BoxFit.contain,
               )
           ),

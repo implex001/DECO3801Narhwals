@@ -11,7 +11,7 @@ class ShopShelf extends StatefulWidget {
   // The shop type
   final String type;
   // The items to display on the shelf
-  final List<String> items;
+  final List<Map<String, dynamic>> items;
   // The function to run if the user clicks on an item
   final Function itemClickFunction;
 
