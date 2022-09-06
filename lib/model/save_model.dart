@@ -31,10 +31,18 @@ class SaveModel extends ChangeNotifier {
   }
 
   void addItem(Map<String, dynamic> item) {
-    addToMiscList(item["type"], item["key"]);
+    if (save.state[item["type"]] == null) {
+      save.state[item["type"]] = <String>[];
+    }
+    save.state[item["type"]].add(item["key"]);
+    hasChanged = true;
+    notifyListeners();
   }
 
   bool checkIfItemOwned(Map<String, dynamic> item) {
+    if (save.state[item["type"]] == null) {
+      return false;
+    }
     return save.state[item["type"]].contains(item["key"]);
   }
 
@@ -62,12 +70,6 @@ class SaveModel extends ChangeNotifier {
 
   void changeMisc(String key, dynamic value) {
     save.state[key] = value;
-    hasChanged = true;
-    notifyListeners();
-  }
-
-  void addToMiscList(String key, dynamic value) {
-    save.state[key].add(value);
     hasChanged = true;
     notifyListeners();
   }

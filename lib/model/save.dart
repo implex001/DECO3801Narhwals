@@ -77,6 +77,7 @@ class SaveState {
     _state[SaveKeysV1.pet] = [];
     _state[SaveKeysV1.weapon] = [];
     _state[SaveKeysV1.accessory] = [];
+    save();
   }
 
   // Configures the Amplify plugin for the S3 instance
