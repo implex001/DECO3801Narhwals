@@ -30,16 +30,12 @@ class SaveModel extends ChangeNotifier {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) - number);
   }
 
-  void addHorse(String horse) {
-    addToMiscList(SaveKeysV1.horses, horse);
+  void addItem(Map<String, dynamic> item) {
+    addToMiscList(item["type"], item["key"]);
   }
 
-  List<String> getHorses() {
-    return List<String>.from(save.state[SaveKeysV1.horses]);
-  }
-
-  bool checkIfHorseOwned(String horse) {
-    return save.state[SaveKeysV1.horses].contains(horse);
+  bool checkIfItemOwned(Map<String, dynamic> item) {
+    return save.state[item["type"]].contains(item["key"]);
   }
 
   Timer? startAutoSave() {

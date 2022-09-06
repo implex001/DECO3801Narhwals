@@ -72,7 +72,11 @@ class SaveState {
   // Resets the state data. Note this does not delete the local or cloud file
   void resetData() {
     _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
-    _state[SaveKeysV1.horses] = [];
+    _state[SaveKeysV1.horse] = [];
+    _state[SaveKeysV1.caravan] = [];
+    _state[SaveKeysV1.pet] = [];
+    _state[SaveKeysV1.weapon] = [];
+    _state[SaveKeysV1.accessory] = [];
   }
 
   // Configures the Amplify plugin for the S3 instance

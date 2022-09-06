@@ -1,6 +1,5 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/shop/shop_items.dart';
-import 'package:caravaneering/model/items_details.dart';
 
 /*
  * Creates an instance of the shop
@@ -32,7 +31,7 @@ class Shop {
       shopItems[shopType] = <Map<String, dynamic>>[];
       for (int i = 0; i < ShopItems.shopItemsDefaults[shopType]!.length; i++) {
         Map<String, dynamic> item = ShopItems.shopItemsDefaults[shopType]![i];
-        if (save.checkIfHorseOwned(item["key"])) {
+        if (save.checkIfItemOwned(item)) {
           shopItems[shopType]!.add(ShopItems.shopSoldOutVisual[shopType]!);
         } else {
           shopItems[shopType]!.add(ShopItems.shopItemsDefaults[shopType]![i]);
@@ -61,18 +60,9 @@ class Shop {
     String type = item["type"];
     int purchaseIndex = shopItems[type]!.indexOf(item);
     shopItems[type]![purchaseIndex] = ShopItems.shopSoldOutVisual[type]!;
-    switch (type) {
-      // If it was a horse that was purchased, add horse to save
-      case ItemDetails.horseKey:
-        save.addHorse(item["key"]);
-        save.saveState();
-        break;
-      // If it was a XXX that was purchased, add XXX to save
-      case ItemDetails.diffKey:
-        save.addHorse(item["key"]);
-        save.saveState();
-        break;
-    }
+    save.addItem(item);
+    save.saveState();
+
     // The item was purchased
     return true;
   }

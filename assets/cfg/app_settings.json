@@ -5,6 +5,10 @@
       "username": "",
       "coins": 0,
       "savedate": null,
-      "horses": []
+      "horses": [],
+      "caravans": [],
+      "pets": [],
+      "weapons": [],
+      "accessories": []
   }
 }

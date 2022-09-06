@@ -10,5 +10,9 @@ class SaveKeysV1{
   static const username = "username";
   static const coins = "coins";
   static const savedate = "savedate";
-  static const horses = "horses";
+  static const horse = "horse";
+  static const caravan = "caravan";
+  static const pet = "pet";
+  static const weapon = "weapon";
+  static const accessory = "accessory";
 }

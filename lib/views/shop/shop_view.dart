@@ -30,10 +30,14 @@ class _ShopState extends State<ShopView> {
   static const double navImageRatio = (72/41);
 
   // The different menu icon hotspots on the right side of the shop
-  static const Map<String, List<int>> menuItems = {
+  Map<String, List<int>> menuItems = {
     // List elements are: X coord1, Y coord1, X coord2, Y coord2
-    ItemDetails.horseKey: [0, 0, 200, 175],
-    ItemDetails.diffKey: [0, 175, 200, 250],
+    ItemDetails.horseKey: [0, 0, 0, 0],
+    ItemDetails.caravanKey: [0, 0, 0, 0],
+    ItemDetails.accessoryKey: [0, 0, 0, 0],
+    ItemDetails.weaponKey: [0, 0, 0, 0],
+    ItemDetails.petKey: [0, 0, 0, 0],
+    ItemDetails.coinKey: [0, 0, 0, 0],
   };
 
   // The instance of the shop
@@ -58,6 +62,7 @@ class _ShopState extends State<ShopView> {
     // Initialise the shop
     if (shop == null) {
       shop = Shop(Provider.of<SaveModel>(context));
+      //shop!.save.save.resetData();
       shop!.setUpItems();
     }
   }
