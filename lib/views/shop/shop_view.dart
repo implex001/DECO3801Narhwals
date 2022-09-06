@@ -64,14 +64,13 @@ class _ShopState extends State<ShopView> {
   }
 
 
-  void itemClicked(String type, Map<String, dynamic> item) {
+  void itemClicked(Map<String, dynamic> item) {
     if (shop == null) {
       return;
     }
-    if (!shop!.isItemAvailable(type, item)) {
+    if (!shop!.isItemAvailable(item)) {
       return;
     }
-    print(itemShowing);
     setState(() {
       if (itemShowing == item) {
         itemShowing = {};
@@ -86,12 +85,16 @@ class _ShopState extends State<ShopView> {
   }
   
   // Attempts to purchase an item
-  void purchaseItem(String type, Map<String, dynamic> item) {
+  void purchaseItem(Map<String, dynamic> item) {
     if (shop == null) {
       return;
     }
     setState(() {
-      shop!.purchaseItem(type, item);
+      if (shop!.purchaseItem(item)) {
+        itemShowing = {};
+        showItemDescription = false;
+        topRightPanelImage = shopKeeperImage;
+      }
     });
   }
 
@@ -185,17 +188,14 @@ class _ShopState extends State<ShopView> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               (shop == null) ? Container() : ShopShelf(
-                                type: shop!.activeShop,
                                 items: shop!.getShopItems(1, 3),
                                 itemClickFunction: itemClicked,
                               ),
                               (shop == null) ? Container() : ShopShelf(
-                                type: shop!.activeShop,
                                 items: shop!.getShopItems(4, 6),
                                 itemClickFunction: itemClicked,
                               ),
                               (shop == null) ? Container() : ShopShelf(
-                                type: shop!.activeShop,
                                 items: shop!.getShopItems(7, 9),
                                 itemClickFunction: itemClicked,
                               ),
@@ -219,7 +219,10 @@ class _ShopState extends State<ShopView> {
                           fit: BoxFit.cover,
                         )
                     ),
-                    child: (!showItemDescription) ? null : itemDescript(item: itemShowing),
+                    child: (!showItemDescription) ? null : ItemDescriptionPanel(
+                      item: itemShowing,
+                      purchase: purchaseItem,
+                    ),
                   ),
                 ),
                 ShopNav(navImageHeight: navImageHeight, navImageWidth: navImageWidth, onTapFunction: onTapShopMenuItem),
@@ -233,11 +236,12 @@ class _ShopState extends State<ShopView> {
   }
 }
 
-class itemDescript extends StatelessWidget {
-  const itemDescript({Key? key, required this.item}) : super(key: key);
+class ItemDescriptionPanel extends StatelessWidget {
+  const ItemDescriptionPanel({Key? key, required this.item, required this.purchase}) : super(key: key);
 
   // The item to display
   final Map<String, dynamic> item;
+  final Function purchase;
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +291,7 @@ class itemDescript extends StatelessWidget {
               ),
             ],
           ),
-          onPressed: (){},
+          onPressed: () {purchase(item);},
         )
       ],
     );

@@ -42,7 +42,8 @@ class Shop {
   }
 
   // Returns whether the item is sold out
-  bool isItemAvailable(String type, Map<String, dynamic> item) {
+  bool isItemAvailable(Map<String, dynamic> item) {
+    String type = item["type"];
     if (item["name"] == ShopItems.shopSoldOutVisual[type]!["name"]) {
       return false;
     }
@@ -52,11 +53,14 @@ class Shop {
   // If the item can be bought, then adds item to save state and changes to the
   // sold out image.
   // Note: Will throw a runtime exception is save is null
-  bool purchaseItem(String type, Map<String, dynamic> item) {
+  bool purchaseItem(Map<String, dynamic> item) {
     // If the item is sold out then return early
-    if (!isItemAvailable(type, item)) {
+    if (!isItemAvailable(item)) {
+      print("Item not available");
       return false;
     }
+    String type = item["type"];
+    print("Item is available");
     int purchaseIndex = shopItems[type]!.indexOf(item);
     shopItems[type]![purchaseIndex] = ShopItems.shopSoldOutVisual[type]!;
     switch (type) {

@@ -6,10 +6,8 @@ import 'package:caravaneering/views/shop/shop_item.dart';
  * Creates a single shelf within the shop page
  */
 class ShopShelf extends StatefulWidget {
-  const ShopShelf({Key? key, required this.type, required this.items, required this.itemClickFunction}) : super(key: key);
+  const ShopShelf({Key? key, required this.items, required this.itemClickFunction}) : super(key: key);
 
-  // The shop type
-  final String type;
   // The items to display on the shelf
   final List<Map<String, dynamic>> items;
   // The function to run if the user clicks on an item
@@ -42,17 +40,14 @@ class _ShopShelfState extends State<ShopShelf> {
                         child: Row(
                           children: [
                             ShopItem(
-                              type: widget.type,
                               item: widget.items[0],
                               itemClickFunction: widget.itemClickFunction,
                             ),
                             ShopItem(
-                              type: widget.type,
                               item: widget.items[1],
                               itemClickFunction: widget.itemClickFunction,
                             ),
                             ShopItem(
-                              type: widget.type,
                               item: widget.items[2],
                               itemClickFunction: widget.itemClickFunction,
                             ),

@@ -6,10 +6,8 @@ import 'package:caravaneering/model/shop/shop_items.dart';
  * Displays a shop item
  */
 class ShopItem extends StatefulWidget {
-  const ShopItem({Key? key, required this.type, required this.item, required this.itemClickFunction}) : super(key: key);
+  const ShopItem({Key? key, required this.item, required this.itemClickFunction}) : super(key: key);
 
-  // The type of the shop
-  final String type;
   // The item to display
   final Map<String, dynamic> item;
   // The function to run if the user clicks on an item
@@ -27,7 +25,7 @@ class _ShopItemState extends State<ShopItem> {
 
   // If this widget is clicked then run the purchase function
   void itemClicked() {
-    widget.itemClickFunction(widget.type, widget.item);
+    widget.itemClickFunction(widget.item);
   }
 
   @override
@@ -40,7 +38,7 @@ class _ShopItemState extends State<ShopItem> {
           decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    widget.item["location"] ?? ShopItems.shopSoldOutVisual[widget.type]!["Location"]
+                    widget.item["location"]
                 ),
                 fit: BoxFit.contain,
               )
