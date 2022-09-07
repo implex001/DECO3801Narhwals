@@ -2,8 +2,6 @@
 name: Flutter iOS
 
 on:
-  push:
-    branches: [ "main" ]
   workflow_dispatch:
 
 
