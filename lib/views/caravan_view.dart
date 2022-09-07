@@ -1,5 +1,4 @@
 import 'package:caravaneering/games/caravan_game.dart';
-import 'package:caravaneering/views/jump_minigame_view.dart';
 import 'package:caravaneering/views/overlays/caravan_bar_overlay.dart';
 import 'package:caravaneering/views/overlays/caravan_step_update_overlay.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
@@ -39,7 +38,6 @@ class _MyHomePageState extends State<CaravanView> {
                     "Bar": caravanBarOverlay,
                     "StepUpdate": caravanStepUpdate,
                     "MiniGames": miniGameOverlay,
-                    "JumpMiniGame": jumpMiniGame,
                   },
                   initialActiveOverlays: const ["Bar"],
               ),

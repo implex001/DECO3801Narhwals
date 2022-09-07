@@ -20,7 +20,7 @@ class MiniGameList extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           children: <Widget>[
             TextButton(
-                onPressed: (){
+                onPressed: () {
                   Navigator.pushNamed(context, "/minigames/jump");
                 },
                 child: Text("Minigame 1")

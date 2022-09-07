@@ -67,6 +67,11 @@ class JumpMiniGame extends MiniGame{
     isStopped.value = true;
   }
 
+  @override
+  String getDescription() {
+    return "Jump and step your way through a dungeon";
+  }
+
   JumpPrompt _getRandomPrompt() {
     return prompts[Random().nextInt(prompts.length)];
   }
