@@ -2,10 +2,14 @@ import 'package:caravaneering/games/caravan_game.dart';
 import 'package:flutter/material.dart';
 
 Widget navbarOverlay(BuildContext buildContext, CaravanGame game) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [NavbarLeftOverlay(), NavbarRightOverlay()],
-  );
+  return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [NavbarLeftOverlay(), NavbarRightOverlay()],
+    ),
+    NavbarBottomOverlay(),
+  ]);
+  //]);
 }
 
 class NavbarLeftOverlay extends StatelessWidget {
@@ -86,5 +90,27 @@ class NavbarRightOverlay extends StatelessWidget {
         ]),
       ],
     );
+  }
+}
+
+class NavbarBottomOverlay extends StatelessWidget {
+  NavbarBottomOverlay({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Image.asset(
+        'assets/images/UI/Minigames.png',
+        fit: BoxFit.contain,
+        height: 30,
+        //width: MediaQuery.of(context).size.width * 0.14,
+      ),
+      Image.asset(
+        'assets/images/UI/Story.png',
+        fit: BoxFit.contain,
+        height: 30,
+        //width: MediaQuery.of(context).size.width * 0.14,
+      ),
+    ]);
   }
 }
