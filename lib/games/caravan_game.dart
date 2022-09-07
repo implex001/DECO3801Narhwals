@@ -111,4 +111,14 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
     super.update(dt);
   }
 
+  // Navigation Related Functions
+
+  void navigateMiniGameOverlay() {
+    overlays.add("MiniGames");
+  }
+
+  void exitMiniGameOverlay() {
+    overlays.remove("MiniGames");
+  }
+
 }

@@ -1,5 +1,7 @@
 import 'package:caravaneering/games/caravan_game.dart';
+import 'package:caravaneering/views/overlays/caravan_bar_overlay.dart';
 import 'package:caravaneering/views/overlays/caravan_step_update_overlay.dart';
+import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class _MyHomePageState extends State<CaravanView> {
                   overlayBuilderMap: const {
                     "Bar": navbarOverlay,
                     "StepUpdate": caravanStepUpdate,
+                    "MiniGames": miniGameOverlay,
                   },
                   initialActiveOverlays: const ["Bar"],
               ),

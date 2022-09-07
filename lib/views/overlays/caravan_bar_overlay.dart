@@ -40,7 +40,7 @@ class CaravanBarOverlay extends StatelessWidget {
           children: [
             TextButton(
                 onPressed: () {
-
+                  game.navigateMiniGameOverlay();
                 },
                 child: const Text("Minigames",
                     style: TextStyle(
