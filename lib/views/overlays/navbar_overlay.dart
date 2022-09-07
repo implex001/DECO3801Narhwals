@@ -21,21 +21,25 @@ class NavbarLeftOverlay extends StatelessWidget {
       Image.asset(
         'assets/images/UI/Menu.png',
         fit: BoxFit.contain,
-        height: 40,
+        height: 30,
+        //width: MediaQuery.of(context).size.width * 0.14,
       ),
       Image.asset(
         'assets/images/UI/Shop.png',
-        height: 40,
+        //width: MediaQuery.of(context).size.width * 0.14,
+        height: 30,
         fit: BoxFit.contain,
       ),
       Image.asset(
         'assets/images/UI/Skills.png',
-        height: 40,
+        //width: MediaQuery.of(context).size.width * 0.14,
+        height: 30,
         fit: BoxFit.contain,
       ),
       Image.asset(
         'assets/images/UI/Caravan.png',
-        height: 40,
+        //width: MediaQuery.of(context).size.width * 0.14,
+        height: 30,
         fit: BoxFit.contain,
       ),
     ]);
@@ -53,7 +57,7 @@ class NavbarRightOverlay extends StatelessWidget {
         Stack(alignment: AlignmentDirectional.center, children: [
           Image.asset(
             'assets/images/UI/Coins.png',
-            height: 40,
+            height: 30,
             fit: BoxFit.contain,
           ),
           const DefaultTextStyle(
@@ -70,7 +74,7 @@ class NavbarRightOverlay extends StatelessWidget {
         Stack(alignment: AlignmentDirectional.center, children: [
           Image.asset(
             'assets/images/UI/Gems.png',
-            height: 40,
+            height: 30,
             fit: BoxFit.contain,
           ),
           const DefaultTextStyle(
