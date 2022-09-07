@@ -73,6 +73,7 @@ flutter:
   assets:
     - assets/cfg/
     - assets/images/General/
+    - assets/images/UI/
     - assets/images/General/Sky.png
     - assets/images/General/Midground.png
     - assets/images/General/Details.png
