@@ -24,6 +24,7 @@ jobs:
         run: flutter build ios --no-codesign
 
       - name: Upload Build
+        if: github.ref_name == 'main'
         uses: actions/upload-artifact@v3.1.0
         with:
           name: caravaneering-ios-${{github.run_number}}

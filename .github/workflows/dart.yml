@@ -48,6 +48,7 @@ jobs:
         run: flutter build apk
         
       - name: Upload Build
+        if: github.ref_name == 'main'
         uses: actions/upload-artifact@v3.1.0
         with:
           name: caravaneering-android-${{github.run_number}}
