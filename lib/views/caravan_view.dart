@@ -2,6 +2,7 @@ import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/views/overlays/caravan_bar_overlay.dart';
 import 'package:caravaneering/views/overlays/caravan_step_update_overlay.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
+import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,6 @@ class CaravanView extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<CaravanView> {
-
   late CaravanGame _game;
 
   @override
@@ -24,7 +24,6 @@ class _MyHomePageState extends State<CaravanView> {
     _game = CaravanGame();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class _MyHomePageState extends State<CaravanView> {
               GameWidget(
                   game: _game,
                   overlayBuilderMap: const {
-                    "Bar": caravanBarOverlay,
+                    "Bar": navbarOverlay,
                     "StepUpdate": caravanStepUpdate,
                     "MiniGames": miniGameOverlay,
                   },
@@ -43,5 +42,4 @@ class _MyHomePageState extends State<CaravanView> {
               ),
           );
   }
-
 }
