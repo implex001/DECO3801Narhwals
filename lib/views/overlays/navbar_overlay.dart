@@ -8,10 +8,6 @@ Widget navbarOverlay(BuildContext buildContext, CaravanGame game) {
   );
 }
 
-Widget navbarLeftOverlay(BuildContext buildContext, CaravanGame game) {
-  return NavbarLeftOverlay();
-}
-
 class NavbarLeftOverlay extends StatelessWidget {
   NavbarLeftOverlay({Key? key});
 
