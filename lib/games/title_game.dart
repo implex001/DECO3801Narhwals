@@ -11,24 +11,42 @@ class TitleScreenAnimation extends FlameGame {
   ''';
 
   late ParallaxComponent<FlameGame> parallaxComponent;
+  late ParallaxComponent<FlameGame> parallaxComponent2;
+  late ParallaxComponent<FlameGame> parallaxComponent3;
+  late ParallaxComponent<FlameGame> parallaxGroundDetails;
   SpriteAnimationComponent charAnimation = SpriteAnimationComponent();
 
   @override
   Future<void>? onLoad() async {
     camera.speed = 2000;
     parallaxComponent = await loadParallaxComponent([
-      ParallaxImageData('General/CaravanBackground.png'),
+      ParallaxImageData('General/Sky.png'),
+    ],
+        repeat: ImageRepeat.repeatX,
+        baseVelocity: Vector2(80, 0),
+        velocityMultiplierDelta: Vector2(0.5, 0));
+    add(parallaxComponent);
+    parallaxComponent2 = await loadParallaxComponent([
+      ParallaxImageData('General/Midground.png'),
+    ],
+        repeat: ImageRepeat.repeatX,
+        baseVelocity: Vector2(100, 0),
+        velocityMultiplierDelta: Vector2(0.5, 0));
+    add(parallaxComponent2);
+    parallaxComponent3 = await loadParallaxComponent([
+      ParallaxImageData('General/Foreground.png'),
+    ],
+        repeat: ImageRepeat.repeatX,
+        baseVelocity: Vector2(70, 0),
+        velocityMultiplierDelta: Vector2(0.5, 0));
+    add(parallaxComponent3);
+    parallaxGroundDetails = await loadParallaxComponent([
+      ParallaxImageData('General/Details.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(50, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
-    add(parallaxComponent);
-
-    var _image = await images.load('General/HorseBlack.png');
-    Sprite T1 = Sprite(_image);
-    final player = SpriteComponent(
-        sprite: T1, size: Vector2(10, 10), position: Vector2(100, 200));
-    add(player);
+    add(parallaxGroundDetails);
 
     var character = await images.load('General/MainCharacterFinal.png');
     final spiteSize = Vector2(152 * 1.4, 142 * 1.4);
@@ -39,7 +57,6 @@ class TitleScreenAnimation extends FlameGame {
           ..x = 150
           ..y = 30
           ..size = spiteSize;
-    //add(characterAnimation);
   }
 
   @override

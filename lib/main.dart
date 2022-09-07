@@ -1,6 +1,7 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/shop/shop_view.dart';
+import 'package:caravaneering/views/title_screen.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/caravan',
+      initialRoute: '/',
       routes: {
+        '/': (context) => const TitleScreen(),
         '/caravan': (context) =>
             const CaravanView(title: 'Flutter Demo Home Page'),
         '/shop': (context) => const ShopView(),
