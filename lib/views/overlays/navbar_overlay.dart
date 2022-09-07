@@ -30,8 +30,8 @@ class NavbarLeftOverlay extends StatelessWidget {
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/shop", (route) => false);
+            Navigator.pushNamed(
+                context, "/shop");
           },
           child: Image.asset(
             'assets/images/UI/Shop.png',
@@ -117,8 +117,8 @@ class NavbarBottomOverlay extends StatelessWidget {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/caravan", (route) => false);
+            Navigator.pushNamed(
+                context, "/minigames");
           },
           child: Image.asset(
             'assets/images/UI/Minigames.png',
