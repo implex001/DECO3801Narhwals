@@ -1,6 +1,7 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
+import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/shop/shop_view.dart';
 
 import 'package:flutter/services.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/caravan': (context) => const CaravanView(title: 'Flutter Demo Home Page'),
         '/shop': (context) => const ShopView(),
+        '/minigames' : (context) => const MiniGameList(),
         '/minigames/jump': (context) => const JumpMiniGameView()
       },
     );

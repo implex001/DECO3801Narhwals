@@ -1,15 +1,9 @@
-import 'package:caravaneering/games/caravan_game.dart';
 import 'package:flutter/material.dart';
-
-Widget miniGameOverlay(BuildContext buildContext, CaravanGame game) {
-  return MiniGameList(game: game);
-}
 
 class MiniGameList extends StatelessWidget {
 
-  final CaravanGame game;
 
-  const MiniGameList({Key? key, required this.game}) : super(key: key);
+  const MiniGameList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +23,7 @@ class MiniGameList extends StatelessWidget {
             TextButton(onPressed: (){}, child: Text("Placeholder")),
             TextButton(
                 onPressed: (){
-                  game.exitMiniGameOverlay();
+                  Navigator.pop(context);
                 },
                 child: Text("Back")
             ),
