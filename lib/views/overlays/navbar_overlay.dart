@@ -65,7 +65,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
                 Text(
                   "Main Menu",
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 32.0,
                     color: Colors.grey[300],
                   ),
                 ),
@@ -91,9 +91,25 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
                     ),
                     GestureDetector(
                       onTap: () {
+                        Provider.of<SaveModel>(context, listen: false).addCoins(1000);
+                        Provider.of<SaveModel>(context, listen: false).addGems(1000);
+                        Provider.of<SaveModel>(context, listen: false).saveState();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        height: 40,
+                        width: 140,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/UI/CheatButton.png'),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
                         Provider.of<SaveModel>(context, listen: false).eraseSave();
-
-                        Navigator.pop(context);
                       },
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),

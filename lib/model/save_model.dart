@@ -28,6 +28,10 @@ class SaveModel extends ChangeNotifier {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) + number);
   }
 
+  void addGems(int number) {
+    changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) + number);
+  }
+
   void removeCoins(int number) {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) - number);
   }
