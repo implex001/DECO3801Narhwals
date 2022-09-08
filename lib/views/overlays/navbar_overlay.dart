@@ -5,15 +5,50 @@ Widget navbarOverlay(BuildContext buildContext, CaravanGame game) {
   return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [NavbarLeftOverlay(), NavbarRightOverlay()],
+      children: [NavbarLeftOverlay(game: game), NavbarRightOverlay()],
     ),
     NavbarBottomOverlay(),
   ]);
   //]);
 }
 
-class NavbarLeftOverlay extends StatelessWidget {
-  NavbarLeftOverlay({Key? key});
+class NavbarLeftOverlay extends StatefulWidget {
+  NavbarLeftOverlay({Key? key, required this.game});
+  final CaravanGame game;
+
+  @override
+  State<NavbarLeftOverlay> createState() => _NavbarLeftOverlayState();
+}
+
+class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
+  String route = "";
+  String menuButtonImage = 'assets/images/UI/Menu.png';
+  String shopButtonImage = 'assets/images/UI/Shop.png';
+  String skillsButtonImage = 'assets/images/UI/Skills.png';
+  String caravanButtonImage = 'assets/images/UI/Caravan.png';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.name != null) {
+      route = ModalRoute.of(context)!.settings.name!;
+      switch (route) {
+        case "/menu":
+          menuButtonImage = 'assets/images/UI/MenuSelected.png';
+          break;
+        case "/shop":
+          shopButtonImage = 'assets/images/UI/ShopSelected.png';
+          break;
+        case "/skills":
+          skillsButtonImage = 'assets/images/UI/SkillsSelected.png';
+          break;
+        case "/caravan":
+          caravanButtonImage = 'assets/images/UI/CaravanSelected.png';
+          break;
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +59,20 @@ class NavbarLeftOverlay extends StatelessWidget {
                 context, "/caravan", (route) => false); // placeholder route
           },
           child: Image.asset(
-            'assets/images/UI/Menu.png',
+            menuButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamed(
-                context, "/shop");
+            if (route != "/shop") {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/shop", (route) => false, arguments:{'game': widget.game}
+              );
+            }
           },
           child: Image.asset(
-            'assets/images/UI/Shop.png',
+            shopButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
@@ -44,17 +82,19 @@ class NavbarLeftOverlay extends StatelessWidget {
                 context, "/caravan", (route) => false); // placeholder route
           },
           child: Image.asset(
-            'assets/images/UI/Skills.png',
+            skillsButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/caravan", (route) => false);
+            if (route != "/caravan") {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/caravan", (route) => false);
+            }
           },
           child: Image.asset(
-            'assets/images/UI/Caravan.png',
+            caravanButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),

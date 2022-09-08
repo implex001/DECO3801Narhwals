@@ -1,12 +1,15 @@
+import 'package:caravaneering/games/caravan_game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/shop/shop.dart';
+import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/views/shop/shop_shelf.dart';
 import 'package:caravaneering/views/shop/shop_nav.dart';
 import 'package:caravaneering/views/shop/shop_description_panel.dart';
+
 
 /*
  * Creates the shop page
@@ -28,7 +31,7 @@ class _ShopState extends State<ShopView> {
   static const String shopKeeperImage = "assets/images/shop/bg-shop-person.png";
   static const String blankPanelImage = "assets/images/shop/bg-item-descript.png";
   static const double navImageRatio = (72/41);
-
+  CaravanGame? game;
   // The different menu icon hotspots on the right side of the shop
   Map<String, List<double>> menuItems = {};
 
@@ -62,6 +65,13 @@ class _ShopState extends State<ShopView> {
     if (shop == null) {
       shop = Shop(Provider.of<SaveModel>(context));
       shop!.setUpItems();
+    }
+
+    if (game == null) {
+      if (ModalRoute.of(context) != null) {
+        Map args = ModalRoute.of(context)!.settings.arguments as Map;
+        game = args["game"];
+      }
     }
   }
 
@@ -174,22 +184,9 @@ class _ShopState extends State<ShopView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(preferredSize: const Size.fromHeight(40.0),
-          child: AppBar(
-            title: const Text("GAME MENU WILL GO HERE"),
-            backgroundColor: Colors.orange[200],
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    temporaryFunctionDeleteSaveData();
-                  },
-                  child: Text("Delete Save")
-              ),
-            ]
-          )
-      ),
-      body: Center(
+    return Stack(
+      children: <Widget> [
+      Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -263,6 +260,8 @@ class _ShopState extends State<ShopView> {
           ],
         ),
       ),
+        (game == null) ? Container() : navbarOverlay(context, game!),
+    ]
     );
   }
 }
