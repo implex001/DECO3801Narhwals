@@ -1,17 +1,31 @@
 import 'package:caravaneering/model/save_keys.dart';
+import 'package:global_configuration/global_configuration.dart';
 
 class ItemDetails{
-  static const horseKey = SaveKeysV1.horse;
-  static const caravanKey = SaveKeysV1.caravan;
-  static const petKey = SaveKeysV1.pet;
+  static const String horseKey = SaveKeysV1.horses;
+  static const String caravanKey = SaveKeysV1.carts;
+  static const String petKey = SaveKeysV1.pets;
 
-  static const coins = "coin";
-  static const gems = "gem";
+  static const String coins = "coin";
+  static const String gems = "gem";
 
-  static const coinImagePath = "assets/images/UI/CoinIcon.png";
-  static const gemImagePath = "assets/images/UI/GemIcon.png";
+  static const String coinImagePath = "assets/images/UI/CoinIcon.png";
+  static const String gemImagePath = "assets/images/UI/GemIcon.png";
+
+  static List<dynamic> startingHorses = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedHorses];
+  static List<dynamic> startingCarts = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedCarts];
+  static List<dynamic> startingPets = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedPets];
 
   static const Map<String, Map<String, dynamic>> items = {
+    "brown-horse": {
+      "key": "brown-yellow",
+      "name": "Brown horse",
+      "type": horseKey,
+      "cost": 0,
+      "purchaseCurrency": coins,
+      "location": "assets/images/items/horse-brown.png",
+      "description": "This is the starter horse",
+    },
     "horse-yellow": {
       "key": "horse-yellow",
       "name": "Yellow horse",
@@ -172,6 +186,15 @@ class ItemDetails{
       "cost": 400,
       "purchaseCurrency": gems,
       "location": "assets/images/items/cart-red.png",
+      "description": "Best cart money can buy!",
+    },
+    "cart-green": {
+      "key": "cart-green",
+      "name": "Green cart",
+      "type": caravanKey,
+      "cost": 400,
+      "purchaseCurrency": gems,
+      "location": "assets/images/items/cart-green.png",
       "description": "Best cart money can buy!",
     }
   };

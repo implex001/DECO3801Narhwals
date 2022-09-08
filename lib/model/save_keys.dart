@@ -11,9 +11,10 @@ class SaveKeysV1{
   static const coins = "coins";
   static const gems = "gems";
   static const savedate = "savedate";
-  static const horse = "horse";
-  static const caravan = "caravan";
-  static const pet = "pet";
-  static const weapon = "weapon";
-  static const accessory = "accessory";
+  static const horses = "horses";
+  static const carts = "cart";
+  static const pets = "pets";
+  static const equippedHorses = "equippedHorses";
+  static const equippedCarts = "equippedCarts";
+  static const equippedPets = "equippedPets";
 }

@@ -8,6 +8,7 @@ class SaveModel extends ChangeNotifier {
   final SaveState save = SaveState();
   bool hasChanged = false;
   bool hasErasedData = false;
+  bool hasUpdatedEquipped = false;
   Timer? autoSave;
 
   Future<SaveModel> init() async {
@@ -38,6 +39,38 @@ class SaveModel extends ChangeNotifier {
 
   void removeGems(int number) {
     changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) - number);
+  }
+
+  // Equips a horse skin to a horse number
+  void equipHorse(int horseNum, String key) {
+    if (save.state[SaveKeysV1.equippedHorses] == null) {
+      save.state[SaveKeysV1.equippedHorses] = <String>[];
+    }
+
+    // If the index number hasn't been created in the list then add blank names
+    while (save.state[SaveKeysV1.equippedHorses].length < horseNum) {
+      save.state[SaveKeysV1.equippedHorses].add("");
+    }
+    save.state[SaveKeysV1.equippedHorses][horseNum - 1] = key;
+
+    hasUpdatedEquipped = true;
+    notifyListeners();
+  }
+
+  // Equips a cart skin to a horse number
+  void equipCart(int cartNum, String key) {
+    if (save.state[SaveKeysV1.equippedCarts] == null) {
+      save.state[SaveKeysV1.equippedCarts] = <String>[];
+    }
+
+    // If the index number hasn't been created in the list then add blank names
+    while (save.state[SaveKeysV1.equippedCarts].length < cartNum) {
+      save.state[SaveKeysV1.equippedCarts].add("");
+    }
+    save.state[SaveKeysV1.equippedCarts][cartNum - 1] = key;
+
+    hasUpdatedEquipped = true;
+    notifyListeners();
   }
 
   void addItem(Map<String, dynamic> item) {
@@ -88,6 +121,7 @@ class SaveModel extends ChangeNotifier {
     save.resetData();
     await save.save();
     hasErasedData = true;
+    hasUpdatedEquipped = true;
     notifyListeners();
   }
 }

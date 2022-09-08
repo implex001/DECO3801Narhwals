@@ -1,4 +1,5 @@
 import 'package:caravaneering/model/items_details.dart';
+import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/shop/shop_items.dart';
 
@@ -67,8 +68,14 @@ class Shop {
     } else {
       save.removeCoins(item["cost"]);
     }
-
     save.saveState();
+    
+    if (item["type"] == SaveKeysV1.horses) {
+      save.equipHorse(1, item["key"]);
+    }
+    if (item["type"] == SaveKeysV1.carts) {
+      save.equipCart(1, item["key"]);
+    }
 
     // The item was purchased
     return true;

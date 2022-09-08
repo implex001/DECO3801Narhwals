@@ -18,6 +18,15 @@ class SaveState {
   // app_settings.json file.
   Map<String, dynamic> _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
 
+  SaveState() {
+    _state[SaveKeysV1.horses] = (_state[SaveKeysV1.horses] == null) ? [] : List.from(_state[SaveKeysV1.horses]);
+    _state[SaveKeysV1.carts] = (_state[SaveKeysV1.carts] == null) ? [] :  List.from(_state[SaveKeysV1.carts]);
+    _state[SaveKeysV1.pets] = (_state[SaveKeysV1.pets] == null) ? [] :  List.from(_state[SaveKeysV1.pets]);
+    _state[SaveKeysV1.equippedHorses] = (_state[SaveKeysV1.equippedHorses] == null) ? [] :  List.from(_state[SaveKeysV1.equippedHorses]);
+    _state[SaveKeysV1.equippedPets] = (_state[SaveKeysV1.equippedPets] == null) ? [] :  List.from(_state[SaveKeysV1.equippedPets]);
+    _state[SaveKeysV1.equippedCarts] = (_state[SaveKeysV1.equippedCarts] == null) ? [] :  List.from(_state[SaveKeysV1.equippedCarts]);
+  }
+
   // Saves the state
   Future<bool> save() async {
     Future localDone = createLocalSave();
@@ -72,11 +81,12 @@ class SaveState {
   // Resets the state data. Note this does not delete the local or cloud file
   void resetData() {
     _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
-    _state[SaveKeysV1.horse] = [];
-    _state[SaveKeysV1.caravan] = [];
-    _state[SaveKeysV1.pet] = [];
-    _state[SaveKeysV1.weapon] = [];
-    _state[SaveKeysV1.accessory] = [];
+    _state[SaveKeysV1.horses] = (_state[SaveKeysV1.horses] == null) ? [] : List.from(_state[SaveKeysV1.horses]);
+    _state[SaveKeysV1.carts] = (_state[SaveKeysV1.carts] == null) ? [] :  List.from(_state[SaveKeysV1.carts]);
+    _state[SaveKeysV1.pets] = (_state[SaveKeysV1.pets] == null) ? [] :  List.from(_state[SaveKeysV1.pets]);
+    _state[SaveKeysV1.equippedHorses] = (_state[SaveKeysV1.equippedHorses] == null) ? [] :  List.from(_state[SaveKeysV1.equippedHorses]);
+    _state[SaveKeysV1.equippedPets] = (_state[SaveKeysV1.equippedPets] == null) ? [] :  List.from(_state[SaveKeysV1.equippedPets]);
+    _state[SaveKeysV1.equippedCarts] = (_state[SaveKeysV1.equippedCarts] == null) ? [] :  List.from(_state[SaveKeysV1.equippedCarts]);
     save();
   }
 
