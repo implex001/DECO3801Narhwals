@@ -34,6 +34,7 @@ dependencies:
   amplify_storage_s3: ^1.0.0-next.0
   path_provider: ^2.0.11
   global_configuration: ^2.0.0-nullsafety.1
+  nine_grid_view: ^2.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -83,6 +84,18 @@ flutter:
     - assets/images/General/HorseCartFinal.png
     - assets/images/General/MainCharacterFinal.png
     - assets/images/shop/
+    - assets/images/skills/Skills-Lines.png
+    - assets/images/skills/Skills-Popup.png
+    - assets/images/skills/SkillsBackground.png
+    - assets/images/skills/Upgrade_Strength.png
+    - assets/images/skills/Upgrade_StrengthLocked.png
+    - assets/images/skills/UpgradeCoins.png
+    - assets/images/skills/UpgradeCoinsLocked.png
+    - assets/images/skills/UpgradeSpeed.png
+    - assets/images/skills/UpgradeSpeedLocked.png
+    - assets/images/UI/BuyButton.png
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
