@@ -90,17 +90,8 @@ class _ShopState extends State<ShopView> {
       ItemDetails.caravanKey: [
         navImageWidth/2.41 - smallShieldBufferX, navImageHeight/1.2 - smallShieldBufferY, navImageWidth/2.41 + smallShieldBufferX, navImageHeight/1.2 + 20
       ],
-      ItemDetails.accessoryKey: [
-        navImageWidth/5.75 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/5.75 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
-      ],
-      ItemDetails.weaponKey: [
-        navImageWidth/1.92 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/1.92 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
-      ],
       ItemDetails.petKey: [
         navImageWidth/5.75 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/5.75 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
-      ],
-      ItemDetails.coinKey: [
-        navImageWidth/1.50 - smallShieldBufferX, navImageHeight/1.2 - smallShieldBufferY, navImageWidth/1.50 + smallShieldBufferX, navImageHeight/1.2 + 20
       ],
     };
   }
@@ -253,6 +244,7 @@ class _ShopState extends State<ShopView> {
     if (shop == null) {
       return;
     }
+    print("Deleting save file!!");
     await shop!.save.eraseSave();
     setState(() {
       shop!.setUpItems();

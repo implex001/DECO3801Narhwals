@@ -3,10 +3,7 @@ import 'package:caravaneering/model/save_keys.dart';
 class ItemDetails{
   static const horseKey = SaveKeysV1.horse;
   static const caravanKey = SaveKeysV1.caravan;
-  static const coinKey = "coin";
   static const petKey = SaveKeysV1.pet;
-  static const weaponKey = SaveKeysV1.weapon;
-  static const accessoryKey = SaveKeysV1.accessory;
 
   static const coins = "coin";
   static const gems = "gem";
