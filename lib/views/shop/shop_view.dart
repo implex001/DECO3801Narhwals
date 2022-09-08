@@ -63,7 +63,7 @@ class _ShopState extends State<ShopView> {
     }
     // Initialise the shop
     if (shop == null) {
-      shop = Shop(Provider.of<SaveModel>(context));
+      shop = Shop(Provider.of<SaveModel>(context, listen: true));
       shop!.setUpItems();
     }
 
@@ -253,6 +253,12 @@ class _ShopState extends State<ShopView> {
 
   @override
   Widget build(BuildContext context) {
+    // If data was erased then refresh shop
+    if (shop != null && shop!.save.hasErasedData) {
+      shop!.setUpItems();
+      shop!.save.hasErasedData = false;
+    }
+
     return Stack(
       children: <Widget> [
       Padding(

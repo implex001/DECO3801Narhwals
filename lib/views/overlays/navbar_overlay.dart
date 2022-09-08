@@ -1,5 +1,7 @@
 import 'package:caravaneering/games/caravan_game.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:caravaneering/model/save_model.dart';
 
 Widget navbarOverlay(BuildContext buildContext, CaravanGame game) {
   return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -49,14 +51,75 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     }
   }
 
+  // Pop up window for menu page
+  Future<void> menuPage() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            backgroundColor: Colors.brown[500],
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Main Menu",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ],
+            ),
+            children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget> [
+                    GestureDetector(
+                      onTap: () {Navigator.pop(context);},
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        height: 40,
+                        width: 140,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/UI/CancelButton.png'),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Provider.of<SaveModel>(context, listen: false).eraseSave();
+
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                        height: 40,
+                        width: 123.5,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/images/UI/EraseButton.png'),
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+              )
+            ],
+          );
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/caravan", (route) => false); // placeholder route
+            menuPage();
           },
           child: Image.asset(
             menuButtonImage,

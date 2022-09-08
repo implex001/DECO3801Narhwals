@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class SaveModel extends ChangeNotifier {
   final SaveState save = SaveState();
   bool hasChanged = false;
+  bool hasErasedData = false;
   Timer? autoSave;
 
   Future<SaveModel> init() async {
@@ -78,5 +79,7 @@ class SaveModel extends ChangeNotifier {
   Future<void> eraseSave() async {
     save.resetData();
     await save.save();
+    hasErasedData = true;
+    notifyListeners();
   }
 }
