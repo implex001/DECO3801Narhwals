@@ -1,3 +1,4 @@
+import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/shop/shop_items.dart';
 
@@ -61,6 +62,12 @@ class Shop {
     int purchaseIndex = shopItems[storeType]!.indexOf(item);
     shopItems[storeType]![purchaseIndex] = ShopItems.shopSoldOutVisual[item["type"]]!;
     save.addItem(item);
+    if (item["purchaseCurrency"] == ItemDetails.gems) {
+      save.removeGems(item["cost"]);
+    } else {
+      save.removeCoins(item["cost"]);
+    }
+
     save.saveState();
 
     // The item was purchased
