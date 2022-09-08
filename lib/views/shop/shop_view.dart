@@ -346,7 +346,12 @@ class _ShopState extends State<ShopView> {
                       ),
                     ),
                   ),
-                  ShopNav(navImageHeight: navImageHeight, navImageWidth: navImageWidth, onTapFunction: onTapShopMenuItem),
+                  ShopNav(
+                    navImageHeight: navImageHeight,
+                    navImageWidth: navImageWidth,
+                    onTapFunction: onTapShopMenuItem,
+                    shopType: (shop == null) ? ItemDetails.horseKey : shop!.activeShop,
+                  ),
                 ]
               )
             ],
