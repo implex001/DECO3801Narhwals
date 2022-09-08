@@ -32,7 +32,7 @@ class _ShopShelfState extends State<ShopShelf> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                    padding: const EdgeInsets.fromLTRB(70, 10, 70, 0),
                     child: SizedBox(
                       height: 50,
                       child: Padding(

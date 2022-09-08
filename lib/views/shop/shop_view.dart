@@ -186,78 +186,81 @@ class _ShopState extends State<ShopView> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget> [
-      Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/shop/bg-curtain.png'),
-                      fit: BoxFit.cover,
-                    )
-                  ),
-                child: Column(
-                  children: [
-                    Image.asset('assets/images/shop/bg-rack-top-bar.png'),
-                    Expanded(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/shop/bg-rack-ropes.png'),
-                            fit: BoxFit.fitWidth,
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/shop/bg-curtain.png'),
+                        fit: BoxFit.cover,
+                      )
+                    ),
+                  child: Column(
+                    children: [
+                      Image.asset('assets/images/shop/bg-rack-top-bar.png'),
+                      Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/shop/bg-rack-ropes.png'),
+                              fit: BoxFit.fitWidth,
+                            ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              (shop == null) ? Container() : ShopShelf(
-                                items: shop!.getShopItems(1, 3),
-                                itemClickFunction: itemClicked,
-                              ),
-                              (shop == null) ? Container() : ShopShelf(
-                                items: shop!.getShopItems(4, 6),
-                                itemClickFunction: itemClicked,
-                              ),
-                              (shop == null) ? Container() : ShopShelf(
-                                items: shop!.getShopItems(7, 9),
-                                itemClickFunction: itemClicked,
-                              ),
-                            ]
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 40),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                (shop == null) ? Container() : ShopShelf(
+                                  items: shop!.getShopItems(1, 3),
+                                  itemClickFunction: itemClicked,
+                                ),
+                                (shop == null) ? Container() : ShopShelf(
+                                  items: shop!.getShopItems(4, 6),
+                                  itemClickFunction: itemClicked,
+                                ),
+                                (shop == null) ? Container() : ShopShelf(
+                                  items: shop!.getShopItems(7, 9),
+                                  itemClickFunction: itemClicked,
+                                ),
+                              ]
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  )
                 )
-              )
-            ),
-            Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: navImageWidth,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(topRightPanelImage),
-                          fit: BoxFit.cover,
-                        )
-                    ),
-                    child: (!showItemDescription) ? null : ShopDescriptionPanel(
-                      item: itemShowing,
-                      purchase: purchaseItem,
+              ),
+              Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: navImageWidth,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(topRightPanelImage),
+                            fit: BoxFit.cover,
+                          )
+                      ),
+                      child: (!showItemDescription) ? null : ShopDescriptionPanel(
+                        item: itemShowing,
+                        purchase: purchaseItem,
+                      ),
                     ),
                   ),
-                ),
-                ShopNav(navImageHeight: navImageHeight, navImageWidth: navImageWidth, onTapFunction: onTapShopMenuItem),
-              ]
-            )
-          ],
+                  ShopNav(navImageHeight: navImageHeight, navImageWidth: navImageWidth, onTapFunction: onTapShopMenuItem),
+                ]
+              )
+            ],
+          ),
         ),
       ),
         (game == null) ? Container() : navbarOverlay(context, game!),

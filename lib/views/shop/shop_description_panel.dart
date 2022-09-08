@@ -23,7 +23,8 @@ class ShopDescriptionPanel extends StatelessWidget {
         Text(
           item["name"],
           style: TextStyle(
-            fontSize: 16.0,
+            fontSize: 14.0,
+            decoration: TextDecoration.none,
             color: Colors.orange[200],
           ),
         ),
@@ -33,7 +34,8 @@ class ShopDescriptionPanel extends StatelessWidget {
         Text(
           item["description"],
           style: TextStyle(
-            fontSize: 16.0,
+            fontSize: 12.0,
+            decoration: TextDecoration.none,
             color: Colors.grey[300],
           ),
         ),
