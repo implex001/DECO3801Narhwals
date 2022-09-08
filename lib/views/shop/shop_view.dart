@@ -78,21 +78,20 @@ class _ShopState extends State<ShopView> {
 
   // Calculates the click hotspots for the shop navigation
   void calculateHotspots() {
-    int largeShieldBufferX = 35;
+    int largeShieldBufferX = 25;
     int largeShieldBufferY = 35;
-    int smallShieldBufferX = 35;
-    int smallShieldBufferY = 25;
+
     // The different menu icon hotspots on the right side of the shop
     menuItems = {
       // List elements are: X coord1, Y coord1, X coord2, Y coord2
-      ItemDetails.horseKey: [
-        navImageWidth/1.23 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/1.23 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
+      ItemDetails.petKey: [
+        navImageWidth/5.04 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/5.04 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
       ],
       ItemDetails.cartKey: [
-        navImageWidth/2.41 - smallShieldBufferX, navImageHeight/1.2 - smallShieldBufferY, navImageWidth/2.41 + smallShieldBufferX, navImageHeight/1.2 + 20
+        navImageWidth/1.87 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/1.87 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
       ],
-      ItemDetails.petKey: [
-        navImageWidth/5.75 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/5.75 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
+      ItemDetails.horseKey: [
+        navImageWidth/1.16 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/1.16 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
       ],
     };
   }
