@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class SaveModel extends ChangeNotifier {
   final SaveState save = SaveState();
   bool hasChanged = false;
-  Timer? autoSave ;
+  Timer? autoSave;
 
   Future<SaveModel> init() async {
     if (await save.checkForLocalSave()) {
@@ -15,6 +15,7 @@ class SaveModel extends ChangeNotifier {
     } else {
       await save.createLocalSave();
     }
+    notifyListeners();
     return this;
   }
 
