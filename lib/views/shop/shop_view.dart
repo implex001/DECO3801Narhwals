@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/shop/shop.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
@@ -137,6 +138,19 @@ class _ShopState extends State<ShopView> {
     if (shop == null) {
       return;
     }
+
+    bool enoughCurrency = false;
+    // If don't have enough currency return false
+    if (itemShowing["purchaseCurrency"] == ItemDetails.gems) {
+      if (shop!.save.get(SaveKeysV1.gems) >= itemShowing["cost"]) {
+        enoughCurrency = true;
+      }
+    } else {
+      if (shop!.save.get(SaveKeysV1.coins) >= itemShowing["cost"]) {
+        enoughCurrency = true;
+      }
+    }
+
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -185,16 +199,18 @@ class _ShopState extends State<ShopView> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      if (enoughCurrency) {
                         purchaseItem();
                         Navigator.pop(context);
+                      }
                       },
                     child: Container(
                       margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                       height: 40,
                       width: 88,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('assets/images/UI/BuyButton.png'),
+                          image: AssetImage(enoughCurrency ? 'assets/images/UI/BuyButton.png' : 'assets/images/UI/BuyButtonDisabled.png'),
                           fit: BoxFit.fitWidth,
                         ),
                       ),
