@@ -127,17 +127,98 @@ class _ShopState extends State<ShopView> {
   }
   
   // Attempts to purchase an item
-  void purchaseItem(Map<String, dynamic> item) {
+  void purchaseItem() {
     if (shop == null) {
       return;
     }
+
     setState(() {
-      if (shop!.purchaseItem(shop!.activeShop, item)) {
+      if (shop!.purchaseItem(shop!.activeShop, itemShowing)) {
         itemShowing = {};
         showItemDescription = false;
         topRightPanelImage = shopKeeperImage;
       }
     });
+  }
+
+  // Pop up window to confirm the purchase
+  Future<void> confirmPurchase() async {
+    if (shop == null) {
+      return;
+    }
+
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            backgroundColor: Colors.brown[500],
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${itemShowing["name"]} for ${itemShowing["cost"].toString()}",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey[300],
+                  ),
+                ),
+                const SizedBox(
+                  width: 3,
+                ),
+                Image(
+                  image: AssetImage(itemShowing["purchaseCurrency"]),
+                  height: 20,
+                ),
+              ],
+            ),
+            children: <Widget>[
+              Image(
+                image: AssetImage(itemShowing["location"]),
+                height: 80,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget> [
+                  GestureDetector(
+                    onTap: () {Navigator.pop(context);},
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      height: 40,
+                      width: 140,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/UI/CancelButton.png'),
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                        purchaseItem();
+                        Navigator.pop(context);
+                      },
+                    child: Container(
+                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                      height: 40,
+                      width: 88,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/UI/BuyButton.png'),
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
+              )
+            ],
+          );
+        }
+    );
   }
 
   // Check what coordinates were clicked on. If clicked on a shop icon then switch
@@ -252,7 +333,7 @@ class _ShopState extends State<ShopView> {
                       ),
                       child: (!showItemDescription) ? null : ShopDescriptionPanel(
                         item: itemShowing,
-                        purchase: purchaseItem,
+                        purchase: confirmPurchase,
                       ),
                     ),
                   ),

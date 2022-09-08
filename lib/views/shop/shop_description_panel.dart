@@ -67,7 +67,7 @@ class ShopDescriptionPanel extends StatelessWidget {
               ),
             ],
           ),
-          onPressed: () {purchase(item);},
+          onPressed: () {purchase();},
         )
       ],
     );
