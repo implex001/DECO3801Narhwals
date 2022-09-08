@@ -1,6 +1,7 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/shop/shop_view.dart';
+import 'package:caravaneering/model/skills/skill_ui.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +34,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/caravan',
+      initialRoute: '/skills',
       routes: {
         '/caravan': (context) => const CaravanView(title: 'Flutter Demo Home Page'),
         '/shop': (context) => const ShopView(),
+        '/skills': (context) => const SkillsView(),
       },
     );
   }
