@@ -146,7 +146,6 @@ class _ShopState extends State<ShopView> {
     if (shop == null) {
       return;
     }
-
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -162,12 +161,9 @@ class _ShopState extends State<ShopView> {
                     color: Colors.grey[300],
                   ),
                 ),
-                const SizedBox(
-                  width: 3,
-                ),
                 Image(
-                  image: AssetImage(itemShowing["purchaseCurrency"]),
-                  height: 20,
+                  image: AssetImage((itemShowing["purchaseCurrency"] == ItemDetails.gems) ? ItemDetails.gemImagePath : ItemDetails.coinImagePath),
+                  height: 32,
                 ),
               ],
             ),

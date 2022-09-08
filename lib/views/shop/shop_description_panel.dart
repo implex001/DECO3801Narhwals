@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:caravaneering/model/items_details.dart';
+
 class ShopDescriptionPanel extends StatelessWidget {
   const ShopDescriptionPanel({Key? key, required this.item, required this.purchase}) : super(key: key);
 
@@ -45,7 +47,7 @@ class ShopDescriptionPanel extends StatelessWidget {
         TextButton(
           style: ButtonStyle(
             fixedSize: MaterialStateProperty.all(const Size(120, 40)),
-            backgroundColor: MaterialStateProperty.all(Colors.brown[400]),
+            backgroundColor: MaterialStateProperty.all((item["purchaseCurrency"] == ItemDetails.gems) ? Colors.deepPurple[400] : Colors.brown[400]),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,11 +61,11 @@ class ShopDescriptionPanel extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 2,
               ),
               Image(
-                image: AssetImage(item["purchaseCurrency"]),
-                height: 30,
+                image: AssetImage((item["purchaseCurrency"] == ItemDetails.gems) ? ItemDetails.gemImagePath : ItemDetails.coinImagePath),
+                height: 32,
               ),
             ],
           ),

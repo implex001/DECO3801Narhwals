@@ -8,7 +8,11 @@ class ItemDetails{
   static const weaponKey = SaveKeysV1.weapon;
   static const accessoryKey = SaveKeysV1.accessory;
 
-  static const coin = "assets/images/shop/coin.png";
+  static const coins = "coin";
+  static const gems = "gem";
+
+  static const coinImagePath = "assets/images/UI/CoinIcon.png";
+  static const gemImagePath = "assets/images/UI/GemIcon.png";
 
   static const Map<String, Map<String, dynamic>> items = {
     "horse-yellow": {
@@ -16,7 +20,7 @@ class ItemDetails{
       "name": "Yellow horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-yellow.png",
       "description": "The best horse money can buy!",
     },
@@ -25,7 +29,7 @@ class ItemDetails{
       "name": "Dark grey horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-dark-grey.png",
       "description": "The best horse money can buy!",
     },
@@ -34,7 +38,7 @@ class ItemDetails{
       "name": "Light grey horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-light-grey.png",
       "description": "The best horse money can buy!",
     },
@@ -43,7 +47,7 @@ class ItemDetails{
       "name": "Blue horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-blue.png",
       "description": "The best horse money can buy!",
     },
@@ -52,7 +56,7 @@ class ItemDetails{
       "name": "Dark blue horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-dark-blue.png",
       "description": "The best horse money can buy!",
     },
@@ -61,7 +65,7 @@ class ItemDetails{
       "name": "Light green horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-light-green.png",
       "description": "The best horse money can buy!",
     },
@@ -70,7 +74,7 @@ class ItemDetails{
       "name": "Dark green horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-dark-green.png",
       "description": "The best horse money can buy!",
     },
@@ -79,7 +83,7 @@ class ItemDetails{
       "name": "Pink horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": gems,
       "location": "assets/images/shop/horse-pink.png",
       "description": "The best horse money can buy!",
     },
@@ -88,7 +92,7 @@ class ItemDetails{
       "name": "Purple horse",
       "type": horseKey,
       "cost": 100,
-      "purchaseCurrency": coin,
+      "purchaseCurrency": coins,
       "location": "assets/images/shop/horse-purple.png",
       "description": "The best horse money can buy!",
     },
