@@ -2,6 +2,7 @@ import 'package:caravaneering/games/caravan_game.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/model/save_keys.dart';
 
 Widget navbarOverlay(BuildContext buildContext, CaravanGame game) {
   return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -165,8 +166,21 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
   }
 }
 
-class NavbarRightOverlay extends StatelessWidget {
+class NavbarRightOverlay extends StatefulWidget {
   NavbarRightOverlay({Key? key});
+
+  @override
+  State<NavbarRightOverlay> createState() => _NavbarRightOverlayState();
+}
+
+class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
+  SaveModel? save;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    save ??= Provider.of<SaveModel>(context, listen: true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,13 +193,13 @@ class NavbarRightOverlay extends StatelessWidget {
             height: 30,
             fit: BoxFit.contain,
           ),
-          const DefaultTextStyle(
+          DefaultTextStyle(
             style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 20,
             ),
             child: Text(
-              'XXXX', // Place holder for number of coins
+              (save == null) ? "" : save!.get(SaveKeysV1.coins).toString(), // Place holder for number of coins
               textAlign: TextAlign.center,
             ),
           )
@@ -196,13 +210,13 @@ class NavbarRightOverlay extends StatelessWidget {
             height: 30,
             fit: BoxFit.contain,
           ),
-          const DefaultTextStyle(
+          DefaultTextStyle(
             style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 20,
             ),
             child: Text(
-              'XXXX', // Place holder for number of gems
+              (save == null) ? "" : save!.get(SaveKeysV1.gems).toString(), // Place holder for number of gems
               textAlign: TextAlign.center,
             ),
           )
