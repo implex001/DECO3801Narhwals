@@ -3,7 +3,7 @@ import 'package:global_configuration/global_configuration.dart';
 
 class ItemDetails{
   static const String horseKey = SaveKeysV1.horses;
-  static const String caravanKey = SaveKeysV1.carts;
+  static const String cartKey = SaveKeysV1.carts;
   static const String petKey = SaveKeysV1.pets;
 
   static const String coins = "coin";
@@ -110,7 +110,7 @@ class ItemDetails{
     "cart1": {
       "key": "cart1",
       "name": "Cart level 1",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 10,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart1.png",
@@ -119,7 +119,7 @@ class ItemDetails{
     "cart2": {
       "key": "cart2",
       "name": "Cart level 2",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 50,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart2.png",
@@ -128,7 +128,7 @@ class ItemDetails{
     "cart3": {
       "key": "cart3",
       "name": "Cart level 3",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 100,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart3.png",
@@ -137,7 +137,7 @@ class ItemDetails{
     "cart4": {
       "key": "cart4",
       "name": "Cart level 4",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 200,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart4.png",
@@ -146,7 +146,7 @@ class ItemDetails{
     "cart5": {
       "key": "cart5",
       "name": "Cart level 5",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 400,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart5.png",
@@ -155,7 +155,7 @@ class ItemDetails{
     "cart6": {
       "key": "cart6",
       "name": "Cart level 6",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 600,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart6.png",
@@ -164,7 +164,7 @@ class ItemDetails{
     "cart-purple": {
       "key": "cart-purple",
       "name": "Purple cart",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 1000,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart-purple.png",
@@ -173,7 +173,7 @@ class ItemDetails{
     "cart-blue": {
       "key": "cart-blue",
       "name": "Blue cart",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 1000,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cart-blue.png",
@@ -182,7 +182,7 @@ class ItemDetails{
     "cart-red": {
       "key": "cart-red",
       "name": "Red cart",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 400,
       "purchaseCurrency": gems,
       "location": "assets/images/items/cart-red.png",
@@ -191,7 +191,7 @@ class ItemDetails{
     "cart-green": {
       "key": "cart-green",
       "name": "Green cart",
-      "type": caravanKey,
+      "type": cartKey,
       "cost": 400,
       "purchaseCurrency": gems,
       "location": "assets/images/items/cart-green.png",

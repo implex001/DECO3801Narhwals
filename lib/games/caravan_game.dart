@@ -56,17 +56,17 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
         var horseImage = await images.load('items/${equippedCarts[0]}.png');
         loadedSprites[equippedCarts[0]] = Sprite(horseImage);
       }
-      if (currentActors.containsKey(ItemDetails.caravanKey)) {
-        remove(currentActors[ItemDetails.caravanKey]!);
+      if (currentActors.containsKey(ItemDetails.cartKey)) {
+        remove(currentActors[ItemDetails.cartKey]!);
       }
 
-      currentActors[ItemDetails.caravanKey] = SpriteComponent(
+      currentActors[ItemDetails.cartKey] = SpriteComponent(
         sprite: loadedSprites[equippedCarts[0]],
           size: Vector2(80, 106),
           position: Vector2(240, 175)
       );
 
-      add(currentActors[ItemDetails.caravanKey]!);
+      add(currentActors[ItemDetails.cartKey]!);
     }
   }
 

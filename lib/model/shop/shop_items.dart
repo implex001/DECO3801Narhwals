@@ -14,14 +14,14 @@ class ShopItems{
       "type": ItemDetails.horseKey,
       "location": "assets/images/shop/horse-sold-out.png",
     },
-    ItemDetails.caravanKey: {
+    ItemDetails.cartKey: {
       "name": "Sold Out!",
-      "type": ItemDetails.caravanKey,
-      "location": "assets/images/shop/horse-sold-out.png",
+      "type": ItemDetails.cartKey,
+      "location": "assets/images/shop/cart-sold-out.png",
     },
     ItemDetails.petKey: {
       "name": "Sold Out!",
-      "type": ItemDetails.caravanKey,
+      "type": ItemDetails.petKey,
       "location": "assets/images/shop/horse-sold-out.png",
     },
   };
@@ -39,16 +39,16 @@ class ShopItems{
       ItemDetails.items["horse-pink"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
       ItemDetails.items["horse-purple"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
     ],
-    ItemDetails.caravanKey: [
-      ItemDetails.items["cart1"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart2"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart3"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart4"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart5"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart6"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart-purple"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart-blue"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
-      ItemDetails.items["cart-red"] ?? shopSoldOutVisual[ItemDetails.caravanKey]!,
+    ItemDetails.cartKey: [
+      ItemDetails.items["cart1"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart2"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart3"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart4"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart5"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart6"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart-purple"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart-blue"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart-red"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
     ],
     ItemDetails.petKey: [
       ItemDetails.items["horse-pink"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,

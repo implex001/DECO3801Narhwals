@@ -88,7 +88,7 @@ class _ShopState extends State<ShopView> {
       ItemDetails.horseKey: [
         navImageWidth/1.23 - largeShieldBufferX, navImageHeight/3 - largeShieldBufferY, navImageWidth/1.23 + largeShieldBufferX, navImageHeight/3 + largeShieldBufferY
       ],
-      ItemDetails.caravanKey: [
+      ItemDetails.cartKey: [
         navImageWidth/2.41 - smallShieldBufferX, navImageHeight/1.2 - smallShieldBufferY, navImageWidth/2.41 + smallShieldBufferX, navImageHeight/1.2 + 20
       ],
       ItemDetails.petKey: [

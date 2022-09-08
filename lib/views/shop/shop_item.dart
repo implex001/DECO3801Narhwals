@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:caravaneering/model/shop/shop_items.dart';
 
 
 /*
