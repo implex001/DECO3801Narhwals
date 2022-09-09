@@ -30,7 +30,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CustomPageTransitionsBuilder(),
+            TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+          },
+        ),
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => const TitleScreen(),
@@ -41,5 +48,22 @@ class MyApp extends StatelessWidget {
         '/minigames/jump': (context) => const JumpMiniGameView()
       },
     );
+  }
+}
+
+// Create a custom page transition that does nothing. This removes the default
+// page transition behaviour
+class CustomPageTransitionsBuilder extends PageTransitionsBuilder {
+  const CustomPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+      PageRoute<T>? route,
+      BuildContext? context,
+      Animation<double> animation,
+      Animation<double>? secondaryAnimation,
+      Widget child,
+      ) {
+    return child;
   }
 }

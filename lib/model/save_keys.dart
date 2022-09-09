@@ -9,6 +9,12 @@ class SaveKeysV1{
   static const version = "version";
   static const username = "username";
   static const coins = "coins";
+  static const gems = "gems";
   static const savedate = "savedate";
   static const horses = "horses";
+  static const carts = "cart";
+  static const pets = "pets";
+  static const equippedHorses = "equippedHorses";
+  static const equippedCarts = "equippedCarts";
+  static const equippedPets = "equippedPets";
 }
