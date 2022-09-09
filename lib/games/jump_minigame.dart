@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:caravaneering/games/minigame.dart';
 import 'package:caravaneering/model/jump_tracker.dart';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 
 class JumpMiniGame extends MiniGame {
   final JumpTracker _tracker;
@@ -59,8 +60,15 @@ class JumpMiniGame extends MiniGame {
     // Set initial jump prompt
     _promptTimerCallback();
 
+    //Check vibrator
+    bool? hasVibrator = await Vibration.hasVibrator();
+    hasVibrator ??= false;
+
     // Set jump stream
     jumpStream = _tracker.getJumpStream().listen((event) {
+      if (hasVibrator!) {
+        Vibration.vibrate(duration: 50);
+      }
       // Check if jump is correct
       // Uncomment to enable jump type checking
       if (/*currentPrompt.value?.requiredType == event.type &&*/ !promptCompleted) {
