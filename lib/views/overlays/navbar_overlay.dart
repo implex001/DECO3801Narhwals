@@ -40,8 +40,8 @@ class NavbarLeftOverlay extends StatelessWidget {
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/caravan", (route) => false); // placeholder route
+            Navigator.pushNamed(
+                context, "/skills");
           },
           child: Image.asset(
             'assets/images/UI/Skills.png',
