@@ -40,6 +40,7 @@ class JumpTracker {
             jumpPhase = JumpPhase.idle;
             _jumpReset = null;
           });
+          yield JumpEvent(JumpType.up);
         }
       }
 
@@ -49,7 +50,6 @@ class JumpTracker {
           _jumpReset = null;
           jumpPhase = JumpPhase.cool;
           Timer(const Duration(milliseconds: 500), ()=> jumpPhase = JumpPhase.idle);
-          yield JumpEvent(JumpType.up);
         }
       }
     }
