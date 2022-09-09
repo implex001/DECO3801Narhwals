@@ -94,7 +94,11 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                         )
                                     ),
                                     GestureDetector(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context, "/minigames/jump", (route) => false
+                                        );
+                                      },
                                       child: Container(
                                         height: 40,
                                         width: 88,
@@ -109,7 +113,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                     ]
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Expanded(
