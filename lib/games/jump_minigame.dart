@@ -53,7 +53,6 @@ class JumpMiniGame extends MiniGame{
     AudioCache.instance.loadAll(prompts.map((e) => e.audioPath).toList());
 
     //Play background music
-    final backgroundPlayer = AudioPlayer();
     backgroundPlayer.setPlayerMode(PlayerMode.mediaPlayer);
     backgroundPlayer.setReleaseMode(ReleaseMode.loop);
     backgroundPlayer.play(AssetSource("audio/music.mp3"));
@@ -76,6 +75,7 @@ class JumpMiniGame extends MiniGame{
   void stop() {
     jumpStream.cancel();
     timeLimit.cancel();
+    backgroundPlayer.stop();
     if (isStopped.value == false) {
       backgroundPlayer.play(AssetSource("audio/win.mp3"));
     }

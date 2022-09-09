@@ -24,8 +24,9 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
   String timeLeft = "0:00";
   JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 10));
 
-  JumpPrompt? currentPrompt = null;
+  JumpPrompt? currentPrompt;
   double _promptHeight = 110;
+  double _promptOpacity = 1;
   Curve _promptCurve = Curves.bounceOut;
   Duration _promptDuration = const Duration(milliseconds: 500);
 
@@ -38,9 +39,10 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
     jumpMiniGame.score.addListener(() {
       setState(() {
         scoreCount = jumpMiniGame.score.value;
-        _promptDuration = const Duration(milliseconds: 200);
+        _promptDuration = const Duration(milliseconds: 100);
         _promptHeight = 0;
         _promptCurve = Curves.linear;
+        _promptOpacity = 0;
       });
     });
 
@@ -52,6 +54,7 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
 
     jumpMiniGame.currentPrompt.addListener(() {
       setState(() {
+        _promptOpacity = 1;
         currentPrompt = jumpMiniGame.currentPrompt.value;
         _promptDuration = const Duration(milliseconds: 500);
         _promptHeight = 0;
@@ -85,7 +88,10 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
                 left: MediaQuery.of(context).size.width / 2 - 200,
                 curve: _promptCurve,
                 duration: _promptDuration,
-                child: Image(image: AssetImage(currentPrompt!.imagePath))),
+                child: AnimatedOpacity(
+                  duration: _promptDuration,
+                    opacity: _promptOpacity,
+                    child: Image(image: AssetImage(currentPrompt!.imagePath)))),
           Column(children: [
             TextButton(
                 onPressed: () {
