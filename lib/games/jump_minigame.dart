@@ -65,7 +65,6 @@ class JumpMiniGame extends MiniGame {
       // Uncomment to enable jump type checking
       if (/*currentPrompt.value?.requiredType == event.type &&*/ !promptCompleted) {
         score.value++;
-        _playSound("audio/sineup.mp3");
         promptCompleted = true;
       }
     });
