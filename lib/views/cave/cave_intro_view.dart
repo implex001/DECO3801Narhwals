@@ -18,6 +18,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    // Store the Caravan game when the page loads
     if (game == null) {
       if (ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.arguments != null) {
         Map args = ModalRoute
@@ -37,7 +38,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
             padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
             child: Center(
               child: Container(
-                color: Colors.teal[800],
+                color: Color.fromRGBO(0x7d, 0x8e, 0x97, 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                         child: Column(
                                           children: <Widget>[
                                             CreatureIcon(
-                                              image: AssetImage('assets/images/cave/snake.png'),
+                                              image: const AssetImage('assets/images/cave/snake.png'),
                                               bgColor: Colors.green[800]!,
                                               audio: "audio/snake.mp3",
                                             ),
@@ -82,7 +83,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                               height: 7,
                                             ),
                                             CreatureIcon(
-                                              image: AssetImage('assets/images/cave/bat.png'),
+                                              image: const AssetImage('assets/images/cave/bat.png'),
                                               bgColor: Colors.blue[300]!,
                                               audio: "audio/bat.mp3",
                                             ),
@@ -90,7 +91,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                               height: 7,
                                             ),
                                             CreatureIcon(
-                                              image: AssetImage('assets/images/cave/rat.png'),
+                                              image: const AssetImage('assets/images/cave/rat.png'),
                                               bgColor: Colors.red[300]!,
                                               audio: "audio/rat.mp3",
                                             ),
