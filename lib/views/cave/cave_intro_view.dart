@@ -1,7 +1,8 @@
-import 'package:caravaneering/games/caravan_game.dart';
 import 'package:flutter/material.dart';
 
+import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
+import 'package:caravaneering/views/cave/creature_icon.dart';
 
 class CaveIntroView extends StatefulWidget {
   const CaveIntroView({Key? key}) : super(key: key);
@@ -75,6 +76,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                             CreatureIcon(
                                               image: AssetImage('assets/images/cave/snake.png'),
                                               bgColor: Colors.green[800]!,
+                                              audio: "audio/snake.mp3",
                                             ),
                                             const SizedBox(
                                               height: 7,
@@ -82,6 +84,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                             CreatureIcon(
                                               image: AssetImage('assets/images/cave/bat.png'),
                                               bgColor: Colors.blue[300]!,
+                                              audio: "audio/bat.mp3",
                                             ),
                                             const SizedBox(
                                               height: 7,
@@ -89,6 +92,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                             CreatureIcon(
                                               image: AssetImage('assets/images/cave/rat.png'),
                                               bgColor: Colors.red[300]!,
+                                              audio: "audio/rat.mp3",
                                             ),
                                           ]
                                         )
@@ -184,33 +188,3 @@ class _CaveIntroViewState extends State<CaveIntroView> {
     );
   }
 }
-
-class CreatureIcon extends StatelessWidget {
-  const CreatureIcon({Key? key, required this.image, required this.bgColor}) : super(key: key);
-  final AssetImage image;
-  final Color bgColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(maxWidth: 60),
-      child: GestureDetector(
-        onTap: () {},
-        child: AspectRatio(
-          aspectRatio: 1/1,
-          child: Container(
-            decoration: BoxDecoration(
-              color: bgColor,
-              borderRadius: BorderRadius.circular(100),
-              image: DecorationImage(
-                image: image,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-

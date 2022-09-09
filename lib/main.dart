@@ -1,7 +1,7 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
-import 'package:caravaneering/views/minigame_cave_intro_view.dart';
+import 'package:caravaneering/views/cave/cave_intro_view.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/shop/shop_view.dart';
 import 'package:caravaneering/views/title_screen.dart';
