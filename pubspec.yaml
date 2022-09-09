@@ -47,6 +47,7 @@ dependencies:
   audioplayers: ^1.0.1
   provider: ^6.0.0
   sensors_plus: ^1.3.4+1
+  vibration: ^1.7.5
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +84,7 @@ flutter:
     - assets/images/shop/
     - assets/images/cave/
     - assets/images/items/
+    - assets/images/animals/
     - assets/audio/
     - assets/images/skills/Skills-Lines.png
     - assets/images/skills/Skills-Popup.png

@@ -12,6 +12,9 @@ abstract class MiniGame {
   // Stops and exits the game
   void stop();
 
+  // Destroys any resources of the game
+  void dispose();
+
   // Description of the game
   String getDescription();
 }
