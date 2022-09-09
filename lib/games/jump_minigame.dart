@@ -12,20 +12,28 @@ class JumpMiniGame extends MiniGame{
   late StreamSubscription jumpStream;
 
   static const prompts = [
-    JumpPrompt(JumpType.up, "audio/sine.mp3"),
-    JumpPrompt(JumpType.up, "audio/sine2.mp3")
+    JumpPrompt(JumpType.up, "audio/rat.mp3", "assets/images/animals/Rat.png"),
+    JumpPrompt(JumpType.up, "audio/snake.mp3", "assets/images/animals/Snake.png"),
+    JumpPrompt(JumpType.up, "audio/bat.mp3", "assets/images/animals/Bat.png"),
   ];
 
+  static const Duration timeUpdateFreq = Duration(seconds: 1);
+
   late Timer timeLimit;
+  Duration timeTotal;
+  ValueNotifier<Duration> currentTime;
   ValueNotifier<int> score = ValueNotifier(0);
   ValueNotifier<bool> isStopped = ValueNotifier(false);
-  JumpPrompt? currentPrompt;
+  ValueNotifier<JumpPrompt?> currentPrompt = ValueNotifier(null);
 
+  final Random _random = Random();
+  final backgroundPlayer = AudioPlayer();
 
-  JumpMiniGame(Duration time)
-      : _tracker = JumpTracker()
+  JumpMiniGame(this.timeTotal)
+      : _tracker = JumpTracker(),
+        currentTime = ValueNotifier(Duration.zero)
   {
-     timeLimit = Timer(time, stop);
+     timeLimit = Timer.periodic(timeUpdateFreq, _checkTimeLeft);
   }
 
   @override
@@ -41,30 +49,40 @@ class JumpMiniGame extends MiniGame{
   @override
   void start() async {
     // Set up cache
-    AudioCache.instance.loadAll(prompts.map((e) => e.path).toList());
+    AudioCache.instance.loadAll(prompts.map((e) => e.audioPath).toList());
+
+    //Play background music
+    final backgroundPlayer = AudioPlayer();
+    backgroundPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+    backgroundPlayer.setReleaseMode(ReleaseMode.loop);
+    backgroundPlayer.play(AssetSource("audio/music.mp3"));
 
     // Set initial jump prompt
-    currentPrompt = _getRandomPrompt();
-    _playSound(currentPrompt!.path);
+    _promptTimerCallback();
 
+    // Set jump stream
     jumpStream = _tracker.getJumpStream().listen((event) {
-      if (currentPrompt?.requiredType == event.type) {
+      if (currentPrompt.value?.requiredType == event.type) {
         score.value++;
-        currentPrompt = null;
         _playSound("audio/sineup.mp3");
-        Timer(const Duration(seconds: 3), () {
-          currentPrompt = _getRandomPrompt();
-          _playSound(currentPrompt!.path);
-        }
-        );
       }
     });
+
   }
 
   @override
   void stop() {
     jumpStream.cancel();
+    timeLimit.cancel();
+    backgroundPlayer.play(AssetSource("audio/win.mp3"));
     isStopped.value = true;
+  }
+
+  @override
+  void dispose() {
+    jumpStream.cancel();
+    timeLimit.cancel();
+    backgroundPlayer.dispose();
   }
 
   @override
@@ -72,8 +90,32 @@ class JumpMiniGame extends MiniGame{
     return "Jump and step your way through a dungeon";
   }
 
+  Duration getTimeLeft() {
+    return timeTotal - currentTime.value;
+  }
+
+  void _checkTimeLeft(Timer timer) {
+    currentTime.value += timeUpdateFreq;
+    if (currentTime.value >= timeTotal) {
+      stop();
+    }
+  }
+
+  void _promptTimerCallback() {
+    if (!isStopped.value) {
+      currentPrompt.value = _getRandomPrompt();
+      _playSound(currentPrompt.value!.audioPath);
+      Timer(Duration(milliseconds: _random.nextInt(3000) + 2000),
+          _promptTimerCallback);
+    }
+  }
+
   JumpPrompt _getRandomPrompt() {
-    return prompts[Random().nextInt(prompts.length)];
+    var tempPrompt = prompts[_random.nextInt(prompts.length)];
+    if (tempPrompt == currentPrompt.value) {
+      return _getRandomPrompt();
+    }
+    return tempPrompt;
   }
 
   void _playSound(String path) {
@@ -86,6 +128,7 @@ class JumpMiniGame extends MiniGame{
 
 class JumpPrompt {
   final JumpType requiredType;
-  final String path;
-  const JumpPrompt(this.requiredType, this.path);
+  final String audioPath;
+  final String imagePath;
+  const JumpPrompt(this.requiredType, this.audioPath, this.imagePath);
 }
