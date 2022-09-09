@@ -74,9 +74,6 @@ class JumpMiniGame extends MiniGame {
     jumpStream.cancel();
     timeLimit.cancel();
     backgroundPlayer.stop();
-    if (isStopped.value == false) {
-      backgroundPlayer.play(AssetSource("audio/win.mp3"));
-    }
     isStopped.value = true;
   }
 
@@ -100,6 +97,10 @@ class JumpMiniGame extends MiniGame {
   void _checkTimeLeft(Timer timer) {
     currentTime.value += timeUpdateFreq;
     if (currentTime.value >= timeTotal) {
+      if (isStopped.value == false) {
+        backgroundPlayer.setReleaseMode(ReleaseMode.stop);
+        backgroundPlayer.play(AssetSource("audio/win.mp3"));
+      }
       stop();
     }
   }
