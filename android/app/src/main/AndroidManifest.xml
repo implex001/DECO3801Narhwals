@@ -4,6 +4,7 @@
     android:versionName="TODO">
 
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
    <application
         android:label="caravaneering"

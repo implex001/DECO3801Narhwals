@@ -46,6 +46,7 @@ dependencies:
   audioplayers: ^1.0.1
   provider: ^6.0.0
   sensors_plus: ^1.3.4+1
+  vibration: ^1.7.5
 
 dev_dependencies:
   flutter_test:
