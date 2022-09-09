@@ -22,7 +22,7 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
   JumpTracker tracker = JumpTracker();
   int scoreCount = 0;
   String timeLeft = "0:00";
-  JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 300));
+  JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 10));
 
   JumpPrompt? currentPrompt = null;
   double _promptHeight = 110;

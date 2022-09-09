@@ -76,7 +76,9 @@ class JumpMiniGame extends MiniGame{
   void stop() {
     jumpStream.cancel();
     timeLimit.cancel();
-    backgroundPlayer.play(AssetSource("audio/win.mp3"));
+    if (isStopped.value == false) {
+      backgroundPlayer.play(AssetSource("audio/win.mp3"));
+    }
     isStopped.value = true;
   }
 
@@ -84,6 +86,7 @@ class JumpMiniGame extends MiniGame{
   void dispose() {
     jumpStream.cancel();
     timeLimit.cancel();
+    backgroundPlayer.stop();
     backgroundPlayer.dispose();
   }
 
