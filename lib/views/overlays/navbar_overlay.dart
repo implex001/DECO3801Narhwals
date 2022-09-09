@@ -10,7 +10,7 @@ Widget navbarOverlay(BuildContext buildContext, CaravanGame game) {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [NavbarLeftOverlay(game: game), NavbarRightOverlay()],
     ),
-    NavbarBottomOverlay(),
+    NavbarBottomOverlay(game: game),
   ]);
   //]);
 }
@@ -242,9 +242,15 @@ class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
   }
 }
 
-class NavbarBottomOverlay extends StatelessWidget {
-  NavbarBottomOverlay({Key? key});
+class NavbarBottomOverlay extends StatefulWidget {
+  NavbarBottomOverlay({Key? key, required this.game});
+  final CaravanGame game;
 
+  @override
+  State<NavbarBottomOverlay> createState() => _NavbarBottomOverlayState();
+}
+
+class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -261,7 +267,8 @@ class NavbarBottomOverlay extends StatelessWidget {
       GestureDetector(
           onTap: () {
             Navigator.pushNamedAndRemoveUntil(
-                context, "/caravan", (route) => false);
+                context, "/cave-intro", (route) => false, arguments:{'game': widget.game}
+            );
           },
           child: Image.asset(
             'assets/images/UI/Story.png',
