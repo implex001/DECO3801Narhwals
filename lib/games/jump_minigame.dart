@@ -25,6 +25,7 @@ class JumpMiniGame extends MiniGame{
   ValueNotifier<int> score = ValueNotifier(0);
   ValueNotifier<bool> isStopped = ValueNotifier(false);
   ValueNotifier<JumpPrompt?> currentPrompt = ValueNotifier(null);
+  bool promptCompleted = false;
 
   final Random _random = Random();
   final backgroundPlayer = AudioPlayer();
@@ -62,9 +63,10 @@ class JumpMiniGame extends MiniGame{
 
     // Set jump stream
     jumpStream = _tracker.getJumpStream().listen((event) {
-      if (currentPrompt.value?.requiredType == event.type) {
+      if (currentPrompt.value?.requiredType == event.type && !promptCompleted) {
         score.value++;
         _playSound("audio/sineup.mp3");
+        promptCompleted = true;
       }
     });
 
@@ -105,6 +107,7 @@ class JumpMiniGame extends MiniGame{
     if (!isStopped.value) {
       currentPrompt.value = _getRandomPrompt();
       _playSound(currentPrompt.value!.audioPath);
+      promptCompleted = false;
       Timer(Duration(milliseconds: _random.nextInt(3000) + 2000),
           _promptTimerCallback);
     }
