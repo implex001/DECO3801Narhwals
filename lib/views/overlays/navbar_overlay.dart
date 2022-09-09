@@ -209,13 +209,13 @@ class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
             height: 30,
             fit: BoxFit.contain,
           ),
-          DefaultTextStyle(
+          const DefaultTextStyle(
             style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 20,
             ),
             child: Text(
-              (save == null) ? "" : save!.get(SaveKeysV1.coins).toString(), // Place holder for number of coins
+              'XXXX', // Place holder for number of coins
               textAlign: TextAlign.center,
             ),
           )
@@ -226,13 +226,13 @@ class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
             height: 30,
             fit: BoxFit.contain,
           ),
-          DefaultTextStyle(
+          const DefaultTextStyle(
             style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 20,
             ),
             child: Text(
-              (save == null) ? "" : save!.get(SaveKeysV1.gems).toString(), // Place holder for number of gems
+              'XXXX', // Place holder for number of gems
               textAlign: TextAlign.center,
             ),
           )
