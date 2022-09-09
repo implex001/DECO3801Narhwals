@@ -11,10 +11,10 @@ class JumpMiniGame extends MiniGame {
   late StreamSubscription jumpStream;
 
   static const prompts = [
-    JumpPrompt(JumpType.up, "audio/rat.mp3", "assets/images/animals/Rat.png"),
+    JumpPrompt(JumpType.side, "audio/rat.mp3", "assets/images/animals/Rat.png"),
     JumpPrompt(
         JumpType.up, "audio/snake.mp3", "assets/images/animals/Snake.png"),
-    JumpPrompt(JumpType.up, "audio/bat.mp3", "assets/images/animals/Bat.png"),
+    JumpPrompt(JumpType.down, "audio/bat.mp3", "assets/images/animals/Bat.png"),
   ];
 
   static const Duration timeUpdateFreq = Duration(seconds: 1);
@@ -61,7 +61,9 @@ class JumpMiniGame extends MiniGame {
 
     // Set jump stream
     jumpStream = _tracker.getJumpStream().listen((event) {
-      if (currentPrompt.value?.requiredType == event.type && !promptCompleted) {
+      // Check if jump is correct
+      // Uncomment to enable jump type checking
+      if (/*currentPrompt.value?.requiredType == event.type &&*/ !promptCompleted) {
         score.value++;
         _playSound("audio/sineup.mp3");
         promptCompleted = true;
