@@ -62,63 +62,11 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                         child: Container(
                           color: Colors.brown[500],
                           child: Padding(
-                            padding: const EdgeInsets.all(20.0),
+                            padding: const EdgeInsets.all(15.0),
                             child: Row(
                               children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        "There be treasure ahead!",
-                                        style: TextStyle(
-                                          fontSize: 24.0,
-                                          decoration: TextDecoration.none,
-                                          color: Colors.orange[200],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 3,
-                                      ),
-                                      Text(
-                                        "I have heard there is treasure in a nearby cave; however, beware there are rumours of dangerous creatures lurking inside!",
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          decoration: TextDecoration.none,
-                                          color: Colors.grey[300],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(
-                                        "How to play:",
-                                        style: TextStyle(
-                                          fontSize: 24.0,
-                                          decoration: TextDecoration.none,
-                                          color: Colors.orange[200],
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 3,
-                                      ),
-                                      Text(
-                                        "Welcome to the exercise minigame where you will be physically dodging and ducking "
-                                            "dangerous creatures to take the treasure from the dark cave. As the cave is "
-                                            "pitch black, you will have to listen out for dangerous sounds and then react "
-                                            "quickly!\n\n"
-                                            "Instructions: Jump over the snakes, duck the bats, dodge out of the way of the giant rat (side step)\n\n"
-                                            "Click the icons to the right to hear the creature sounds.",
-                                        style: TextStyle(
-                                          fontSize: 12.0,
-                                          decoration: TextDecoration.none,
-                                          color: Colors.grey[300],
-                                        ),
-                                      ),
-                                    ]
-                                  ),
-                                ),
                                 SizedBox(
-                                  width: 100,
+                                  width: 90,
                                   child: Column(
                                     children: <Widget> [
                                       Expanded(
@@ -148,7 +96,6 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                     GestureDetector(
                                       onTap: () {},
                                       child: Container(
-                                        margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                         height: 40,
                                         width: 88,
                                         decoration: const BoxDecoration(
@@ -161,7 +108,62 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                     ),
                                     ]
                                   ),
-                                )
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                      children: [
+                                        Text(
+                                          "There be treasure ahead!",
+                                          style: TextStyle(
+                                            fontSize: 24.0,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.orange[200],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          "I have heard there is treasure in a nearby cave; however, beware there are rumours of dangerous creatures lurking inside!",
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          "How to play:",
+                                          style: TextStyle(
+                                            fontSize: 24.0,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.orange[200],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 3,
+                                        ),
+                                        Text(
+                                          "Welcome to the exercise minigame where you will be physically dodging and ducking "
+                                              "dangerous creatures to take the treasure from the dark cave. As the cave is "
+                                              "pitch black, you will have to listen out for dangerous sounds and then react "
+                                              "quickly!\n\n"
+                                              "Instructions: Jump over the snakes, duck the bats, dodge out of the way of the giant rat (side step)\n\n"
+                                              "Click the icons to the right to hear the creature sounds.",
+                                          style: TextStyle(
+                                            fontSize: 12.0,
+                                            decoration: TextDecoration.none,
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                      ]
+                                  ),
+                                ),
                               ],
                             ),
                           ),
