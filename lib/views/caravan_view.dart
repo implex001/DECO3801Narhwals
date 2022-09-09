@@ -1,8 +1,9 @@
 import 'package:caravaneering/games/caravan_game.dart';
-import 'package:caravaneering/views/overlays/caravan_bar_overlay.dart';
 import 'package:caravaneering/views/overlays/caravan_step_update_overlay.dart';
+import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CaravanView extends StatefulWidget {
   const CaravanView({Key? key, required this.title}) : super(key: key);
@@ -14,7 +15,6 @@ class CaravanView extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<CaravanView> {
-
   late CaravanGame _game;
 
   @override
@@ -23,18 +23,20 @@ class _MyHomePageState extends State<CaravanView> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
       return
-          GameWidget(
-              game: _game,
-              overlayBuilderMap: const {
-                "Bar": caravanBarOverlay,
-                "StepUpdate": caravanStepUpdate
-              },
-              initialActiveOverlays: const ["Bar"],
+          Provider(
+            create: (context) => _game,
+            child:
+              GameWidget(
+                  game: _game,
+                  overlayBuilderMap: const {
+                    "Bar": navbarOverlay,
+                    "StepUpdate": caravanStepUpdate,
+                  },
+                  initialActiveOverlays: const ["Bar"],
+              ),
           );
   }
-
 }

@@ -11,9 +11,7 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-
 class CaravanGame extends FlameGame with HorizontalDragDetector {
-
   static const String description = '''
     Caravan Game
   ''';
@@ -25,8 +23,7 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
   late ParallaxComponent<FlameGame> parallaxComponent;
 
   @override
-  Future<void>? onLoad() async{
-
+  Future<void>? onLoad() async {
     //Set orientation
     Flame.device.setLandscape();
     Flame.device.fullScreen();
@@ -39,24 +36,18 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
       ParallaxImageData('General/Foreground.png'),
       ParallaxImageData('General/Details.png'),
       // General/Details.png
-    ]);
+    ], velocityMultiplierDelta: Vector2(1.1, 0));
     add(parallaxComponent);
 
     var _image1 = await images.load('General/HorseCartFinal.png');
     Sprite T1 = Sprite(_image1);
     final horseCart = SpriteComponent(
-        sprite: T1,
-        size: Vector2(160,100),
-        position: Vector2(120,180)
-    );
+        sprite: T1, size: Vector2(160, 100), position: Vector2(120, 180));
 
     var _image2 = await images.load('General/MainCharacterFinal.png');
     Sprite T2 = Sprite(_image2);
     final mainCharacter = SpriteComponent(
-        sprite: T2,
-        size: Vector2(60,60),
-        position: Vector2(280,220)
-    );
+        sprite: T2, size: Vector2(60, 60), position: Vector2(280, 220));
     add(horseCart);
     add(mainCharacter);
   }
@@ -75,30 +66,27 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
 
         // Set up step tracking
         stepTracker = StepTracker();
-        stepTracker.getBackgroundStepData(
-            lastsave, DateTime.now()).then(
-                (steps) {
-                  if (steps == null) {
-                    return;
-                  }
-                  backgroundSteps = steps;
-                  if (backgroundSteps != 0) {
-                    overlays.add("StepUpdate");
-                    dartasync.Timer(
-                        const Duration(seconds: 5),
-                            () => overlays.remove("StepUpdate"));
-                    s.addCoins(backgroundSteps);
-                    s.saveState(force: true);
-                  }
-            }
-        );
+        stepTracker
+            .getBackgroundStepData(lastsave, DateTime.now())
+            .then((steps) {
+          if (steps == null) {
+            return;
+          }
+          backgroundSteps = steps;
+          if (backgroundSteps != 0) {
+            overlays.add("StepUpdate");
+            dartasync.Timer(const Duration(seconds: 5),
+                () => overlays.remove("StepUpdate"));
+            s.addCoins(backgroundSteps);
+            s.saveState(force: true);
+          }
+        });
         stepTracker.getStepStream().listen((event) {
           s.addCoins(1);
         });
         s.startAutoSave();
       });
     }
-
   }
 
   @override
@@ -109,9 +97,10 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
   @override
   void onHorizontalDragUpdate(DragUpdateInfo info) {
     camera.translateBy(-info.delta.game * 3);
-    parallaxComponent.parallax?.baseVelocity = Vector2(-info.delta.game.x * 100, 0);
+    parallaxComponent.parallax?.baseVelocity =
+        Vector2(-info.delta.game.x * 100, 0);
   }
-  
+
   @override
   void render(Canvas canvas) {
     super.render(canvas);
@@ -132,7 +121,4 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
     overlays.remove("MiniGames");
   }
 
-  void startJumpMiniGame() {
-    overlays.add("JumpMiniGame");
-  }
 }
