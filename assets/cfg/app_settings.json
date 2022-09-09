@@ -4,7 +4,13 @@
       "version": 1,
       "username": "",
       "coins": 0,
+      "gems": 0,
       "savedate": null,
-      "horses": []
+      "horses": [],
+      "carts": [],
+      "pets": [],
+      "equippedHorses": ["horse-brown"],
+      "equippedCarts": ["cart1"],
+      "equippedPets": []
   }
 }

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 class SaveModel extends ChangeNotifier {
   final SaveState save = SaveState();
   bool hasChanged = false;
+  bool hasErasedData = false;
+  bool hasUpdatedEquipped = false;
   Timer? autoSave;
 
   Future<SaveModel> init() async {
@@ -31,16 +33,60 @@ class SaveModel extends ChangeNotifier {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) - number);
   }
 
-  void addHorse(String horse) {
-    addToMiscList(SaveKeysV1.horses, horse);
+  void addGems(int number) {
+    changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) + number);
   }
 
-  List<String> getHorses() {
-    return List<String>.from(save.state[SaveKeysV1.horses]);
+  void removeGems(int number) {
+    changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) - number);
   }
 
-  bool checkIfHorseOwned(String horse) {
-    return save.state[SaveKeysV1.horses].contains(horse);
+  // Equips a horse skin to a horse number
+  void equipHorse(int horseNum, String key) {
+    if (save.state[SaveKeysV1.equippedHorses] == null) {
+      save.state[SaveKeysV1.equippedHorses] = <String>[];
+    }
+
+    // If the index number hasn't been created in the list then add blank names
+    while (save.state[SaveKeysV1.equippedHorses].length < horseNum) {
+      save.state[SaveKeysV1.equippedHorses].add("");
+    }
+    save.state[SaveKeysV1.equippedHorses][horseNum - 1] = key;
+
+    hasUpdatedEquipped = true;
+    notifyListeners();
+  }
+
+  // Equips a cart skin to a horse number
+  void equipCart(int cartNum, String key) {
+    if (save.state[SaveKeysV1.equippedCarts] == null) {
+      save.state[SaveKeysV1.equippedCarts] = <String>[];
+    }
+
+    // If the index number hasn't been created in the list then add blank names
+    while (save.state[SaveKeysV1.equippedCarts].length < cartNum) {
+      save.state[SaveKeysV1.equippedCarts].add("");
+    }
+    save.state[SaveKeysV1.equippedCarts][cartNum - 1] = key;
+
+    hasUpdatedEquipped = true;
+    notifyListeners();
+  }
+
+  void addItem(Map<String, dynamic> item) {
+    if (save.state[item["type"]] == null) {
+      save.state[item["type"]] = <String>[];
+    }
+    save.state[item["type"]].add(item["key"]);
+    hasChanged = true;
+    notifyListeners();
+  }
+
+  bool checkIfItemOwned(Map<String, dynamic> item) {
+    if (save.state[item["type"]] == null) {
+      return false;
+    }
+    return save.state[item["type"]].contains(item["key"]);
   }
 
   Timer? startAutoSave() {
@@ -71,14 +117,11 @@ class SaveModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addToMiscList(String key, dynamic value) {
-    save.state[key].add(value);
-    hasChanged = true;
-    notifyListeners();
-  }
-
   Future<void> eraseSave() async {
     save.resetData();
     await save.save();
+    hasErasedData = true;
+    hasUpdatedEquipped = true;
+    notifyListeners();
   }
 }

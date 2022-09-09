@@ -1,6 +1,7 @@
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
+import 'package:caravaneering/views/cave/cave_intro_view.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/shop/shop_view.dart';
 import 'package:caravaneering/views/skills/skill_view.dart';
@@ -31,7 +32,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CustomPageTransitionsBuilder(),
+            TargetPlatform.iOS: CustomPageTransitionsBuilder(),
+          },
+        ),
       ),
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => const TitleScreen(),
@@ -39,9 +47,27 @@ class MyApp extends StatelessWidget {
             const CaravanView(title: 'Flutter Demo Home Page'),
         '/shop': (context) => const ShopView(),
         '/skills': (context) => const SkillsView(),
+        '/cave-intro': (context) => const CaveIntroView(),
         '/minigames': (context) => const MiniGameList(),
         '/minigames/jump': (context) => const JumpMiniGameView()
       },
     );
+  }
+}
+
+// Create a custom page transition that does nothing. This removes the default
+// page transition behaviour
+class CustomPageTransitionsBuilder extends PageTransitionsBuilder {
+  const CustomPageTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+      PageRoute<T>? route,
+      BuildContext? context,
+      Animation<double> animation,
+      Animation<double>? secondaryAnimation,
+      Widget child,
+      ) {
+    return child;
   }
 }

@@ -32,7 +32,7 @@ class _MyHomePageState extends State<CaravanView> {
               GameWidget(
                   game: _game,
                   overlayBuilderMap: const {
-                    "Bar": navbarOverlay,
+                    "Bar": flameNavbarOverlay,
                     "StepUpdate": caravanStepUpdate,
                   },
                   initialActiveOverlays: const ["Bar"],

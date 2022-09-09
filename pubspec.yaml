@@ -78,14 +78,11 @@ flutter:
     - assets/cfg/
     - assets/images/General/
     - assets/images/UI/
-    - assets/images/General/Sky.png
-    - assets/images/General/Midground.png
-    - assets/images/General/Details.png
-    - assets/images/General/Cart1.png
-    - assets/images/General/Foreground.png
-    - assets/images/placeholders/T1.png
+    - assets/images/placeholders/
     - assets/images/General/
     - assets/images/shop/
+    - assets/images/cave/
+    - assets/images/items/
     - assets/audio/
     - assets/images/skills/Skills-Lines.png
     - assets/images/skills/Skills-Popup.png

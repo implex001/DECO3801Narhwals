@@ -6,14 +6,12 @@ import 'package:caravaneering/views/shop/shop_item.dart';
  * Creates a single shelf within the shop page
  */
 class ShopShelf extends StatefulWidget {
-  const ShopShelf({Key? key, required this.type, required this.items, required this.purchaseFunction}) : super(key: key);
+  const ShopShelf({Key? key, required this.items, required this.itemClickFunction}) : super(key: key);
 
-  // The shop type
-  final String type;
   // The items to display on the shelf
-  final List<String> items;
+  final List<Map<String, dynamic>> items;
   // The function to run if the user clicks on an item
-  final Function purchaseFunction;
+  final Function itemClickFunction;
 
   @override
   State<ShopShelf> createState() => _ShopShelfState();
@@ -34,7 +32,7 @@ class _ShopShelfState extends State<ShopShelf> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                    padding: const EdgeInsets.fromLTRB(70, 10, 70, 0),
                     child: SizedBox(
                       height: 50,
                       child: Padding(
@@ -42,19 +40,16 @@ class _ShopShelfState extends State<ShopShelf> {
                         child: Row(
                           children: [
                             ShopItem(
-                              type: widget.type,
                               item: widget.items[0],
-                              purchaseFunction: widget.purchaseFunction,
+                              itemClickFunction: widget.itemClickFunction,
                             ),
                             ShopItem(
-                              type: widget.type,
                               item: widget.items[1],
-                              purchaseFunction: widget.purchaseFunction,
+                              itemClickFunction: widget.itemClickFunction,
                             ),
                             ShopItem(
-                              type: widget.type,
                               item: widget.items[2],
-                              purchaseFunction: widget.purchaseFunction,
+                              itemClickFunction: widget.itemClickFunction,
                             ),
                           ],
                         ),
