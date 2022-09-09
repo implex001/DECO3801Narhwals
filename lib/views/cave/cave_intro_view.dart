@@ -3,14 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/views/cave/creature_icon.dart';
 
-class CaveIntroView extends StatefulWidget {
+class CaveIntroView extends StatelessWidget {
   const CaveIntroView({Key? key}) : super(key: key);
-
-  @override
-  State<CaveIntroView> createState() => _CaveIntroViewState();
-}
-
-class _CaveIntroViewState extends State<CaveIntroView> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +20,18 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Expanded(
-                      flex: 1,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 40),
-                        child: Container(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 40),
+                          child: Container(
                             decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   image: AssetImage('assets/images/cave/cave-guide.png'),
                                   fit: BoxFit.contain,
                                 )
                             ),
-                        ),
-                      )
+                          ),
+                        )
                     ),
                     Expanded(
                       flex: 4,
@@ -52,52 +46,52 @@ class _CaveIntroViewState extends State<CaveIntroView> {
                                 SizedBox(
                                   width: 90,
                                   child: Column(
-                                    children: <Widget> [
-                                      Expanded(
-                                        child: Column(
-                                          children: <Widget>[
-                                            CreatureIcon(
-                                              image: const AssetImage('assets/images/cave/snake.png'),
-                                              bgColor: Colors.green[800]!,
-                                              audio: "audio/snake.mp3",
+                                      children: <Widget> [
+                                        Expanded(
+                                            child: Column(
+                                                children: <Widget>[
+                                                  CreatureIcon(
+                                                    image: const AssetImage('assets/images/cave/snake.png'),
+                                                    bgColor: Colors.green[800]!,
+                                                    audio: "audio/snake.mp3",
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 7,
+                                                  ),
+                                                  CreatureIcon(
+                                                    image: const AssetImage('assets/images/cave/bat.png'),
+                                                    bgColor: Colors.blue[300]!,
+                                                    audio: "audio/bat.mp3",
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 7,
+                                                  ),
+                                                  CreatureIcon(
+                                                    image: const AssetImage('assets/images/cave/rat.png'),
+                                                    bgColor: Colors.red[300]!,
+                                                    audio: "audio/rat.mp3",
+                                                  ),
+                                                ]
+                                            )
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            Navigator.pushNamedAndRemoveUntil(
+                                                context, "/minigames/jump", (route) => false
+                                            );
+                                          },
+                                          child: Container(
+                                            height: 40,
+                                            width: 88,
+                                            decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                image: AssetImage('assets/images/UI/play.png'),
+                                                fit: BoxFit.fitWidth,
+                                              ),
                                             ),
-                                            const SizedBox(
-                                              height: 7,
-                                            ),
-                                            CreatureIcon(
-                                              image: const AssetImage('assets/images/cave/bat.png'),
-                                              bgColor: Colors.blue[300]!,
-                                              audio: "audio/bat.mp3",
-                                            ),
-                                            const SizedBox(
-                                              height: 7,
-                                            ),
-                                            CreatureIcon(
-                                              image: const AssetImage('assets/images/cave/rat.png'),
-                                              bgColor: Colors.red[300]!,
-                                              audio: "audio/rat.mp3",
-                                            ),
-                                          ]
-                                        )
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context, "/minigames/jump", (route) => false
-                                        );
-                                      },
-                                      child: Container(
-                                        height: 40,
-                                        width: 88,
-                                        decoration: const BoxDecoration(
-                                          image: DecorationImage(
-                                            image: AssetImage('assets/images/UI/play.png'),
-                                            fit: BoxFit.fitWidth,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                    ]
+                                      ]
                                   ),
                                 ),
                                 const SizedBox(
@@ -170,4 +164,5 @@ class _CaveIntroViewState extends State<CaveIntroView> {
         ]
     );
   }
+
 }
