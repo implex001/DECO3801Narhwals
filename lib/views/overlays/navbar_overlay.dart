@@ -182,21 +182,8 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
   }
 }
 
-class NavbarRightOverlay extends StatefulWidget {
+class NavbarRightOverlay extends StatelessWidget {
   NavbarRightOverlay({Key? key});
-
-  @override
-  State<NavbarRightOverlay> createState() => _NavbarRightOverlayState();
-}
-
-class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
-  SaveModel? save;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    save ??= Provider.of<SaveModel>(context, listen: true);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,15 +196,19 @@ class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
             height: 30,
             fit: BoxFit.contain,
           ),
-          const DefaultTextStyle(
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 20,
-            ),
-            child: Text(
-              'XXXX', // Place holder for number of coins
-              textAlign: TextAlign.center,
-            ),
+          Consumer<SaveModel>(
+              builder: (context, save, build) {
+                return DefaultTextStyle(
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 20,
+                  ),
+                  child: Text(
+                    '${save.get(SaveKeysV1.coins)}',
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }
           )
         ]),
         Stack(alignment: AlignmentDirectional.center, children: [
@@ -226,15 +217,19 @@ class _NavbarRightOverlayState extends State<NavbarRightOverlay> {
             height: 30,
             fit: BoxFit.contain,
           ),
-          const DefaultTextStyle(
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 20,
-            ),
-            child: Text(
-              'XXXX', // Place holder for number of gems
-              textAlign: TextAlign.center,
-            ),
+          Consumer<SaveModel>(
+              builder: (context, save, build) {
+                return DefaultTextStyle(
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    fontSize: 20,
+                  ),
+                  child: Text(
+                    '${save.get(SaveKeysV1.gems)}',
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              }
           )
         ]),
       ],
