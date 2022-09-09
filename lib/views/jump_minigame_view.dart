@@ -99,7 +99,9 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
                       [DeviceOrientation.landscapeLeft]);
                   jumpMiniGame.stop();
                   jumpMiniGame.dispose();
-                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/caravan", (route) => false
+                  );
                 },
                 child: const Text("Exit")),
             Text("Time Left: $timeLeft",
