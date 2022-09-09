@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/views/cave/creature_icon.dart';
 
@@ -12,23 +11,6 @@ class CaveIntroView extends StatefulWidget {
 }
 
 class _CaveIntroViewState extends State<CaveIntroView> {
-  CaravanGame? game;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    // Store the Caravan game when the page loads
-    if (game == null) {
-      if (ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.arguments != null) {
-        Map args = ModalRoute
-            .of(context)!
-            .settings
-            .arguments as Map;
-        game = args["game"];
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +166,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
               ),
             ),
           ),
-          (game == null) ? Container() : navbarOverlay(context, game!),
+          const NavBar(),
         ]
     );
   }
