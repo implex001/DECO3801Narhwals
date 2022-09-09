@@ -168,8 +168,8 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/caravan", (route) => false); // placeholder route
+            Navigator.pushNamed(
+                context, "/skills");
           },
           child: Image.asset(
             skillsButtonImage,
