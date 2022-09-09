@@ -80,6 +80,7 @@ flutter:
     - assets/images/placeholders/
     - assets/images/General/
     - assets/images/shop/
+    - assets/images/cave/
     - assets/images/items/
     - assets/audio/
 

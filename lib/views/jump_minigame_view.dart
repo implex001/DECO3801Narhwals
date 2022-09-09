@@ -47,7 +47,9 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
           TextButton(onPressed: () {
             SystemChrome.setPreferredOrientations(
                 [DeviceOrientation.landscapeLeft]);
-            Navigator.pop(context);
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/caravan", (route) => false
+            );
             },
               child: const Text("Exit")),
           Text("Score: $scoreCount"),
