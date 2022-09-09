@@ -44,7 +44,9 @@ class _MiniGameListState extends State<MiniGameList> {
             TextButton(onPressed: (){}, child: Text("Placeholder")),
             TextButton(
                 onPressed: (){
-                  Navigator.pop(context);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/caravan", (route) => false
+                  );
                 },
                 child: Text("Back")
             ),
