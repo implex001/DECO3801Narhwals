@@ -10,7 +10,7 @@ enum JumpPhase {
 enum JumpType {
   up,
   down,
-  left
+  side
 }
 
 
