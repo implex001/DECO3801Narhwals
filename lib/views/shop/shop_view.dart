@@ -69,7 +69,7 @@ class _ShopState extends State<ShopView> {
     }
 
     if (game == null) {
-      if (ModalRoute.of(context) != null) {
+      if (ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.arguments != null) {
         Map args = ModalRoute.of(context)!.settings.arguments as Map;
         game = args["game"];
       }

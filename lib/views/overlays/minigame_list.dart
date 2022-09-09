@@ -1,8 +1,28 @@
+import 'package:caravaneering/games/caravan_game.dart';
 import 'package:flutter/material.dart';
 
-class MiniGameList extends StatelessWidget {
+class MiniGameList extends StatefulWidget {
 
   const MiniGameList({Key? key}) : super(key: key);
+
+  @override
+  State<MiniGameList> createState() => _MiniGameListState();
+}
+
+class _MiniGameListState extends State<MiniGameList> {
+  CaravanGame? game;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (game == null) {
+      if (ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.arguments != null) {
+        Map args = ModalRoute.of(context)!.settings.arguments as Map;
+        game = args["game"];
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +34,9 @@ class MiniGameList extends StatelessWidget {
           children: <Widget>[
             TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/minigames/jump");
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/cave-intro", (route) => false, arguments:{'game': game}
+                  );
                 },
                 child: Text("Minigame 1")
             ),

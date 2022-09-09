@@ -19,7 +19,7 @@ class _CaveIntroViewState extends State<CaveIntroView> {
     super.didChangeDependencies();
 
     if (game == null) {
-      if (ModalRoute.of(context) != null) {
+      if (ModalRoute.of(context) != null && ModalRoute.of(context)!.settings.arguments != null) {
         Map args = ModalRoute
             .of(context)!
             .settings

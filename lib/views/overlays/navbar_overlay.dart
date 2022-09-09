@@ -256,8 +256,9 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
           onTap: () {
-            Navigator.pushNamed(
-                context, "/minigames");
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/minigames", (route) => false, arguments:{'game': widget.game}
+            );
           },
           child: Image.asset(
             'assets/images/UI/Minigames.png',
@@ -265,11 +266,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
             height: 30,
           )),
       GestureDetector(
-          onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/cave-intro", (route) => false, arguments:{'game': widget.game}
-            );
-          },
+          onTap: () {},
           child: Image.asset(
             'assets/images/UI/Story.png',
             fit: BoxFit.contain,
