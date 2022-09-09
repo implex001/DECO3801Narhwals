@@ -14,7 +14,6 @@ class SkillsView extends StatefulWidget {
 }
 
 class _SkillsViewState extends State<SkillsView> {
-
   Map selectedSkill = {
     "icon": "assets/images/skills/UpgradeSpeed.png",
     "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
@@ -36,7 +35,7 @@ class _SkillsViewState extends State<SkillsView> {
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
       "buyState": false,
-      "index": 1, 
+      "index": 1,
     },
     {
       "icon": "assets/images/skills/UpgradeCoins.png",
@@ -186,74 +185,89 @@ class _SkillsViewState extends State<SkillsView> {
                       fit: BoxFit.fill,
                     ),
                     // ***** 调节点 *****
-                    Padding(padding: EdgeInsets.only(left: 40,right: 40,top: 40,bottom: 0),child: Transform.translate(
-                      offset: Offset(-5, 0),
-                      child: SingleChildScrollView(
-                          child: GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3, // 每行三列
-                              childAspectRatio: 1.5, // 显示区域宽高相等
-                              // 上下左右的内边距
-                              mainAxisSpacing: 5.0,
-                              // 主轴元素间距
-                              crossAxisSpacing: 5.0,
-                            ),
-                            itemCount: skillList.length,
-                            itemBuilder: (context, index) {
-                              bool buyState = skillList[index]["buyState"];
-                              return GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () {
-                                    setState(() {
-                                      selectedSkill = skillList[index];
-                                    });
-                                  },
-                                  child: Image.asset(buyState
-                                      ? skillList[index]["icon"]
-                                      : skillList[index]["iconLocked"]));
+                    SingleChildScrollView(
+                        child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3, // 每行三列
+                        childAspectRatio: 1.5, // 显示区域宽高相等
+                        // 上下左右的内边距
+                        mainAxisSpacing: 5.0,
+                        // 主轴元素间距
+                        crossAxisSpacing: 5.0,
+                      ),
+                      itemCount: skillList.length,
+                      itemBuilder: (context, index) {
+                        bool buyState = skillList[index]["buyState"];
+                        return GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              setState(() {
+                                selectedSkill = skillList[index];
+                              });
                             },
-                          )),
-                    ),)
+                            child: Image.asset(buyState
+                                ? skillList[index]["icon"]
+                                : skillList[index]["iconLocked"]));
+                      },
+                    )),
                   ],
                 )),
             Expanded(
-                child: Stack(
-                  children: [
-                    Image.asset("assets/images/skills/Skills-Popup.png",height: height,fit: BoxFit.fill),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 24,),
-                        Image.asset(selectedSkillBuyState ? selectedSkill["icon"]
-                            : selectedSkill["iconLocked"],width: 64,),
-                        SizedBox(height: 24,),
-                        Padding(padding: EdgeInsets.only(left: 5,right: 5),
-                          child: Text(
-                            selectedSkill["introduction"],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),
-                          ),),
-                        SizedBox(height: 24,),
-                        if(!selectedSkillBuyState)(
-                            TextButton(onPressed: () {
-                              setState(() {
-                                selectedSkill["buyState"] = true;
-                                skillList[selectedSkill["index"]]["buyState"] = true;
-                              });
-                            }, child: Image.asset("assets/images/UI/BuyButton.png", height: 20)
-                        )
-                        )]
-                    )
-                  ],
-                ))
+                child: Container(
+                    decoration: const BoxDecoration(
+                        image: DecorationImage(
+                      image:
+                          AssetImage("assets/images/skills/Skills-Popup.png"),
+                      fit: BoxFit.fitWidth,
+                    )),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 24,
+                          ),
+                          Image.asset(
+                            selectedSkillBuyState
+                                ? selectedSkill["icon"]
+                                : selectedSkill["iconLocked"],
+                            width: 64,
+                          ),
+                          SizedBox(
+                            height: 24,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 5, right: 5),
+                            child: Text(
+                              selectedSkill["introduction"],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 24,
+                          ),
+                          if (!selectedSkillBuyState)
+                            (TextButton(
+                                onPressed: () {
+                                  setState(() {
+                                    selectedSkill["buyState"] = true;
+                                    skillList[selectedSkill["index"]]
+                                        ["buyState"] = true;
+                                  });
+                                },
+                                child: Image.asset(
+                                    "assets/images/UI/BuyButton.png",
+                                    height: 20)))
+                        ])))
           ],
         ),
       ),
       // This trailing comma makeormatting nicer for build methods.
     );
-    
-  } 
+  }
 }
-
