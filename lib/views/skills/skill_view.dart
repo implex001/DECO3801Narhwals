@@ -16,114 +16,153 @@ class SkillsView extends StatefulWidget {
 class _SkillsViewState extends State<SkillsView> {
 
   Map selectedSkill = {
+    "icon": "assets/images/skills/UpgradeSpeed.png",
     "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
     "introduction": "introduction, introduction",
+    "buyState": false,
     "index": 0,
   };
 
   List<Map> skillList = [
     {
+      "icon": "assets/images/skills/UpgradeSpeed.png",
       "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 0,
     },
     {
+      "icon": "assets/images/skills/Upgrade_Strength.png",
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 1, 
     },
     {
+      "icon": "assets/images/skills/UpgradeCoins.png",
       "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 2,
     },
     {
+      "icon": "assets/images/skills/UpgradeSpeed.png",
       "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 3,
     },
     {
+      "icon": "assets/images/skills/Upgrade_Strength.png",
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 4,
     },
     {
+      "icon": "assets/images/skills/UpgradeCoins.png",
       "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 5,
     },
     {
+      "icon": "assets/images/skills/UpgradeSpeed.png",
       "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 6,
     },
     {
+      "icon": "assets/images/skills/Upgrade_Strength.png",
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 7,
     },
     {
+      "icon": "assets/images/skills/UpgradeCoins.png",
       "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 8,
     },
     {
+      "icon": "assets/images/skills/UpgradeSpeed.png",
       "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 9,
     },
     {
+      "icon": "assets/images/skills/Upgrade_Strength.png",
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 10,
     },
     {
+      "icon": "assets/images/skills/UpgradeCoins.png",
       "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 11,
     },
     {
+      "icon": "assets/images/skills/UpgradeSpeed.png",
       "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 12,
     },
     {
+      "icon": "assets/images/skills/Upgrade_Strength.png",
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 13,
     },
     {
+      "icon": "assets/images/skills/UpgradeCoins.png",
       "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 14,
     },
     {
+      "icon": "assets/images/skills/UpgradeSpeed.png",
       "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 15,
     },
     {
+      "icon": "assets/images/skills/Upgrade_Strength.png",
       "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 16,
     },
     {
+      "icon": "assets/images/skills/UpgradeCoins.png",
       "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
       "introduction": "introduction, introduction",
+      "buyState": false,
       "index": 17,
     },
   ];
 
   @override
   Widget build(BuildContext context) {
+    bool selectedSkillBuyState = selectedSkill["buyState"];
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("aaaaaaaaaa"),
-      // ),
+      appBar: AppBar(
+        title: Text("aaaaaaaaaa"),
+      ),
       body: Container(
         height: height,
         width: width,
@@ -147,7 +186,7 @@ class _SkillsViewState extends State<SkillsView> {
                       fit: BoxFit.fill,
                     ),
                     // ***** 调节点 *****
-                    Padding(padding: EdgeInsets.only(left: 40,right: 40,top: 40,bottom: 20),child: Transform.translate(
+                    Padding(padding: EdgeInsets.only(left: 40,right: 40,top: 40,bottom: 0),child: Transform.translate(
                       offset: Offset(-5, 0),
                       child: SingleChildScrollView(
                           child: GridView.builder(
@@ -163,6 +202,7 @@ class _SkillsViewState extends State<SkillsView> {
                             ),
                             itemCount: skillList.length,
                             itemBuilder: (context, index) {
+                              bool buyState = skillList[index]["buyState"];
                               return GestureDetector(
                                   behavior: HitTestBehavior.translucent,
                                   onTap: () {
@@ -170,7 +210,9 @@ class _SkillsViewState extends State<SkillsView> {
                                       selectedSkill = skillList[index];
                                     });
                                   },
-                                  child: Image.asset(skillList[index]["iconLocked"]));
+                                  child: Image.asset(buyState
+                                      ? skillList[index]["icon"]
+                                      : skillList[index]["iconLocked"]));
                             },
                           )),
                     ),)
@@ -184,7 +226,8 @@ class _SkillsViewState extends State<SkillsView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(height: 24,),
-                        Image.asset(selectedSkill["iconLocked"],width: 64,),
+                        Image.asset(selectedSkillBuyState ? selectedSkill["icon"]
+                            : selectedSkill["iconLocked"],width: 64,),
                         SizedBox(height: 24,),
                         Padding(padding: EdgeInsets.only(left: 5,right: 5),
                           child: Text(
@@ -193,6 +236,7 @@ class _SkillsViewState extends State<SkillsView> {
                             style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w500),
                           ),),
                         SizedBox(height: 24,),
+                        if(!selectedSkillBuyState)(
                             TextButton(onPressed: () {
                               setState(() {
                                 selectedSkill["buyState"] = true;
@@ -200,14 +244,16 @@ class _SkillsViewState extends State<SkillsView> {
                               });
                             }, child: Image.asset("assets/images/UI/BuyButton.png", height: 20)
                         )
-                        ]
+                        )]
                     )
                   ],
                 ))
           ],
         ),
       ),
+      // This trailing comma makeormatting nicer for build methods.
     );
     
   } 
 }
+
