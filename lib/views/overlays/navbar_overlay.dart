@@ -251,6 +251,31 @@ class NavbarBottomOverlay extends StatefulWidget {
 }
 
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
+
+  // Pop up window for coming soon
+  Future<void> comingSoonPrompt() async {
+    await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            backgroundColor: Colors.brown[500],
+            title: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
+              child: Center(
+                child: Text(
+                  "Story Coming Soon",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -266,7 +291,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
             height: 30,
           )),
       GestureDetector(
-          onTap: () {},
+          onTap: () {comingSoonPrompt();},
           child: Image.asset(
             'assets/images/UI/Story.png',
             fit: BoxFit.contain,
