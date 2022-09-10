@@ -24,7 +24,7 @@ class Skill {
       if (personal > i) {
         pState = true;
       }
-      int cost = pow(50, (i+1/2)).round();
+      int cost = pow(10, (i+1)).round();
       skillList.add(
           {
             "icon": "assets/images/skills/Upgrade_Strength.png",
