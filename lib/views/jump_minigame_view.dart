@@ -23,7 +23,7 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
   JumpTracker tracker = JumpTracker();
   int scoreCount = 0;
   String timeLeft = "0:00";
-  JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 120));
+  JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 10));
 
   late JumpPrompt currentPrompt;
   double _promptHeight = 110;
@@ -56,14 +56,17 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
     jumpMiniGame.currentTime.addListener(() {
       setState(() {
         timeLeft = minSecDurationToString(jumpMiniGame.getTimeLeft());
-        if (timeLeft == "00:00") {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => MinigameStats(miniGame: jumpMiniGame),
-              ));
-        }
       });
+    });
+
+    jumpMiniGame.isStopped.addListener(() {
+      if (jumpMiniGame.isStopped.value) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MinigameStats(miniGame: jumpMiniGame),
+            ));
+      }
     });
 
     jumpMiniGame.currentPrompt.addListener(() {

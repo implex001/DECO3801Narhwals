@@ -4,22 +4,15 @@ import 'dart:math';
 
 import 'package:caravaneering/games/jump_minigame.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-Widget minigameStats(BuildContext buildContext, JumpMiniGame game) {
-  ValueNotifier<int> score = game.score;
-
-  return MinigameStats(miniGame: game);
-}
 
 class MinigameStats extends StatelessWidget {
-  const MinigameStats({Key? key, required this.miniGame}) : super(key: key);
+  MinigameStats({Key? key, required this.miniGame}) : super(key: key);
   final JumpMiniGame miniGame;
+  late ValueNotifier<int> score = miniGame.score;
+  late Duration time = miniGame.timeTotal;
 
   @override
   Widget build(BuildContext context) {
-    ValueNotifier<int> score = miniGame.score;
-    Duration time = miniGame.timeTotal;
     return Stack(
       children: [
         Container(
