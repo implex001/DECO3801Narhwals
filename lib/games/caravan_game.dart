@@ -4,23 +4,32 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
-import 'package:global_configuration/global_configuration.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/parallax.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class CaravanGame extends FlameGame with HorizontalDragDetector {
+
+class CaravanGame extends FlameGame with
+    VerticalDragDetector,
+    MultiTouchDragDetector,
+    MultiTouchTapDetector {
+
   static const String description = '''
     Caravan Game
   ''';
-
   late StepTracker stepTracker;
   SaveModel? save;
+
+  static final parralaxBgVelocityIncrease = Vector2(3.0, 0);
+  static const framesPerSecond = 60.0;
+  static const deltaThresholdToUpdateParralax = 0.005;
+  Vector2 lastCameraPosition = Vector2.zero();
+  Vector2 cameraPosition = Vector2.zero();
+  int worldBound = 300;
 
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
@@ -43,9 +52,9 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
       }
 
       currentActors[ItemDetails.horseKey] = SpriteComponent(
-          sprite: loadedSprites[equippedHorses[0]],
-          size: Vector2(100, 86.54),
-          position: Vector2(320, 195),
+        sprite: loadedSprites[equippedHorses[0]],
+        size: Vector2(100, 86.54),
+        position: Vector2(320, 195),
       );
 
       add(currentActors[ItemDetails.horseKey]!);
@@ -62,8 +71,8 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
 
       currentActors[ItemDetails.cartKey] = SpriteComponent(
         sprite: loadedSprites[equippedCarts[0]],
-          size: Vector2(80, 106),
-          position: Vector2(240, 175)
+        size: Vector2(80, 106),
+        position: Vector2(240, 175),
       );
 
       add(currentActors[ItemDetails.cartKey]!);
@@ -76,15 +85,44 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
     Flame.device.setLandscape();
     Flame.device.fullScreen();
 
-    camera.speed = 2000;
-    parallaxComponent = await loadParallaxComponent([
+    camera.followVector2(
+        cameraPosition,
+        relativeOffset: Anchor.topLeft,
+    );
+    camera.speed = 100;
+
+
+    final skyLayer = await loadParallaxLayer(
       ParallaxImageData('General/Sky.png'),
+      velocityMultiplier: Vector2(0, 0),
+    );
+    final cloudsFarLayer = await loadParallaxLayer(
       ParallaxImageData('General/Clouds.png'),
+      velocityMultiplier: Vector2(1.8, 0),
+    );
+    final midgroundLayer = await loadParallaxLayer(
       ParallaxImageData('General/Midground.png'),
+      velocityMultiplier: Vector2(3.8, 0),
+    );
+    final foregroundLayer = await loadParallaxLayer(
       ParallaxImageData('General/Foreground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    final detailsLayer = await loadParallaxLayer(
       ParallaxImageData('General/Details.png'),
-      // General/Details.png
-    ], velocityMultiplierDelta: Vector2(1.1, 0));
+      velocityMultiplier: Vector2(20, 0),
+    );
+    final parallax = Parallax(
+      [
+        skyLayer,
+        cloudsFarLayer,
+        midgroundLayer,
+        foregroundLayer,
+        detailsLayer,
+      ],
+      baseVelocity: Vector2(20, 0),
+    );
+    parallaxComponent = ParallaxComponent(parallax: parallax);
     add(parallaxComponent);
 
     renderEquipped();
@@ -151,13 +189,6 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
   }
 
   @override
-  void onHorizontalDragUpdate(DragUpdateInfo info) {
-    camera.translateBy(-info.delta.game * 3);
-    parallaxComponent.parallax?.baseVelocity =
-        Vector2(-info.delta.game.x * 100, 0);
-  }
-
-  @override
   void render(Canvas canvas) {
     super.render(canvas);
   }
@@ -165,6 +196,17 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
   @override
   void update(double dt) {
     super.update(dt);
+
+    // Code below is modified from https://stackoverflow.com/questions/71131480/flutter-flame-how-to-use-parallax-with-camera-followcomponent
+    final currentCameraPosition = camera.position;
+    final delta = dt > deltaThresholdToUpdateParralax ? 1.0 / (dt * framesPerSecond) : 1.0;
+    final baseVelocity = currentCameraPosition
+      ..sub(lastCameraPosition)
+      ..multiply(parralaxBgVelocityIncrease)
+      ..multiply(Vector2(delta, delta));
+    parallaxComponent.parallax?.baseVelocity.setFrom(baseVelocity + Vector2(2, 2));
+    lastCameraPosition.setFrom(camera.position);
+
     if (save != null && save!.hasUpdatedEquipped) {
       equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
       equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
@@ -175,7 +217,6 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
   }
 
   // Navigation Related Functions
-
   void navigateMiniGameOverlay() {
     overlays.add("MiniGames");
   }
@@ -184,4 +225,11 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
     overlays.remove("MiniGames");
   }
 
+  @override
+  void onDragUpdate(int pointerId, DragUpdateInfo info) {
+    if (cameraPosition.x - info.delta.global.x < worldBound &&
+        cameraPosition.x - info.delta.global.x > -worldBound) {
+      cameraPosition.add(Vector2(-info.delta.global.x, 0));
+    }
+  }
 }
