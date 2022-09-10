@@ -4,6 +4,7 @@ import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/games/jump_minigame.dart';
 import 'package:caravaneering/model/jump_tracker.dart';
 import 'package:caravaneering/helpers/duration_to_string.dart';
+import 'package:caravaneering/views/game_stats_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -55,6 +56,13 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
     jumpMiniGame.currentTime.addListener(() {
       setState(() {
         timeLeft = minSecDurationToString(jumpMiniGame.getTimeLeft());
+        if (timeLeft == "00:00") {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MinigameStats(miniGame: jumpMiniGame),
+              ));
+        }
       });
     });
 

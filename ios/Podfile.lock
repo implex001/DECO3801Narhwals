@@ -19,6 +19,8 @@ PODS:
     - AWSCore (~> 2.27.0)
     - AWSPluginsCore (= 1.23.0)
     - AWSS3 (~> 2.27.0)
+  - audioplayers_darwin (0.0.1):
+    - Flutter
   - AWSCore (2.27.15)
   - AWSPluginsCore (1.23.0):
     - Amplify (= 1.23.0)
@@ -38,11 +40,16 @@ PODS:
     - Flutter
   - platform_device_id (0.0.1):
     - Flutter
+  - sensors_plus (0.0.1):
+    - Flutter
+  - vibration (1.7.5):
+    - Flutter
 
 DEPENDENCIES:
   - amplify_auth_cognito_ios (from `.symlinks/plugins/amplify_auth_cognito_ios/ios`)
   - amplify_flutter_ios (from `.symlinks/plugins/amplify_flutter_ios/ios`)
   - amplify_storage_s3_ios (from `.symlinks/plugins/amplify_storage_s3_ios/ios`)
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
@@ -50,6 +57,8 @@ DEPENDENCIES:
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - pedometer (from `.symlinks/plugins/pedometer/ios`)
   - platform_device_id (from `.symlinks/plugins/platform_device_id/ios`)
+  - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
+  - vibration (from `.symlinks/plugins/vibration/ios`)
 
 SPEC REPOS:
   trunk:
@@ -66,6 +75,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplify_flutter_ios/ios"
   amplify_storage_s3_ios:
     :path: ".symlinks/plugins/amplify_storage_s3_ios/ios"
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   device_info_plus:
@@ -80,6 +91,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/pedometer/ios"
   platform_device_id:
     :path: ".symlinks/plugins/platform_device_id/ios"
+  sensors_plus:
+    :path: ".symlinks/plugins/sensors_plus/ios"
+  vibration:
+    :path: ".symlinks/plugins/vibration/ios"
 
 SPEC CHECKSUMS:
   Amplify: 010d6a71db20812d9e3062db1fe827393d01e584
@@ -87,6 +102,7 @@ SPEC CHECKSUMS:
   amplify_flutter_ios: b850afebaa322d97d55aae63851fb8209ea36743
   amplify_storage_s3_ios: 04d453c5c3615d4e0824259c4fe1b861222db968
   AmplifyPlugins: d939707cf36dfcd53c5fd6533e842e323a2287ab
+  audioplayers_darwin: 387322cb364026a1782298c982693b1b6aa9fa1b
   AWSCore: c67277201b6aca10e4cf24638eadaa67c85ebf03
   AWSPluginsCore: 120cfa265293694921b6595fe00d1cb5ab558847
   AWSS3: 09801b290f8818f532694cabd5d503c7474eb3df
@@ -97,6 +113,8 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
   platform_device_id: 81b3e2993881f87d0c82ef151dc274df4869aef5
+  sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
+  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
 
 PODFILE CHECKSUM: 20449ab27ec74b36f170c4aaaa29b831847716c6
 
