@@ -4,7 +4,6 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
-import 'package:global_configuration/global_configuration.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -43,9 +42,9 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
       }
 
       currentActors[ItemDetails.horseKey] = SpriteComponent(
-          sprite: loadedSprites[equippedHorses[0]],
-          size: Vector2(100, 86.54),
-          position: Vector2(320, 195),
+        sprite: loadedSprites[equippedHorses[0]],
+        size: Vector2(100, 86.54),
+        position: Vector2(320, 195),
       );
 
       add(currentActors[ItemDetails.horseKey]!);
@@ -61,7 +60,7 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
       }
 
       currentActors[ItemDetails.cartKey] = SpriteComponent(
-        sprite: loadedSprites[equippedCarts[0]],
+          sprite: loadedSprites[equippedCarts[0]],
           size: Vector2(80, 106),
           position: Vector2(240, 175)
       );
@@ -119,6 +118,7 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
         equippedPets = List.from(s.get(SaveKeysV1.equippedPets));
         save!.hasUpdatedEquipped = true;
+        int modifier = s.get("personalUpgrades");
 
         // Set up step tracking
         stepTracker = StepTracker();
@@ -132,13 +132,13 @@ class CaravanGame extends FlameGame with HorizontalDragDetector {
           if (backgroundSteps != 0) {
             overlays.add("StepUpdate");
             dartasync.Timer(const Duration(seconds: 5),
-                () => overlays.remove("StepUpdate"));
-            s.addCoins(backgroundSteps);
+                    () => overlays.remove("StepUpdate"));
+            s.addCoins(backgroundSteps * modifier);
             s.saveState(force: true);
           }
         });
         stepTracker.getStepStream().listen((event) {
-          s.addCoins(1);
+          s.addCoins(1 * modifier);
         });
         s.startAutoSave();
       });
