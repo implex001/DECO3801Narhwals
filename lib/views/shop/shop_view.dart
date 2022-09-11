@@ -6,10 +6,12 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/shop/shop.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
+import 'package:caravaneering/views/overlays/coming_soon.dart';
 import 'package:caravaneering/views/shop/shop_shelf.dart';
 import 'package:caravaneering/views/shop/shop_nav.dart';
 import 'package:caravaneering/views/shop/shop_description_panel.dart';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
+
 
 /*
  * Creates the shop page
@@ -87,6 +89,42 @@ class _ShopState extends State<ShopView> {
     };
   }
 
+
+  // Check what coordinates were clicked on. If clicked on a shop icon then switch
+  // to that shop type
+  void onTapShopMenuItem(TapDownDetails details) {
+    if (shop == null) {
+      return;
+    }
+    double x = details.localPosition.dx;
+    double y = details.localPosition.dy;
+
+    print("Tap coordinates are: $x, $y");
+    // Check through all the menu coordinates
+    for (String type in menuItems.keys) {
+      List<double> coordBounds = menuItems[type]!;
+      print(coordBounds);
+      // If the click was within the coordinate boundaries then switch to that
+      // shop type
+      if (x > coordBounds[x1] && x < coordBounds[x2] &&
+          y > coordBounds[y1] && y < coordBounds[y2]) {
+        print("Shop tab $type selected!");
+        if (type == ItemDetails.petKey) {
+          ComingSoonPage.showPage(context, "Pets shop coming soon!");
+        } else {
+          // Setup the items for the new shop type
+          shop!.activeShop = type;
+          itemShowing = {};
+          showItemDescription = false;
+          setState(() {
+            topRightPanelImage = shopKeeperImage;
+            shop!.setUpItems();
+          });
+        }
+      }
+    }
+  }
+
   // When an item is clicked it shows/removes the description panel
   void itemClicked(Map<String, dynamic> item) {
     if (shop == null) {
@@ -144,36 +182,6 @@ class _ShopState extends State<ShopView> {
     PurchaseConfirmationPage.showPage(context, enoughCurrency, itemShowing, purchaseItem);
   }
 
-  // Check what coordinates were clicked on. If clicked on a shop icon then switch
-  // to that shop type
-  void onTapShopMenuItem(TapDownDetails details) {
-    if (shop == null) {
-      return;
-    }
-    double x = details.localPosition.dx;
-    double y = details.localPosition.dy;
-
-    print("Tap coordinates are: $x, $y");
-    // Check through all the menu coordinates
-    for (String type in menuItems.keys) {
-      List<double> coordBounds = menuItems[type]!;
-      print(coordBounds);
-      // If the click was within the coordinate boundaries then switch to that
-      // shop type
-      if (x > coordBounds[x1] && x < coordBounds[x2] &&
-          y > coordBounds[y1] && y < coordBounds[y2]) {
-        print("Shop tab $type selected!");
-        // Setup the items for the new shop type
-        shop!.activeShop = type;
-        itemShowing = {};
-        showItemDescription = false;
-        setState(() {
-          topRightPanelImage = shopKeeperImage;
-          shop!.setUpItems();
-        });
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

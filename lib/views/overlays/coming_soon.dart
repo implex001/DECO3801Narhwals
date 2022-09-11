@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ComingSoonPage {
   // Pop up window for coming soon page
-  static Future<void> showPage(BuildContext context) async {
+  static Future<void> showPage(BuildContext context, String comingSoonText) async {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -12,7 +12,7 @@ class ComingSoonPage {
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
               child: Center(
                 child: Text(
-                  "Story Coming Soon",
+                  comingSoonText,
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.grey[300],

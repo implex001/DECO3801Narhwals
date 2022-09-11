@@ -193,7 +193,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
           )),
       GestureDetector(
           onTap: () {
-            ComingSoonPage.showPage(context);
+            ComingSoonPage.showPage(context, "Story page coming soon!");
           },
           child: Image.asset(
             'assets/images/UI/Story.png',
