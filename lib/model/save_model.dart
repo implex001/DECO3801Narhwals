@@ -125,11 +125,13 @@ class SaveModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void personalSkillUp() {
+  Future<void> personalSkillUp() async {
     changeMisc(SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
+    await save.save();
   }
 
-  void groupSkillUp() {
+  Future<void> groupSkillUp() async {
     changeMisc(SaveKeysV1.groupUpgrades, get(SaveKeysV1.groupUpgrades) + 1);
+    await save.save();
   }
 }

@@ -35,24 +35,31 @@ class CaravanGame extends FlameGame with
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
   List<String> equippedPets = List.from(ItemDetails.startingPets);
 
-  Map<String,Sprite> loadedSprites = {};
-  Map<String, SpriteComponent> currentActors = {};
+  Map<String, Image> loadedImages = {};
+  Map<String, SpriteAnimationComponent> currentActors = {};
 
   int backgroundSteps = 0;
   late ParallaxComponent<FlameGame> parallaxComponent;
 
   void renderEquipped() async {
     if (equippedHorses.isNotEmpty) {
-      if (!loadedSprites.containsKey(equippedHorses[0])) {
-        var horseImage = await images.load('items/${equippedHorses[0]}.png');
-        loadedSprites[equippedHorses[0]] = Sprite(horseImage);
+      if (!loadedImages.containsKey(equippedHorses[0])) {
+        loadedImages[equippedHorses[0]] = await images.load("items/${equippedHorses[0]}-animation.png");
       }
       if (currentActors.containsKey(ItemDetails.horseKey)) {
         remove(currentActors[ItemDetails.horseKey]!);
       }
 
-      currentActors[ItemDetails.horseKey] = SpriteComponent(
-        sprite: loadedSprites[equippedHorses[0]],
+      final horseSpriteSize = Vector2(260,225);
+      final horseSpriteData = SpriteAnimationData.sequenced(
+        textureSize: horseSpriteSize,
+        amount: 4,
+        amountPerRow: 2,
+        stepTime: 0.2,
+      );
+      currentActors[ItemDetails.horseKey] = SpriteAnimationComponent.fromFrameData(
+        loadedImages[equippedHorses[0]]!,
+        horseSpriteData,
         size: Vector2(100, 86.54),
         position: Vector2(320, 195),
       );
@@ -61,16 +68,23 @@ class CaravanGame extends FlameGame with
     }
 
     if (equippedCarts.isNotEmpty) {
-      if (!loadedSprites.containsKey(equippedCarts[0])) {
-        var horseImage = await images.load('items/${equippedCarts[0]}.png');
-        loadedSprites[equippedCarts[0]] = Sprite(horseImage);
+      if (!loadedImages.containsKey(equippedCarts[0])) {
+        loadedImages[equippedCarts[0]] = await images.load("items/${equippedCarts[0]}.png");
       }
       if (currentActors.containsKey(ItemDetails.cartKey)) {
         remove(currentActors[ItemDetails.cartKey]!);
       }
 
-      currentActors[ItemDetails.cartKey] = SpriteComponent(
-          sprite: loadedSprites[equippedCarts[0]],
+      final cartSpriteSize = Vector2(242,256);
+      final cartSpriteData = SpriteAnimationData.sequenced(
+        textureSize: cartSpriteSize,
+        amount: 1,
+        amountPerRow: 1,
+        stepTime: 0.2,
+      );
+      currentActors[ItemDetails.cartKey] = SpriteAnimationComponent.fromFrameData(
+        loadedImages[equippedCarts[0]]!,
+        cartSpriteData,
           size: Vector2(80, 106),
           position: Vector2(240, 175)
       );
@@ -90,7 +104,6 @@ class CaravanGame extends FlameGame with
         relativeOffset: Anchor.topLeft,
     );
     camera.speed = 100;
-
 
     final skyLayer = await loadParallaxLayer(
       ParallaxImageData('General/Sky.png'),
@@ -132,10 +145,19 @@ class CaravanGame extends FlameGame with
     final horseLeads = SpriteComponent(
         sprite: horseLeadSprite, size: Vector2(180, 90), position: Vector2(235, 185));
 
-    var mainChar = await images.load('General/MainCharacterFinal.png');
-    Sprite mainCharSprite = Sprite(mainChar);
-    final mainCharacter = SpriteComponent(
-        sprite: mainCharSprite, size: Vector2(60, 60), position: Vector2(420, 220));
+    final charSpriteSize = Vector2(192,192);
+    final charSpriteData = SpriteAnimationData.sequenced(
+      textureSize: charSpriteSize,
+      amount: 2,
+      amountPerRow: 2,
+      stepTime: 0.5,
+    );
+    final mainCharacter = SpriteAnimationComponent.fromFrameData(
+      await images.load("General/MainCharacterFinal-animation.png"),
+      charSpriteData,
+        size: Vector2(60, 60),
+        position: Vector2(420, 220)
+    );
 
     add(horseLeads);
     add(mainCharacter);

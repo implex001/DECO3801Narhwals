@@ -21,7 +21,7 @@ class Skill {
     }
     for (var i = 0; i < treeHeight; i++) {
       pState = false;
-      if (personal > i) {
+      if (personal > i + 1) {
         pState = true;
       }
       int cost = pow(10, (i+1)).round();
@@ -36,7 +36,7 @@ class Skill {
             "cost": cost,
           });
       gState = false;
-      if (group > i) {
+      if (group > i + 1) {
         gState = true;
       }
       skillList.add(

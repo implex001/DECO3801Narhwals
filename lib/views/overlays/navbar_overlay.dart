@@ -3,6 +3,9 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/views/overlays/minigame_list.dart';
+import 'package:caravaneering/views/overlays/main_menu.dart';
+import 'package:caravaneering/views/overlays/coming_soon.dart';
 
 /// Game engine function to build navbar overlay.
 /// For Flame use only
@@ -62,92 +65,12 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     }
   }
 
-  // Pop up window for menu page
-  Future<void> menuPage() async {
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            backgroundColor: Colors.brown[500],
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Main Menu",
-                  style: TextStyle(
-                    fontSize: 32.0,
-                    color: Colors.grey[300],
-                  ),
-                ),
-              ],
-            ),
-            children: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <
-                  Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    height: 40,
-                    width: 140,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/UI/CancelButton.png'),
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Provider.of<SaveModel>(context, listen: false)
-                        .addCoins(1000);
-                    Provider.of<SaveModel>(context, listen: false)
-                        .addGems(1000);
-                    Provider.of<SaveModel>(context, listen: false).saveState();
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    height: 40,
-                    width: 140,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/UI/CheatButton.png'),
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Provider.of<SaveModel>(context, listen: false).eraseSave();
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    height: 40,
-                    width: 123.5,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/UI/EraseButton.png'),
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  ),
-                ),
-              ])
-            ],
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(
           onTap: () {
-            menuPage();
+            MainMenuPage.showPage(context);
           },
           child: Image.asset(
             menuButtonImage,
@@ -255,27 +178,24 @@ class NavbarBottomOverlay extends StatefulWidget {
 }
 
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
-  // Pop up window for coming soon
-  Future<void> comingSoonPrompt() async {
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            backgroundColor: Colors.brown[500],
-            title: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
-              child: Center(
-                child: Text(
-                  "Story Coming Soon",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey[300],
-                  ),
-                ),
-              ),
-            ),
-          );
-        });
+  String route = "";
+  String mingameButtonImage = 'assets/images/UI/Minigames.png';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ModalRoute.of(context) != null &&
+        ModalRoute.of(context)!.settings.name != null) {
+      route = ModalRoute.of(context)!.settings.name!;
+      switch (route) {
+        case "/cave-intro":
+          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          break;
+        case "/minigames/jump":
+          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          break;
+      }
+    }
   }
 
   @override
@@ -283,17 +203,16 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
           onTap: () {
-            Navigator.pushNamedAndRemoveUntil(
-                context, "/minigames", (route) => false);
+            MinigameSelectorPage.showPage(context);
           },
           child: Image.asset(
-            'assets/images/UI/Minigames.png',
+            mingameButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
       GestureDetector(
           onTap: () {
-            comingSoonPrompt();
+            ComingSoonPage.showPage(context, "Story page coming soon!");
           },
           child: Image.asset(
             'assets/images/UI/Story.png',

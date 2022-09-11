@@ -20,7 +20,7 @@ class StatsView extends State<MiniGameStats> {
   StatsView({Key? key, required this.miniGame});
   final JumpMiniGame miniGame;
   late ValueNotifier<int> score = miniGame.score;
-  late Duration time = miniGame.timeTotal;
+  late Duration time = miniGame.currentTime.value;
 
   late int? modifier;
   late int coinsEarned;
@@ -95,10 +95,7 @@ class StatsView extends State<MiniGameStats> {
                     ),
                   )),
                   Center(
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                        GestureDetector(
+                      child: GestureDetector(
                             onTap: () {
                               Navigator.pushNamedAndRemoveUntil(
                                   context, "/caravan", (route) => false);
@@ -108,17 +105,7 @@ class StatsView extends State<MiniGameStats> {
                               fit: BoxFit.contain,
                               height: 30,
                             )),
-                        GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, "/minigames", (route) => false);
-                            },
-                            child: Image.asset(
-                              'assets/images/UI/Minigames.png',
-                              fit: BoxFit.contain,
-                              height: 30,
-                            )),
-                      ]))
+                  )
                 ])),
         Positioned(
           bottom: 30,

@@ -6,9 +6,11 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/shop/shop.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
+import 'package:caravaneering/views/overlays/coming_soon.dart';
 import 'package:caravaneering/views/shop/shop_shelf.dart';
 import 'package:caravaneering/views/shop/shop_nav.dart';
 import 'package:caravaneering/views/shop/shop_description_panel.dart';
+import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
 
 
 /*
@@ -87,6 +89,42 @@ class _ShopState extends State<ShopView> {
     };
   }
 
+
+  // Check what coordinates were clicked on. If clicked on a shop icon then switch
+  // to that shop type
+  void onTapShopMenuItem(TapDownDetails details) {
+    if (shop == null) {
+      return;
+    }
+    double x = details.localPosition.dx;
+    double y = details.localPosition.dy;
+
+    print("Tap coordinates are: $x, $y");
+    // Check through all the menu coordinates
+    for (String type in menuItems.keys) {
+      List<double> coordBounds = menuItems[type]!;
+      print(coordBounds);
+      // If the click was within the coordinate boundaries then switch to that
+      // shop type
+      if (x > coordBounds[x1] && x < coordBounds[x2] &&
+          y > coordBounds[y1] && y < coordBounds[y2]) {
+        print("Shop tab $type selected!");
+        if (type == ItemDetails.petKey) {
+          ComingSoonPage.showPage(context, "Pets shop coming soon!");
+        } else {
+          // Setup the items for the new shop type
+          shop!.activeShop = type;
+          itemShowing = {};
+          showItemDescription = false;
+          setState(() {
+            topRightPanelImage = shopKeeperImage;
+            shop!.setUpItems();
+          });
+        }
+      }
+    }
+  }
+
   // When an item is clicked it shows/removes the description panel
   void itemClicked(Map<String, dynamic> item) {
     if (shop == null) {
@@ -141,121 +179,9 @@ class _ShopState extends State<ShopView> {
       }
     }
 
-    await showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            backgroundColor: Colors.brown[500],
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "${itemShowing["name"]} for ${itemShowing["cost"].toString()}",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey[300],
-                  ),
-                ),
-                Image(
-                  image: AssetImage((itemShowing["purchaseCurrency"] == ItemDetails.gems) ? ItemDetails.gemImagePath : ItemDetails.coinImagePath),
-                  height: 32,
-                ),
-              ],
-            ),
-            children: <Widget>[
-              Image(
-                image: AssetImage(itemShowing["location"]),
-                height: 80,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget> [
-                  GestureDetector(
-                    onTap: () {Navigator.pop(context);},
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                      height: 40,
-                      width: 140,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/UI/CancelButton.png'),
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (enoughCurrency) {
-                        purchaseItem();
-                        Navigator.pop(context);
-                      }
-                      },
-                    child: Container(
-                      margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                      height: 40,
-                      width: 88,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(enoughCurrency ? 'assets/images/UI/BuyButton.png' : 'assets/images/UI/BuyButtonDisabled.png'),
-                          fit: BoxFit.fitWidth,
-                        ),
-                      ),
-                    ),
-                  ),
-                ]
-              )
-            ],
-          );
-        }
-    );
+    PurchaseConfirmationPage.showPage(context, enoughCurrency, itemShowing, purchaseItem);
   }
 
-  // Check what coordinates were clicked on. If clicked on a shop icon then switch
-  // to that shop type
-  void onTapShopMenuItem(TapDownDetails details) {
-    if (shop == null) {
-      return;
-    }
-    double x = details.localPosition.dx;
-    double y = details.localPosition.dy;
-
-    print("Tap coordinates are: $x, $y");
-    // Check through all the menu coordinates
-    for (String type in menuItems.keys) {
-      List<double> coordBounds = menuItems[type]!;
-      print(coordBounds);
-      // If the click was within the coordinate boundaries then switch to that
-      // shop type
-      if (x > coordBounds[x1] && x < coordBounds[x2] &&
-          y > coordBounds[y1] && y < coordBounds[y2]) {
-        print("Shop tab $type selected!");
-        // Setup the items for the new shop type
-        shop!.activeShop = type;
-        itemShowing = {};
-        showItemDescription = false;
-        setState(() {
-          topRightPanelImage = shopKeeperImage;
-          shop!.setUpItems();
-        });
-      }
-    }
-  }
-
-  // DELETE before release. This function is to test out deleting the save data
-  void temporaryFunctionDeleteSaveData() async {
-    if (shop == null) {
-      return;
-    }
-    print("Deleting save file!!");
-    await shop!.save.eraseSave();
-    setState(() {
-      shop!.setUpItems();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
