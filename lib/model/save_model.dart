@@ -91,7 +91,7 @@ class SaveModel extends ChangeNotifier {
 
   Timer? startAutoSave() {
     autoSave ??= Timer.periodic(
-          const Duration(seconds: 10), (timer) => saveState());
+        const Duration(seconds: 10), (timer) => saveState());
     return autoSave;
   }
 
@@ -123,5 +123,13 @@ class SaveModel extends ChangeNotifier {
     hasErasedData = true;
     hasUpdatedEquipped = true;
     notifyListeners();
+  }
+
+  void personalSkillUp() {
+    changeMisc(SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
+  }
+
+  void groupSkillUp() {
+    changeMisc(SaveKeysV1.groupUpgrades, get(SaveKeysV1.groupUpgrades) + 1);
   }
 }
