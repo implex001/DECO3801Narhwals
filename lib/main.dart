@@ -2,7 +2,6 @@ import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
 import 'package:caravaneering/views/cave/cave_intro_view.dart';
-import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/shop/shop_view.dart';
 import 'package:caravaneering/views/skills/skill_view.dart';
 import 'package:caravaneering/views/title_screen.dart';
@@ -48,7 +47,6 @@ class MyApp extends StatelessWidget {
         '/shop': (context) => const ShopView(),
         '/skills': (context) => const SkillsView(),
         '/cave-intro': (context) => const CaveIntroView(),
-        '/minigames': (context) => const MiniGameList(),
         '/minigames/jump': (context) => const JumpMiniGameView()
       },
     );
