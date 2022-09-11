@@ -1,30 +1,43 @@
 import 'package:caravaneering/games/jump_minigame.dart';
+import 'package:caravaneering/model/save_keys.dart';
+import 'package:caravaneering/model/save_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:provider/provider.dart';
 
 class MiniGameStats extends StatefulWidget {
   const MiniGameStats({super.key, required this.miniGame});
   final JumpMiniGame miniGame;
 
   @override
-  State<MiniGameStats> createState() => _StatsView(miniGame: miniGame);
+  State<MiniGameStats> createState() => StatsView(miniGame: miniGame);
 }
 
-class _StatsView extends State<MiniGameStats> {
-  _StatsView({Key? key, required this.miniGame});
+class StatsView extends State<MiniGameStats> {
+  StatsView({Key? key, required this.miniGame});
   final JumpMiniGame miniGame;
   late ValueNotifier<int> score = miniGame.score;
   late Duration time = miniGame.timeTotal;
+
+  late int? modifier;
+  late int coinsEarned;
+
   @override
   void initState() {
     super.initState();
     SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
       DeviceOrientation.landscapeLeft,
     ]);
+    modifier = Provider.of<SaveModel>(context, listen: false)
+        .get(SaveKeysV1.groupUpgrades);
+    coinsEarned = (modifier == null)
+        ? (500 + 10 + score.value)
+        : (500 + 10 + score.value) * modifier!;
+    Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
+    Provider.of<SaveModel>(context, listen: false).saveState();
   }
 
   @override
@@ -55,7 +68,7 @@ class _StatsView extends State<MiniGameStats> {
                       fontSize: 20,
                     ),
                     child: Text(
-                      'You played for a total time of ${time.inSeconds} seconds.',
+                      'Time played: ${time.inSeconds} seconds',
                       textAlign: TextAlign.center,
                     ),
                   )),
@@ -66,7 +79,18 @@ class _StatsView extends State<MiniGameStats> {
                       fontSize: 20,
                     ),
                     child: Text(
-                      'You have earned a total score of ${score.value.toString()}.',
+                      'Scores earned: ${score.value.toString()}',
+                      textAlign: TextAlign.center,
+                    ),
+                  )),
+                  Center(
+                      child: DefaultTextStyle(
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                      fontSize: 20,
+                    ),
+                    child: Text(
+                      'Coins earned: $coinsEarned',
                       textAlign: TextAlign.center,
                     ),
                   )),
