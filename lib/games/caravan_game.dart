@@ -70,9 +70,9 @@ class CaravanGame extends FlameGame with
       }
 
       currentActors[ItemDetails.cartKey] = SpriteComponent(
-        sprite: loadedSprites[equippedCarts[0]],
-        size: Vector2(80, 106),
-        position: Vector2(240, 175),
+          sprite: loadedSprites[equippedCarts[0]],
+          size: Vector2(80, 106),
+          position: Vector2(240, 175)
       );
 
       add(currentActors[ItemDetails.cartKey]!);
@@ -157,6 +157,7 @@ class CaravanGame extends FlameGame with
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
         equippedPets = List.from(s.get(SaveKeysV1.equippedPets));
         save!.hasUpdatedEquipped = true;
+        int modifier = s.get("personalUpgrades");
 
         // Set up step tracking
         stepTracker = StepTracker();
@@ -170,13 +171,13 @@ class CaravanGame extends FlameGame with
           if (backgroundSteps != 0) {
             overlays.add("StepUpdate");
             dartasync.Timer(const Duration(seconds: 5),
-                () => overlays.remove("StepUpdate"));
-            s.addCoins(backgroundSteps);
+                    () => overlays.remove("StepUpdate"));
+            s.addCoins(backgroundSteps * modifier);
             s.saveState(force: true);
           }
         });
         stepTracker.getStepStream().listen((event) {
-          s.addCoins(1);
+          s.addCoins(1 * modifier);
         });
         s.startAutoSave();
       });
