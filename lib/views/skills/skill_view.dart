@@ -17,11 +17,26 @@ class _SkillsViewState extends State<SkillsView> {
   Map selectedSkill = {
     "icon": "assets/images/skills/UpgradeSpeed.png",
     "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
-    "introduction": "introduction, introduction",
+    "introduction": "introduction",
     "buyState": false,
     "index": 0,
   };
   Skill? skill;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (skill == null) {
+      skill = Skill(Provider.of<SaveModel>(context, listen: true));
+      skill!.setupTree();
+    }
+
+    if (skill != null && selectedSkill["introduction"] == "introduction") {
+      selectedSkill = skill!.skillList[0];
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +45,6 @@ class _SkillsViewState extends State<SkillsView> {
     final width = size.width;
     final height = size.height;
 
-
-    if (skill == null) {
-      skill = Skill(Provider.of<SaveModel>(context, listen: true));
-      skill!.setupTree();
-    }
 
     return Stack(
         children: <Widget>[
@@ -127,6 +137,7 @@ class _SkillsViewState extends State<SkillsView> {
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
+                                        decoration: TextDecoration.none,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ),
