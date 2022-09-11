@@ -178,6 +178,25 @@ class NavbarBottomOverlay extends StatefulWidget {
 }
 
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
+  String route = "";
+  String mingameButtonImage = 'assets/images/UI/Minigames.png';
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (ModalRoute.of(context) != null &&
+        ModalRoute.of(context)!.settings.name != null) {
+      route = ModalRoute.of(context)!.settings.name!;
+      switch (route) {
+        case "/cave-intro":
+          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          break;
+        case "/minigames/jump":
+          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          break;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +206,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
             MinigameSelectorPage.showPage(context);
           },
           child: Image.asset(
-            'assets/images/UI/Minigames.png',
+            mingameButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
