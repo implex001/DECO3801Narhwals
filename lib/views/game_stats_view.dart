@@ -1,15 +1,31 @@
-// ignore_for_file: prefer_const_constructors_in_immutables
-
-import 'dart:math';
-
 import 'package:caravaneering/games/jump_minigame.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class MinigameStats extends StatelessWidget {
-  MinigameStats({Key? key, required this.miniGame}) : super(key: key);
+class MiniGameStats extends StatefulWidget {
+  const MiniGameStats({super.key, required this.miniGame});
+  final JumpMiniGame miniGame;
+
+  @override
+  State<MiniGameStats> createState() => _StatsView(miniGame: miniGame);
+}
+
+class _StatsView extends State<MiniGameStats> {
+  _StatsView({Key? key, required this.miniGame});
   final JumpMiniGame miniGame;
   late ValueNotifier<int> score = miniGame.score;
   late Duration time = miniGame.timeTotal;
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+  }
 
   @override
   Widget build(BuildContext context) {
