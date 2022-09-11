@@ -23,24 +23,8 @@ class MainMenuPage {
               ],
             ),
             children: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <
+              Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <
                   Widget>[
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                    height: 40,
-                    width: 140,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/UI/CancelButton.png'),
-                        fit: BoxFit.fitWidth,
-                      ),
-                    ),
-                  ),
-                ),
                 GestureDetector(
                   onTap: () {
                     Provider.of<SaveModel>(context, listen: false)
@@ -61,6 +45,9 @@ class MainMenuPage {
                     ),
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
                   onTap: () {
                     Provider.of<SaveModel>(context, listen: false).eraseSave();
@@ -72,6 +59,25 @@ class MainMenuPage {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/images/UI/EraseButton.png'),
+                        fit: BoxFit.fitWidth,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    height: 40,
+                    width: 140,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/UI/CancelButton.png'),
                         fit: BoxFit.fitWidth,
                       ),
                     ),
