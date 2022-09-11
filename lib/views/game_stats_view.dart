@@ -20,7 +20,7 @@ class StatsView extends State<MiniGameStats> {
   StatsView({Key? key, required this.miniGame});
   final JumpMiniGame miniGame;
   late ValueNotifier<int> score = miniGame.score;
-  late Duration time = miniGame.timeTotal;
+  late Duration time = miniGame.currentTime.value;
 
   late int? modifier;
   late int coinsEarned;
