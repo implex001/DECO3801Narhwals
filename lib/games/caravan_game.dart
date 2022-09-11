@@ -31,6 +31,7 @@ class CaravanGame extends FlameGame with
   Vector2 cameraPosition = Vector2.zero();
   int worldBound = 300;
 
+  bool placeholderEquips = true;
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
   List<String> equippedPets = List.from(ItemDetails.startingPets);
@@ -230,12 +231,13 @@ class CaravanGame extends FlameGame with
     parallaxComponent.parallax?.baseVelocity.setFrom(baseVelocity + Vector2(2, 2));
     lastCameraPosition.setFrom(camera.position);
 
-    if (save != null && save!.hasUpdatedEquipped) {
+    if (save != null && (save!.hasUpdatedEquipped || placeholderEquips)) {
       equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
       equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
       equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
       renderEquipped();
       save!.hasUpdatedEquipped = false;
+      placeholderEquips = false;
     }
   }
 
