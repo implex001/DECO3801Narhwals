@@ -4,10 +4,12 @@ import 'package:caravaneering/model/save_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+@Deprecated("Use navbarOverlay instead")
 Widget caravanBarOverlay(BuildContext buildContext, CaravanGame game) {
   return CaravanBarOverlay(game: game);
 }
 
+@Deprecated("Use navbarOverlay instead")
 class CaravanBarOverlay extends StatelessWidget {
   final CaravanGame game;
 
