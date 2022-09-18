@@ -109,18 +109,16 @@ class _ShopState extends State<ShopView> {
       if (x > coordBounds[x1] && x < coordBounds[x2] &&
           y > coordBounds[y1] && y < coordBounds[y2]) {
         print("Shop tab $type selected!");
-        if (type == ItemDetails.petKey) {
-          ComingSoonPage.showPage(context, "Pets shop coming soon!");
-        } else {
-          // Setup the items for the new shop type
-          shop!.activeShop = type;
-          itemShowing = {};
-          showItemDescription = false;
-          setState(() {
-            topRightPanelImage = shopKeeperImage;
-            shop!.setUpItems();
-          });
-        }
+
+        // Setup the items for the new shop type
+        shop!.activeShop = type;
+        itemShowing = {};
+        showItemDescription = false;
+        setState(() {
+          topRightPanelImage = shopKeeperImage;
+          shop!.setUpItems();
+        });
+
       }
     }
   }

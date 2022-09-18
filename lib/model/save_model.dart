@@ -73,6 +73,18 @@ class SaveModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Equips a pet
+  void equipPet(int petNum, String key) {
+    if (save.state[SaveKeysV1.equippedPets] == null) {
+      save.state[SaveKeysV1.equippedPets] = <String>[];
+    }
+
+    save.state[SaveKeysV1.equippedPets].add(key);
+
+    hasUpdatedEquipped = true;
+    notifyListeners();
+  }
+
   void addItem(Map<String, dynamic> item) {
     if (save.state[item["type"]] == null) {
       save.state[item["type"]] = <String>[];
