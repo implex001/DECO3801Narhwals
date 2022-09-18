@@ -31,13 +31,41 @@ class CartComponent extends SpriteAnimationComponent{
   );
 }
 
-class HumanComponent extends SpriteAnimationComponent{
-  HumanComponent(String humanKey, Vector2 position) : super.fromFrameData(
-    Flame.images.fromCache("General/$humanKey-animation.png"),
+class HumanComponentAnimated extends SpriteAnimationComponent{
+  HumanComponentAnimated(String humanKey, Vector2 position) : super.fromFrameData(
+    Flame.images.fromCache("characters/$humanKey-animation.png"),
     SpriteAnimationData.sequenced(
       textureSize: Vector2(192,192),
       amount: 2,
       amountPerRow: 2,
+      stepTime: 0.5,
+    ),
+    size: Vector2(60, 60),
+    position: position,
+  );
+}
+
+class HumanComponent extends SpriteAnimationComponent{
+  HumanComponent(String humanKey, Vector2 position) : super.fromFrameData(
+    Flame.images.fromCache("characters/$humanKey.png"),
+    SpriteAnimationData.sequenced(
+      textureSize: Vector2(256,256),
+      amount: 1,
+      amountPerRow: 1,
+      stepTime: 0.5,
+    ),
+    size: Vector2(60, 60),
+    position: position,
+  );
+}
+
+class PetComponent extends SpriteAnimationComponent{
+  PetComponent(String petKey, Vector2 position) : super.fromFrameData(
+    Flame.images.fromCache("items/$petKey.png"),
+    SpriteAnimationData.sequenced(
+      textureSize: Vector2(256,256),
+      amount: 1,
+      amountPerRow: 1,
       stepTime: 0.5,
     ),
     size: Vector2(60, 60),

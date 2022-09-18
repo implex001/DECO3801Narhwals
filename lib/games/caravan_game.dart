@@ -5,6 +5,7 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
+import 'package:caravaneering/model/skills.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -79,8 +80,12 @@ class CaravanGame extends FlameGame with
         sprite: horseLeadSprite, size: Vector2(180, 90), position: Vector2(235, 185));
 
 
-    await images.load("General/MainCharacterFinal-animation.png");
-    final mainCharacter = HumanComponent("MainCharacterFinal", Vector2(420, 220));
+    await images.load("characters/MainCharacterFinal-animation.png");
+    final mainCharacter = HumanComponentAnimated("MainCharacterFinal", Vector2(420, 220));
+
+    for (var image in Skill.groupUpgradeImage.values) {
+      await images.load("characters/$image.png");
+    }
 
     add(horseLeads);
     add(mainCharacter);
@@ -103,7 +108,14 @@ class CaravanGame extends FlameGame with
         equippedPets = List.from(s.get(SaveKeysV1.equippedPets));
         save!.hasUpdatedEquipped = true;
         renderEquipped();
-        int modifier = s.get("personalUpgrades");
+        int modifier = s.get(SaveKeysV1.personalUpgrades);
+
+        // TODO: These are temporary positioning until proper positioning is
+        // implemented
+        for (int i = 1; i <= s.get(SaveKeysV1.groupUpgrades) && i <= Skill.groupUpgradeImage.length; i++) {
+          final human = HumanComponent(Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
+          add(human);
+        }
 
         // Set up step tracking
         stepTracker = StepTracker();
