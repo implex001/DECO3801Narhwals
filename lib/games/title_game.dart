@@ -48,7 +48,7 @@ class TitleScreenAnimation extends FlameGame {
         velocityMultiplierDelta: Vector2(0.5, 0));
     add(parallaxGroundDetails);
 
-    var character = await images.load('General/MainCharacterFinal.png');
+    var character = await images.load('characters/MainCharacterFinal.png');
     final spiteSize = Vector2(152 * 1.4, 142 * 1.4);
     SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
         amount: 9, stepTime: 0.03, textureSize: Vector2(152.0, 142.0));
