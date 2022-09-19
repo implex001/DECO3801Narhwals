@@ -22,7 +22,7 @@ class ShopItems{
     ItemDetails.petKey: {
       "name": "Sold Out!",
       "type": ItemDetails.petKey,
-      "location": "assets/images/shop/horse-sold-out.png",
+      "location": "assets/images/shop/pet-sold-out.png",
     },
   };
 
@@ -51,15 +51,15 @@ class ShopItems{
       ItemDetails.items["cart-red"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
     ],
     ItemDetails.petKey: [
-      ItemDetails.items["horse-pink"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-light-grey"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-dark-grey"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-dark-green"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-dark-blue"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-purple"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-yellow"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-light-green"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-blue"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["cat-black"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["cat-white"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["cat-orange"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["dog-brown"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["dog-white"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["dog-yellow"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["bird-pink"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["bird-blue"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
+      ItemDetails.items["dragon"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
     ],
   };
 

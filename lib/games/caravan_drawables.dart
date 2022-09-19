@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
+import 'package:caravaneering/model/pet_animation_details.dart';
 
 // These components assume that there respective images are loaded
 
@@ -60,16 +61,16 @@ class HumanComponent extends SpriteAnimationComponent{
 }
 
 class PetComponent extends SpriteAnimationComponent{
-  PetComponent(String petKey, Vector2 position) : super.fromFrameData(
-    Flame.images.fromCache("items/$petKey.png"),
+  PetComponent(String petKey) : super.fromFrameData(
+    Flame.images.fromCache("items/$petKey-animation.png"),
     SpriteAnimationData.sequenced(
-      textureSize: Vector2(256,256),
-      amount: 1,
-      amountPerRow: 1,
-      stepTime: 0.5,
+      textureSize: PetAnimationDetails.pets[petKey]!["spriteSize"],
+      amount: PetAnimationDetails.pets[petKey]!["animationCount"],
+      amountPerRow: PetAnimationDetails.pets[petKey]!["animationCount"],
+      stepTime: PetAnimationDetails.pets[petKey]!["stepTime"],
     ),
-    size: Vector2(60, 60),
-    position: position,
+    size: PetAnimationDetails.pets[petKey]!["size"],
+    position: PetAnimationDetails.pets[petKey]!["position"],
   );
 }
 

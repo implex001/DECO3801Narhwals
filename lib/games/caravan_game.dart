@@ -42,6 +42,7 @@ class CaravanGame extends FlameGame with
   int backgroundSteps = 0;
   late ParallaxComponent<FlameGame> parallaxComponent;
 
+
   void renderEquipped() async {
       if (currentActors.isNotEmpty) {
         removeAll(currentActors);
@@ -56,6 +57,17 @@ class CaravanGame extends FlameGame with
       final cartComponent = CartComponent(equippedCarts[0], Vector2(240, 175));
       currentActors.add(cartComponent);
 
+
+      // add all equipped pets to the screen
+      if (equippedPets.isNotEmpty) {
+        for (String pet in equippedPets) {
+          await images.load("items/$pet-animation.png");
+          final petComponent = PetComponent(pet);
+
+          currentActors.add(petComponent);
+        }
+      }
+
       addAll(currentActors);
   }
 
@@ -66,8 +78,8 @@ class CaravanGame extends FlameGame with
     Flame.device.fullScreen();
 
     camera.followVector2(
-        cameraPosition,
-        relativeOffset: Anchor.topLeft,
+      cameraPosition,
+      relativeOffset: Anchor.topLeft,
     );
     camera.speed = 100;
 
@@ -228,6 +240,7 @@ class CaravanGame extends FlameGame with
       ],
       baseVelocity: Vector2(20, 0),
     );
+
     return ParallaxComponent(parallax: parallax);
   }
 

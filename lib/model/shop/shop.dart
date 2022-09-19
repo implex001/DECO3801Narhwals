@@ -76,6 +76,9 @@ class Shop {
     if (item["type"] == SaveKeysV1.carts) {
       save.equipCart(1, item["key"]);
     }
+    if (item["type"] == SaveKeysV1.pets) {
+      save.equipPet(1, item["key"]);
+    }
 
     // The item was purchased
     return true;
