@@ -8,6 +8,13 @@ class Skill {
   List<Map> skillList = [];
   static const treeHeight = 12;
 
+  static const Map<int, String> groupUpgradeImage = {
+    1: "Merchant",
+    2: "NPC-1",
+    3: "NPC-Backpack-1",
+    4: "Veteran"
+  };
+
   void setupTree() {
     int personal = save.get("personalUpgrades");
     int group = save.get("groupUpgrades");
