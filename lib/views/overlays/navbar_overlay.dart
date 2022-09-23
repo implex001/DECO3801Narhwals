@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:provider/provider.dart';
@@ -184,6 +186,7 @@ class NavbarBottomOverlay extends StatefulWidget {
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
   String route = "";
   String mingameButtonImage = 'assets/images/UI/Minigames.png';
+  bool isCaravanPage = true;
 
   @override
   void didChangeDependencies() {
@@ -192,37 +195,48 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
         ModalRoute.of(context)!.settings.name != null) {
       route = ModalRoute.of(context)!.settings.name!;
       switch (route) {
+        case "/caravan":
+          isCaravanPage = true;
+          break;
         case "/cave-intro":
           mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          isCaravanPage = false;
           break;
         case "/minigames/jump":
           mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          isCaravanPage = false;
           break;
+        default:
+          isCaravanPage = false;
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      GestureDetector(
-          onTap: () {
-            MinigameSelectorPage.showPage(context);
-          },
-          child: Image.asset(
-            mingameButtonImage,
-            fit: BoxFit.contain,
-            height: 30,
-          )),
-      GestureDetector(
-          onTap: () {
-            ComingSoonPage.showPage(context, "Story page coming soon!");
-          },
-          child: Image.asset(
-            'assets/images/UI/Story.png',
-            fit: BoxFit.contain,
-            height: 30,
-          )),
-    ]);
+    if (!isCaravanPage) {
+      return Container();
+    } else {
+      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        GestureDetector(
+            onTap: () {
+              MinigameSelectorPage.showPage(context);
+            },
+            child: Image.asset(
+              mingameButtonImage,
+              fit: BoxFit.contain,
+              height: 30,
+            )),
+        GestureDetector(
+            onTap: () {
+              ComingSoonPage.showPage(context, "Story page coming soon!");
+            },
+            child: Image.asset(
+              'assets/images/UI/Story.png',
+              fit: BoxFit.contain,
+              height: 30,
+            )),
+      ]);
+    }
   }
 }
