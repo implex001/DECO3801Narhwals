@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/model/save_keys.dart';
+import 'package:caravaneering/views/overlays/tips_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
@@ -133,44 +134,54 @@ class NavbarRightOverlay extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Stack(alignment: AlignmentDirectional.center, children: [
-          Image.asset(
-            'assets/images/UI/Coins.png',
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-          Consumer<SaveModel>(builder: (context, save, build) {
-            return DefaultTextStyle(
-              style: const TextStyle(
-                fontWeight: FontWeight.w300,
-                fontSize: 20,
-              ),
-              child: Text(
-                '${save.get(SaveKeysV1.coins)}',
-                textAlign: TextAlign.center,
-              ),
-            );
-          })
-        ]),
-        Stack(alignment: AlignmentDirectional.center, children: [
-          Image.asset(
-            'assets/images/UI/Gems.png',
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-          Consumer<SaveModel>(builder: (context, save, build) {
-            return DefaultTextStyle(
-              style: const TextStyle(
-                fontWeight: FontWeight.w300,
-                fontSize: 20,
-              ),
-              child: Text(
-                '${save.get(SaveKeysV1.gems)}',
-                textAlign: TextAlign.center,
-              ),
-            );
-          })
-        ]),
+        GestureDetector(
+          onTap: () {
+            TipPopUp.showTips(context, "This is some tips for the coins");
+          },
+          child: Stack(alignment: AlignmentDirectional.center, children: [
+            Image.asset(
+              'assets/images/UI/Coins.png',
+              height: 30,
+              fit: BoxFit.contain,
+            ),
+            Consumer<SaveModel>(builder: (context, save, build) {
+              return DefaultTextStyle(
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 20,
+                ),
+                child: Text(
+                  '${save.get(SaveKeysV1.coins)}',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            })
+          ]),
+        ),
+        GestureDetector(
+          onTap: () {
+            TipPopUp.showTips(context, "This is some tips for the gems");
+          },
+          child: Stack(alignment: AlignmentDirectional.center, children: [
+            Image.asset(
+              'assets/images/UI/Gems.png',
+              height: 30,
+              fit: BoxFit.contain,
+            ),
+            Consumer<SaveModel>(builder: (context, save, build) {
+              return DefaultTextStyle(
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 20,
+                ),
+                child: Text(
+                  '${save.get(SaveKeysV1.gems)}',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            })
+          ]),
+        )
       ],
     );
   }
