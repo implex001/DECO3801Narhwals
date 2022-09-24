@@ -5,7 +5,7 @@ import 'package:caravaneering/model/save_model.dart';
 class Skill {
   SaveModel save;
   Skill(this.save);
-  List<Map> skillList = [];
+  List<Map<String, dynamic>> skillList = [];
   static const treeHeight = 12;
 
   static const Map<int, String> groupUpgradeImage = {
@@ -41,6 +41,7 @@ class Skill {
             "buyState": pState,
             "index": i * 2,
             "cost": cost,
+            "location": "assets/images/skills/Upgrade_Strength.png"
           });
       gState = false;
       if (group > i + 1) {
@@ -55,6 +56,7 @@ class Skill {
             "buyState": gState,
             "index": i * 2 + 1,
             "cost": cost,
+            "location":  "assets/images/skills/UpgradeCoins.png"
           });
     }
   }
