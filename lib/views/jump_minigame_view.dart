@@ -8,12 +8,15 @@ import 'package:caravaneering/views/game_stats_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/*
 Widget jumpMiniGame(BuildContext buildContext, CaravanGame game) {
   return JumpMiniGameView();
 }
+*/
 
 class JumpMiniGameView extends StatefulWidget {
-  const JumpMiniGameView({Key? key}) : super(key: key);
+  final int? selectedTime;
+  const JumpMiniGameView({Key? key, this.selectedTime}) : super(key: key);
 
   @override
   State<JumpMiniGameView> createState() => _JumpMiniGameState();
@@ -22,8 +25,9 @@ class JumpMiniGameView extends StatefulWidget {
 class _JumpMiniGameState extends State<JumpMiniGameView> {
   JumpTracker tracker = JumpTracker();
   int scoreCount = 0;
+  late int selectedDifficulty;
+  late JumpMiniGame jumpMiniGame;
   String timeLeft = "0:00";
-  JumpMiniGame jumpMiniGame = JumpMiniGame(const Duration(seconds: 120));
 
   late JumpPrompt currentPrompt;
   double _promptHeight = 110;
@@ -40,9 +44,10 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
   @override
   void initState() {
     super.initState();
-
+    selectedDifficulty = widget.selectedTime ?? 4;
+    int secondsPlay = selectedDifficulty * 60;
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
+    jumpMiniGame = JumpMiniGame(Duration(seconds: secondsPlay));
     jumpMiniGame.score.addListener(() {
       setState(() {
         scoreCount = jumpMiniGame.score.value;
@@ -119,7 +124,8 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MiniGameStats(miniGame: jumpMiniGame),
+                        builder: (context) =>
+                            MiniGameStats(miniGame: jumpMiniGame),
                       ));
                 },
                 child: const Text("Exit")),
