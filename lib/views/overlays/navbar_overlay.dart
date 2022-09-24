@@ -136,7 +136,8 @@ class NavbarRightOverlay extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            TipPopUp.showTips(context, "This is some tips for the coins");
+            TipPopUp.showTips(
+                context, "Coins", "This is some tips for the coins");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
@@ -160,7 +161,8 @@ class NavbarRightOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            TipPopUp.showTips(context, "This is some tips for the gems");
+            TipPopUp.showTips(
+                context, "Gems", "This is some tips for the gems");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
