@@ -5,6 +5,7 @@ import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/skills.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
 
 class SkillsView extends StatefulWidget {
@@ -34,8 +35,6 @@ class _SkillsViewState extends State<SkillsView> {
     }
 
     bool enoughCurrency =  skill!.save.get('coins') >= selectedSkill["cost"];
-    print(enoughCurrency);
-    print(selectedSkill);
     PurchaseConfirmationPage.showPage(context, enoughCurrency, selectedSkill, purchaseItem);
   }
 
@@ -73,6 +72,7 @@ class _SkillsViewState extends State<SkillsView> {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
+    double safePadding = max(MediaQuery.of(context).padding.right, 15);
 
 
     return Stack(
@@ -159,7 +159,7 @@ class _SkillsViewState extends State<SkillsView> {
                                   height: 24,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  padding:  EdgeInsets.only(left: safePadding,right: safePadding),
                                   child: Text(
                                     selectedSkill["introduction"],
                                     textAlign: TextAlign.center,
