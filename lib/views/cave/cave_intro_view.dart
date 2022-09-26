@@ -1,3 +1,4 @@
+import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
 import 'package:flutter/material.dart';
 
@@ -85,32 +86,6 @@ class _CaveIntroView extends State<CaveIntroView> {
                                     audio: "audio/rat.mp3",
                                   ),
                                 ])),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              JumpMiniGameView(
-                                                  selectedTime: selectedLevel),
-                                        ));
-                                    /*
-                                    Navigator.pushNamedAndRemoveUntil(context,
-                                        "/minigames/jump", (route) => false);
-                                        */
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width: 88,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/UI/play.png'),
-                                        fit: BoxFit.fitWidth,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ]),
                             ),
                             const SizedBox(
@@ -274,7 +249,56 @@ class _CaveIntroView extends State<CaveIntroView> {
                                               ),
                                             ])),
                                   ],
-                                )
+                                ),
+                                Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const CaravanView(
+                                                          title: "title")));
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: 88,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/UI/Back.png'),
+                                              //fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    JumpMiniGameView(
+                                                        selectedTime:
+                                                            selectedLevel),
+                                              ));
+                                        },
+                                        child: Container(
+                                          height: 40,
+                                          width: 88,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/UI/play.png'),
+                                              //fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ])
                               ]),
                             ),
                           ],
