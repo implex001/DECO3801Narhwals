@@ -1,9 +1,37 @@
 import 'dart:async';
 
+import 'package:caravaneering/games/caravan_game.dart';
 import 'package:flutter/material.dart';
 
+// For flame use only
+Widget coinOverlay(BuildContext buildContext, CaravanGame game) {
+  return game.coinCollectAnimation;
+}
+
 class CoinCollectAnimation extends StatefulWidget {
-  const CoinCollectAnimation({Key? key}) : super(key: key);
+  const CoinCollectAnimation(
+      {Key? key,
+      required this.startTop,
+      required this.endTop,
+      required this.startLeft,
+      required this.endLeft,
+      required this.startTurn,
+      required this.endTurn,
+      required this.numCoins,
+      this.startScale = 1,
+      this.endScale = 1})
+      : super(key: key);
+
+  final double startTop;
+  final double endTop;
+  final double startLeft;
+  final double endLeft;
+  final int startTurn;
+  final int endTurn;
+  final double startScale;
+  final double endScale;
+
+  final int numCoins;
 
   @override
   State<CoinCollectAnimation> createState() => _CoinCollectAnimationState();
@@ -15,32 +43,13 @@ class _CoinCollectAnimationState extends State<CoinCollectAnimation> {
   final List<double> topPositions = [];
   final List<double> leftPositions = [];
   final List<double> turns = [];
+  final List<double> scales = [];
 
-  int startTop = 0;
-  int endTop = 0;
-  int startLeft = 0;
-  int endLeft = 0;
-  int startTurn = 0;
-  int endTurn = 0;
-
-  int numCoins = 1;
-
-  void setValues(
-      {required int numCoins,
-      required int startTop,
-      required int endTop,
-      required int startLeft,
-      required int endLeft,
-      required int startTurn,
-      required int endTurn}) {
-    this.numCoins = numCoins;
-    this.startTop = startTop;
-    this.endTop = endTop;
-    this.startLeft = startLeft;
-    this.endLeft = endLeft;
-    this.startTurn = startTurn;
-    this.endTurn = endTurn;
+  @override
+  void initState() {
+    super.initState();
     _generateCoinPositions();
+    play();
   }
 
   @override
@@ -51,14 +60,14 @@ class _CoinCollectAnimationState extends State<CoinCollectAnimation> {
   }
 
   void play() {
-    for (int i = 0; i < numCoins; i++) {
+    for (int i = 0; i < widget.numCoins; i++) {
       _animateCoin(i);
     }
   }
 
   List<Widget> _buildAllCoins() {
     List<Widget> coins = [];
-    for (int i = 0; i < numCoins; i++) {
+    for (int i = 0; i < widget.numCoins; i++) {
       coins.add(_buildCoin(i));
     }
     return coins;
@@ -69,10 +78,15 @@ class _CoinCollectAnimationState extends State<CoinCollectAnimation> {
         duration: duration,
         top: topPositions[index],
         left: leftPositions[index],
+        curve: Curves.easeInQuint,
         child: AnimatedRotation(
           duration: duration,
-          turns: 1,
-          child: Image.asset('assets/images/UI/coin.png'),
+          turns: turns[index],
+          child: AnimatedScale(
+              duration: duration,
+              scale: scales[index],
+              curve: Curves.easeInExpo,
+              child: Image.asset('assets/images/UI/CoinIcon.png')),
         ));
   }
 
@@ -80,19 +94,21 @@ class _CoinCollectAnimationState extends State<CoinCollectAnimation> {
     topPositions.clear();
     leftPositions.clear();
     turns.clear();
-    for (int i = 0; i < numCoins; i++) {
-      topPositions.add(startTop.toDouble());
-      leftPositions.add(startLeft.toDouble());
-      turns.add(startTurn.toDouble());
+    for (int i = 0; i < widget.numCoins; i++) {
+      topPositions.add(widget.startTop.toDouble());
+      leftPositions.add(widget.startLeft.toDouble());
+      turns.add(widget.startTurn.toDouble());
+      scales.add(widget.startScale.toDouble());
     }
   }
 
   void _animateCoin(int index) {
     Timer(delay * index, () {
       setState(() {
-        topPositions[index] = endTop.toDouble();
-        leftPositions[index] = endLeft.toDouble();
-        turns[index] = endTurn.toDouble();
+        topPositions[index] = widget.endTop.toDouble();
+        leftPositions[index] = widget.endLeft.toDouble();
+        turns[index] = widget.endTurn.toDouble();
+        scales[index] = widget.endScale.toDouble();
       });
     });
   }
