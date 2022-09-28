@@ -13,7 +13,7 @@ class PurchaseConfirmationPage {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "${item["name"]} for ${item["cost"].toString()}",
+                   (item.containsKey('name')) ? "${item["name"]} for ${item["cost"].toString()}" : "${item["cost"].toString()}",
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.grey[300],
