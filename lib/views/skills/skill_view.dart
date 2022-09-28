@@ -5,6 +5,8 @@ import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/skills.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
+import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
 
 class SkillsView extends StatefulWidget {
   const SkillsView({super.key});
@@ -14,7 +16,7 @@ class SkillsView extends StatefulWidget {
 }
 
 class _SkillsViewState extends State<SkillsView> {
-  Map selectedSkill = {
+  Map<String, dynamic> selectedSkill = {
     "icon": "assets/images/skills/UpgradeSpeed.png",
     "iconLocked": "assets/images/skills/UpgradeSpeedLocked.png",
     "introduction": "introduction",
@@ -22,6 +24,32 @@ class _SkillsViewState extends State<SkillsView> {
     "index": 0,
   };
   Skill? skill;
+
+  // Whether the item description is currently shown
+  bool showItemDescription = false;
+
+    // Pop up window to confirm the purchase
+  Future<void> confirmPurchase() async {
+    if (skill == null) {
+      return;
+    }
+
+    bool enoughCurrency =  skill!.save.get('coins') >= selectedSkill["cost"];
+    PurchaseConfirmationPage.showPage(context, enoughCurrency, selectedSkill, purchaseItem);
+  }
+
+    // Attempts to purchase an item
+  void purchaseItem() {
+    if (skill == null) {
+      return;
+    }
+
+    setState(() {
+      if (skill!.purchase(selectedSkill["cost"])) {
+        skill!.addSkill(selectedSkill["index"]);
+      }
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -44,6 +72,7 @@ class _SkillsViewState extends State<SkillsView> {
     final size = MediaQuery.of(context).size;
     final width = size.width;
     final height = size.height;
+    double safePadding = max(MediaQuery.of(context).padding.right, 15);
 
 
     return Stack(
@@ -130,7 +159,7 @@ class _SkillsViewState extends State<SkillsView> {
                                   height: 24,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  padding:  EdgeInsets.only(left: safePadding,right: safePadding),
                                   child: Text(
                                     selectedSkill["introduction"],
                                     textAlign: TextAlign.center,
@@ -146,18 +175,10 @@ class _SkillsViewState extends State<SkillsView> {
                                 ),
                                 if (!selectedSkillBuyState)
                                   (TextButton(
-                                      onPressed: () {
-                                        if (skill!.purchase(
-                                            selectedSkill["cost"]))
-                                          setState(() {
-                                            selectedSkill["buyState"] = true;
-                                            skill!.addSkill(
-                                                selectedSkill["index"]);
-                                          });
-                                      },
+                                      onPressed: confirmPurchase,
                                       child: Image.asset(
                                           "assets/images/UI/BuyButton.png",
-                                          height: 20)))
+                                          height: 20,)))
                               ]))),
                 ],
               ),
