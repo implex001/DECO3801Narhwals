@@ -12,7 +12,6 @@ class WorldGame extends FlameGame with HorizontalDragDetector{
 
   @override
   Future<void> onLoad() async {
-
     camera.followVector2(
       cameraPosition,
       relativeOffset: Anchor.topLeft,
@@ -20,14 +19,25 @@ class WorldGame extends FlameGame with HorizontalDragDetector{
     camera.speed = 100;
 
     Sprite backgroundImage = await loadSprite(world.backgroundImagePath);
-    final ratio = backgroundImage.originalSize.y / camera.viewport.effectiveSize.y;
+    final ratio = backgroundImage.originalSize.y /
+        camera.viewport.effectiveSize.y;
 
     SpriteComponent backgroundComponent = SpriteComponent(
       sprite: backgroundImage,
-      size: Vector2(backgroundImage.originalSize.x / ratio, camera.viewport.effectiveSize.y),
+      size: Vector2(backgroundImage.originalSize.x / ratio,
+          camera.viewport.effectiveSize.y),
     );
 
     add(backgroundComponent);
+
+    // Add episodes
+    for (Episode episode in world.episodes) {
+      CircleComponent circleComponent = CircleComponent(
+        radius: 10,
+        position: Vector2(episode.position.x / ratio, episode.position.y / ratio),
+      );
+      add(circleComponent);
+    }
   }
 
   @override

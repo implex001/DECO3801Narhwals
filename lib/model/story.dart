@@ -1,4 +1,9 @@
+import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+
+mixin Coordinates {
+  Vector2 position = Vector2.zero();
+}
 
 mixin Sequence<T> {
   int get currentSequence;
@@ -17,14 +22,15 @@ class EpisodeChunk {
   }
 }
 
-class Episode with Sequence<EpisodeChunk> {
+class Episode with Sequence<EpisodeChunk>, Coordinates {
   final List<EpisodeChunk> _story = [];
   int _currentSequence = -1;
 
   @override
   int get currentSequence => _currentSequence;
 
-  Episode(List<EpisodeChunk> story) {
+  Episode(List<EpisodeChunk> story, {Vector2? position}) {
+    this.position = position ?? Vector2.zero();
     _story.addAll(story);
   }
 
@@ -54,4 +60,6 @@ class World {
   Episode getEpisode(int index) {
     return _episodes[index];
   }
+
+  Iterable<Episode> get episodes => _episodes;
 }
