@@ -1,4 +1,3 @@
-import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
 mixin Sequence<T> {
@@ -20,7 +19,7 @@ class EpisodeChunk {
 
 class Episode with Sequence<EpisodeChunk> {
   final List<EpisodeChunk> _story = [];
-  int _currentSequence = 0;
+  int _currentSequence = -1;
 
   @override
   int get currentSequence => _currentSequence;
