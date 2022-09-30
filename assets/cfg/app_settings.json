@@ -14,6 +14,6 @@
     "equippedHorses": ["horse-brown"],
     "equippedCarts": ["cart1"],
     "equippedPets": [],
-    "unlockedEpisode": 0
+    "unlockedEpisodes": ["W1E1"]
   }
 }

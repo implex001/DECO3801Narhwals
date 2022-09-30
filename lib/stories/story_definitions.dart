@@ -22,16 +22,18 @@ class EpisodeFactory {
   };
 
   static final Map<String, Vector2> _episodePositions = {
-    'W1E1': Vector2(150, 665),
-    'W1E2': Vector2(370, 460),
-    'W1E3': Vector2(540, 250),
-    'W1E4': Vector2(800, 185),
-    'W1E5': Vector2(1100, 185),
+    'W1E1': Vector2(150, 690),
+    'W1E2': Vector2(390, 485),
+    'W1E3': Vector2(540, 280),
+    'W1E4': Vector2(800, 215),
+    'W1E5': Vector2(1100, 215),
   };
 
   static Episode createEpisode(String episodeName) {
     try {
-      return Episode(_episodes[episodeName]!, position: _episodePositions[episodeName]);
+      return Episode(episodeName,
+          _episodes[episodeName]!,
+          position: _episodePositions[episodeName]);
     } catch (e) {
       throw Exception("Episode not found");
     }

@@ -23,15 +23,15 @@ class EpisodeChunk {
 }
 
 class Episode with Sequence<EpisodeChunk>, Coordinates {
-  final List<EpisodeChunk> _story = [];
+  final List<EpisodeChunk> _story;
+  final String id;
   int _currentSequence = -1;
 
   @override
   int get currentSequence => _currentSequence;
 
-  Episode(List<EpisodeChunk> story, {Vector2? position}) {
+  Episode(this.id, this._story, {Vector2? position}) {
     this.position = position ?? Vector2.zero();
-    _story.addAll(story);
   }
 
   @override
