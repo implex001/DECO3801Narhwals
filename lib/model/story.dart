@@ -14,7 +14,7 @@ mixin Sequence<T> {
 }
 
 class EpisodeChunk {
-  final String text;
+  final String? text;
   final String imagePath;
 
   const EpisodeChunk(this.text, this.imagePath);

@@ -24,24 +24,34 @@ class _EpisodeViewState extends State<EpisodeView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        _currentChunk!.getImage(),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: TextBubble(
-              text: _currentChunk!.text,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 3,
-              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
-            )),
-        TextButton(
-          onPressed: () {
-            nextEpisode();
-          },
-          child: const Text('Next'),
-        ),
-      ],
+    return GestureDetector(
+      onTap: () {
+        nextEpisode();
+      },
+      child:
+      Stack(
+        children: [
+          _currentChunk!.getImage(),
+          if (_currentChunk!.text != null)
+            Align(
+                alignment: Alignment.bottomCenter - const Alignment(0, 0.1),
+                child: TextBubble(
+                  text: _currentChunk!.text,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width - 20,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height / 3 - 20,
+                  padding: EdgeInsets.all(MediaQuery
+                      .of(context)
+                      .size
+                      .width / 25),
+                )),
+        ],
+      ),
     );
   }
 

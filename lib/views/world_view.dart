@@ -21,6 +21,14 @@ class _WorldViewState extends State<WorldView> {
 
   @override
   Widget build(BuildContext context) {
-    return GameWidget(game: _game);
+    return Stack(
+      children: [
+        GameWidget(game: _game),
+        GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Image.asset("assets/images/UI/Back.png", height: 30),
+        ),
+      ],
+    );
   }
 }
