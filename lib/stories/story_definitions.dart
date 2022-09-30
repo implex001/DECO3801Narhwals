@@ -5,6 +5,9 @@ class EpisodeFactory {
   static const Map<String, List<EpisodeChunk>> _episodes = {
     'W1E1': [
       EpisodeChunk('Tester 1', 'assets/images/placeholders/E1.1.png'),
+      EpisodeChunk('Tester 2', 'assets/images/placeholders/E1.2.png')],
+    'W1E2': [
+      EpisodeChunk('Tester 1', 'assets/images/placeholders/E1.1.png'),
       EpisodeChunk('Tester 2', 'assets/images/placeholders/E1.2.png')]
   };
 
@@ -19,7 +22,7 @@ class EpisodeFactory {
 
 class WorldFactory {
     static final Map<String, World> _worlds = {
-      'W1': World('assets/images/placeholders/W1.png', [
+      'W1': World('background/StoryMap.png', [
         EpisodeFactory.createEpisode('W1E1'),
         EpisodeFactory.createEpisode('W1E2'),
       ])
@@ -29,7 +32,7 @@ class WorldFactory {
       try {
         return _worlds[worldName]!;
       } catch (e) {
-        throw Exception("World not found");
+        throw Exception("Error constructing world: $e");
       }
     }
 }
