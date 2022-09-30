@@ -1,5 +1,7 @@
 import 'dart:ui';
-
+import 'package:caravaneering/views/story_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/navigator.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/story.dart' as story;
@@ -10,13 +12,14 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:provider/provider.dart';
 
-class WorldGame extends FlameGame with HorizontalDragDetector, HasTappableComponents{
-
+class WorldGame extends FlameGame
+    with HorizontalDragDetector, HasTappableComponents {
   // Hard coded world for test
   story.World world = WorldFactory.createWorld('W1');
   Vector2 cameraPosition = Vector2.zero();
   SaveModel? save;
   late double ratio;
+  late double worldBound;
 
   @override
   Future<void> onLoad() async {
@@ -27,8 +30,7 @@ class WorldGame extends FlameGame with HorizontalDragDetector, HasTappableCompon
     camera.speed = 100;
 
     Sprite backgroundImage = await loadSprite(world.backgroundImagePath);
-    ratio = backgroundImage.originalSize.y /
-        camera.viewport.effectiveSize.y;
+    ratio = backgroundImage.originalSize.y / camera.viewport.effectiveSize.y;
 
     SpriteComponent backgroundComponent = SpriteComponent(
       sprite: backgroundImage,
@@ -38,7 +40,7 @@ class WorldGame extends FlameGame with HorizontalDragDetector, HasTappableCompon
 
     add(backgroundComponent);
 
-
+    worldBound = backgroundComponent.size.x - camera.viewport.effectiveSize.x;
   }
 
   @override
@@ -51,9 +53,20 @@ class WorldGame extends FlameGame with HorizontalDragDetector, HasTappableCompon
       for (story.Episode episode in world.episodes) {
         CircleComponent dot;
         if (unlocked.contains(episode.id)) {
-          dot = EpisodeDot(Vector2(episode.position.x / ratio, episode.position.y / ratio), () {});
+          dot = EpisodeDot(
+              Vector2(episode.position.x / ratio, episode.position.y / ratio),
+              () {
+                episode.reset();
+            Navigator.push(
+                buildContext!,
+                MaterialPageRoute(
+                    builder: (context) => EpisodeView(
+                        episode: episode,
+                        onEnd: () => Navigator.pop(buildContext!))));
+          });
         } else {
-          dot = DisabledEpisodeDot(Vector2(episode.position.x / ratio, episode.position.y / ratio));
+          dot = DisabledEpisodeDot(
+              Vector2(episode.position.x / ratio, episode.position.y / ratio));
         }
 
         add(dot);
@@ -63,15 +76,18 @@ class WorldGame extends FlameGame with HorizontalDragDetector, HasTappableCompon
 
   @override
   void onHorizontalDragUpdate(DragUpdateInfo info) {
-    cameraPosition.add(Vector2(-info.delta.global.x, 0));
+    if (cameraPosition.x - info.delta.global.x < worldBound &&
+        cameraPosition.x - info.delta.global.x > 0) {
+      cameraPosition.add(Vector2(-info.delta.global.x, 0));
+    }
   }
 }
 
-class EpisodeDot extends CircleComponent with TapCallbacks{
+class EpisodeDot extends CircleComponent with TapCallbacks {
   final VoidCallback onTap;
 
-  EpisodeDot(Vector2 position, this.onTap) :
-        super(radius: 10, position: position, anchor: Anchor.center);
+  EpisodeDot(Vector2 position, this.onTap)
+      : super(radius: 10, position: position, anchor: Anchor.center);
 
   @override
   void onTapUp(TapUpEvent event) {
@@ -80,11 +96,11 @@ class EpisodeDot extends CircleComponent with TapCallbacks{
   }
 }
 
-class DisabledEpisodeDot extends CircleComponent{
-
-  DisabledEpisodeDot(Vector2 position) :
-        super(radius: 5,
-          position: position,
-          paint: Paint()..color = const Color(0x80FFFFFF),
-          anchor: Anchor.center);
+class DisabledEpisodeDot extends CircleComponent {
+  DisabledEpisodeDot(Vector2 position)
+      : super(
+            radius: 5,
+            position: position,
+            paint: Paint()..color = const Color(0x80FFFFFF),
+            anchor: Anchor.center);
 }

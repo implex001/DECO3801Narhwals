@@ -27,8 +27,14 @@ class _EpisodeViewState extends State<EpisodeView> {
     return Stack(
       children: [
         _currentChunk!.getImage(),
-        TextBubble(text: _currentChunk!.text),
-        Text(_currentChunk!.text),
+        Align(
+            alignment: Alignment.bottomCenter,
+            child: TextBubble(
+              text: _currentChunk!.text,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 3,
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width / 20),
+            )),
         TextButton(
           onPressed: () {
             nextEpisode();
@@ -40,11 +46,13 @@ class _EpisodeViewState extends State<EpisodeView> {
   }
 
   void nextEpisode() {
+    if (!widget.episode.hasNext()) {
+      widget.onEnd();
+      return;
+    }
+
     setState(() {
       _currentChunk = widget.episode.next();
-      if (_currentChunk == null) {
-        widget.onEnd();
-      }
     });
   }
 }

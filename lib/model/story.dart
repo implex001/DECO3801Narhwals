@@ -7,8 +7,10 @@ mixin Coordinates {
 
 mixin Sequence<T> {
   int get currentSequence;
-  T next();
+  T? next();
   T previous();
+  bool hasNext();
+  void reset();
 }
 
 class EpisodeChunk {
@@ -35,9 +37,12 @@ class Episode with Sequence<EpisodeChunk>, Coordinates {
   }
 
   @override
-  EpisodeChunk next() {
+  EpisodeChunk? next() {
     if (_currentSequence < _story.length - 1) {
       _currentSequence++;
+    } else {
+      _currentSequence = -1;
+      return null;
     }
     return _story[_currentSequence];
   }
@@ -48,6 +53,16 @@ class Episode with Sequence<EpisodeChunk>, Coordinates {
       _currentSequence--;
     }
     return _story[_currentSequence];
+  }
+
+  @override
+  bool hasNext() {
+    return _currentSequence < _story.length - 1;
+  }
+
+  @override
+  void reset() {
+    _currentSequence = -1;
   }
 }
 
