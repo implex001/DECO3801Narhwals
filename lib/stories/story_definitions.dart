@@ -29,11 +29,20 @@ class EpisodeFactory {
     'W1E5': Vector2(1100, 215),
   };
 
+  static final Map<String, int> _episodeSteps = {
+    'W1E1': 100,
+    'W1E2': 200,
+    'W1E3': 300,
+    'W1E4': 400,
+    'W1E5': 500,
+  };
+
   static Episode createEpisode(String episodeName) {
     try {
       return Episode(episodeName,
           _episodes[episodeName]!,
-          position: _episodePositions[episodeName]);
+          position: _episodePositions[episodeName],
+          requiredSteps: _episodeSteps[episodeName]!);
     } catch (e) {
       throw Exception("Episode not found");
     }

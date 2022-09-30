@@ -28,11 +28,12 @@ class Episode with Sequence<EpisodeChunk>, Coordinates {
   final List<EpisodeChunk> _story;
   final String id;
   int _currentSequence = -1;
+  int requiredSteps = 0;
 
   @override
   int get currentSequence => _currentSequence;
 
-  Episode(this.id, this._story, {Vector2? position}) {
+  Episode(this.id, this._story, {Vector2? position, this.requiredSteps = 0}) {
     this.position = position ?? Vector2.zero();
   }
 

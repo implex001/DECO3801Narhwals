@@ -20,6 +20,9 @@ class WorldGame extends FlameGame
   SaveModel? save;
   late double ratio;
   late double worldBound;
+  Function(story.Episode) selectedEpisodeCallback;
+
+  WorldGame(this.selectedEpisodeCallback);
 
   @override
   Future<void> onLoad() async {
@@ -53,19 +56,11 @@ class WorldGame extends FlameGame
       for (story.Episode episode in world.episodes) {
         CircleComponent dot;
         if (unlocked.contains(episode.id)) {
-          dot = EpisodeDot(
+          dot = Dot<story.Episode>(
               Vector2(episode.position.x / ratio, episode.position.y / ratio),
-              () {
-                episode.reset();
-            Navigator.push(
-                buildContext!,
-                MaterialPageRoute(
-                    builder: (context) => EpisodeView(
-                        episode: episode,
-                        onEnd: () => Navigator.pop(buildContext!))));
-          });
+              (e) => selectedEpisodeCallback(e), episode);
         } else {
-          dot = DisabledEpisodeDot(
+          dot = DisabledDot(
               Vector2(episode.position.x / ratio, episode.position.y / ratio));
         }
 
@@ -81,23 +76,34 @@ class WorldGame extends FlameGame
       cameraPosition.add(Vector2(-info.delta.global.x, 0));
     }
   }
+
+  void playEpisode(story.Episode episode) {
+    episode.reset();
+    Navigator.push(
+        buildContext!,
+        MaterialPageRoute(
+            builder: (context) => EpisodeView(
+                episode: episode,
+                onEnd: () => Navigator.pop(buildContext!))));
+  }
 }
 
-class EpisodeDot extends CircleComponent with TapCallbacks {
-  final VoidCallback onTap;
+class Dot<T> extends CircleComponent with TapCallbacks {
+  final Function(T) onTap;
+  final T data;
 
-  EpisodeDot(Vector2 position, this.onTap)
+  Dot(Vector2 position, this.onTap, this.data)
       : super(radius: 10, position: position, anchor: Anchor.center);
 
   @override
   void onTapUp(TapUpEvent event) {
     super.onTapUp(event);
-    onTap();
+    onTap(data);
   }
 }
 
-class DisabledEpisodeDot extends CircleComponent {
-  DisabledEpisodeDot(Vector2 position)
+class DisabledDot extends CircleComponent {
+  DisabledDot(Vector2 position)
       : super(
             radius: 5,
             position: position,
