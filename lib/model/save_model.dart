@@ -25,6 +25,10 @@ class SaveModel extends ChangeNotifier {
     return save.state[key];
   }
 
+  void addSteps(int number) {
+    changeMisc(SaveKeysV1.lifeTimeSteps, get(SaveKeysV1.lifeTimeSteps) + number);
+  }
+
   void addCoins(int number) {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) + number);
   }

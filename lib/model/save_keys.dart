@@ -20,4 +20,5 @@ class SaveKeysV1{
   static const equippedCarts = "equippedCarts";
   static const equippedPets = "equippedPets";
   static const unlockedEpisodes = "unlockedEpisodes";
+  static const lifeTimeSteps = "lifeTimeSteps";
 }

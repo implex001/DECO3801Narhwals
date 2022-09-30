@@ -165,6 +165,7 @@ class CaravanGame extends FlameGame with
         });
         stepTracker.getStepStream().listen((event) {
           s.addCoins(1 * modifier);
+          s.addSteps(1 * modifier);
         });
         s.startAutoSave();
       });
