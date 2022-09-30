@@ -148,6 +148,7 @@ class CaravanGame extends FlameGame with
             dartasync.Timer(const Duration(seconds: 5),
                    () => overlays.remove("StepUpdate"));
             s.addCoins(backgroundSteps * modifier);
+            s.addSteps(backgroundSteps * modifier);
             s.saveState(force: true);
 
             coinCollectAnimation = CoinCollectAnimation(
@@ -168,7 +169,7 @@ class CaravanGame extends FlameGame with
         if (await stepTracker.requestPermission()) {
           stepTracker.getStepStream().listen((event) {
             s.addCoins(1 * modifier);
-            s.addSteps(1 * modifier);
+            s.addSteps(1);
           });
         }
         s.startAutoSave();

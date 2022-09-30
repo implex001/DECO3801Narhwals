@@ -21,6 +21,7 @@ class WorldGame extends FlameGame
   late double ratio;
   late double worldBound;
   Function(story.Episode) selectedEpisodeCallback;
+  List<Dot> dots = [];
 
   WorldGame(this.selectedEpisodeCallback);
 
@@ -51,19 +52,31 @@ class WorldGame extends FlameGame
     super.onAttach();
     if (save == null) {
       save = Provider.of<SaveModel>(buildContext!);
-      List<dynamic> unlocked = save?.get(SaveKeysV1.unlockedEpisodes);
+      List<dynamic> unlocked = save!.get(SaveKeysV1.unlockedEpisodes);
+
       // Add episodes
       for (story.Episode episode in world.episodes) {
-        CircleComponent dot;
-        if (unlocked.contains(episode.id)) {
-          dot = Dot<story.Episode>(
-              Vector2(episode.position.x / ratio, episode.position.y / ratio),
-              (e) => selectedEpisodeCallback(e), episode);
-        } else {
-          dot = DisabledDot(
-              Vector2(episode.position.x / ratio, episode.position.y / ratio));
+        // Check progression
+        if (save!.get(SaveKeysV1.lifeTimeSteps) > episode.requiredSteps &&
+            !unlocked.contains(episode.id)) {
+          save!.addUnlockedEpisode(episode.id);
+          unlocked.add(episode.id);
         }
+        save!.save.save();
 
+        Dot dot = Dot<story.Episode>(
+            Vector2(episode.position.x / ratio, episode.position.y / ratio),
+                (e) {
+              for (Dot d in dots) {
+                d.hideSelected();
+              }
+              selectedEpisodeCallback(e);
+            }, episode);
+        if (unlocked.contains(episode.id)) {
+          dot.unlocked = true;
+          dot.showUnlocked();
+        }
+        dots.add(dot);
         add(dot);
       }
     }
@@ -82,31 +95,69 @@ class WorldGame extends FlameGame
     Navigator.push(
         buildContext!,
         MaterialPageRoute(
-            builder: (context) => EpisodeView(
-                episode: episode,
-                onEnd: () => Navigator.pop(buildContext!))));
+            builder: (context) =>
+                EpisodeView(
+                    episode: episode,
+                    onEnd: () => Navigator.pop(buildContext!))));
   }
 }
 
 class Dot<T> extends CircleComponent with TapCallbacks {
   final Function(T) onTap;
   final T data;
+  bool unlocked = false;
+  bool selected = false;
 
   Dot(Vector2 position, this.onTap, this.data)
-      : super(radius: 10, position: position, anchor: Anchor.center);
+      : super(radius: 10,
+      position: position,
+      anchor: Anchor.center,
+      paint: Paint()..color = const Color(0x80FFFFFF));
 
   @override
   void onTapUp(TapUpEvent event) {
     super.onTapUp(event);
-    onTap(data);
+    if (!selected) {
+      onTap(data);
+      showSelected();
+    }
+  }
+
+  void showSelected() {
+    super.radius = 10;
+    if (unlocked) {
+      super.paint.color = Colors.green;
+    } else {
+      super.paint.color = Colors.white;
+    }
+
+    selected = true;
+  }
+
+  void hideSelected() {
+    super.radius = 10;
+
+    if (unlocked) {
+      super.paint.color = Colors.lightGreen;
+    } else {
+      super.paint.color = const Color(0x80FFFFFF);
+    }
+    selected = false;
+  }
+
+  void showUnlocked() {
+    if (unlocked) {
+      super.paint.color = Colors.green;
+    }
   }
 }
 
 class DisabledDot extends CircleComponent {
   DisabledDot(Vector2 position)
       : super(
-            radius: 5,
-            position: position,
-            paint: Paint()..color = const Color(0x80FFFFFF),
-            anchor: Anchor.center);
+      radius: 5,
+      position: position,
+      paint: Paint()
+        ..color = const Color(0x80FFFFFF),
+      anchor: Anchor.center);
 }

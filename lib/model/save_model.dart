@@ -45,6 +45,10 @@ class SaveModel extends ChangeNotifier {
     changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) - number);
   }
 
+  void addUnlockedEpisode(String episode) {
+    save.state[SaveKeysV1.unlockedEpisodes].add(episode);
+  }
+
   // Equips a horse skin to a horse number
   void equipHorse(int horseNum, String key) {
     if (save.state[SaveKeysV1.equippedHorses] == null) {

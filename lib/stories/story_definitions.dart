@@ -31,10 +31,10 @@ class EpisodeFactory {
 
   static final Map<String, int> _episodeSteps = {
     'W1E1': 100,
-    'W1E2': 200,
-    'W1E3': 300,
-    'W1E4': 400,
-    'W1E5': 500,
+    'W1E2': 1000,
+    'W1E3': 3000,
+    'W1E4': 4000,
+    'W1E5': 5000,
   };
 
   static Episode createEpisode(String episodeName) {
