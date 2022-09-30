@@ -115,7 +115,7 @@ class CaravanGame extends FlameGame with
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
-      save?.init().then((s) {
+      save?.init().then((s) async {
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
@@ -163,10 +163,14 @@ class CaravanGame extends FlameGame with
             showCoins();
           }
         });
-        stepTracker.getStepStream().listen((event) {
-          s.addCoins(1 * modifier);
-          s.addSteps(1 * modifier);
-        });
+
+        // Live step tracking
+        if (await stepTracker.requestPermission()) {
+          stepTracker.getStepStream().listen((event) {
+            s.addCoins(1 * modifier);
+            s.addSteps(1 * modifier);
+          });
+        }
         s.startAutoSave();
       });
 
