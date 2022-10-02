@@ -91,8 +91,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamed(
-                context, "/skills");
+            Navigator.pushNamed(context, "/skills");
           },
           child: Image.asset(
             skillsButtonImage,
@@ -129,20 +128,18 @@ class NavbarRightOverlay extends StatelessWidget {
             height: 30,
             fit: BoxFit.contain,
           ),
-          Consumer<SaveModel>(
-              builder: (context, save, build) {
-                return DefaultTextStyle(
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 20,
-                  ),
-                  child: Text(
-                    '${save.get(SaveKeysV1.coins)}',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-          )
+          Consumer<SaveModel>(builder: (context, save, build) {
+            return DefaultTextStyle(
+              style: const TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 20,
+              ),
+              child: Text(
+                '${save.get(SaveKeysV1.coins)}',
+                textAlign: TextAlign.center,
+              ),
+            );
+          })
         ]),
         Stack(alignment: AlignmentDirectional.center, children: [
           Image.asset(
@@ -150,20 +147,18 @@ class NavbarRightOverlay extends StatelessWidget {
             height: 30,
             fit: BoxFit.contain,
           ),
-          Consumer<SaveModel>(
-              builder: (context, save, build) {
-                return DefaultTextStyle(
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 20,
-                  ),
-                  child: Text(
-                    '${save.get(SaveKeysV1.gems)}',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-          )
+          Consumer<SaveModel>(builder: (context, save, build) {
+            return DefaultTextStyle(
+              style: const TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 20,
+              ),
+              child: Text(
+                '${save.get(SaveKeysV1.gems)}',
+                textAlign: TextAlign.center,
+              ),
+            );
+          })
         ]),
       ],
     );

@@ -16,12 +16,8 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-class CaravanGame extends FlameGame with
-    VerticalDragDetector,
-    MultiTouchDragDetector,
-    MultiTouchTapDetector {
-
+class CaravanGame extends FlameGame
+    with VerticalDragDetector, MultiTouchDragDetector, MultiTouchTapDetector {
   static const String description = '''
     Caravan Game
   ''';
@@ -43,37 +39,35 @@ class CaravanGame extends FlameGame with
 
   int backgroundSteps = 0;
   late ParallaxComponent<FlameGame> parallaxComponent;
-
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
-
-
   void renderEquipped() async {
-      if (currentActors.isNotEmpty) {
-        removeAll(currentActors);
-        currentActors.clear();
+    if (currentActors.isNotEmpty) {
+      removeAll(currentActors);
+      currentActors.clear();
+    }
+
+    await images.load("items/${equippedHorses[0]}-animation.png");
+    final horseComponent =
+        HorseComponent(equippedHorses[0], Vector2(320, 195 + 100));
+    currentActors.add(horseComponent);
+
+    await images.load("items/${equippedCarts[0]}.png");
+    final cartComponent =
+        CartComponent(equippedCarts[0], Vector2(240, 175 + 100));
+    currentActors.add(cartComponent);
+
+    // add all equipped pets to the screen
+    if (equippedPets.isNotEmpty) {
+      for (String pet in equippedPets) {
+        await images.load("items/$pet-animation.png");
+        final petComponent = PetComponent(pet);
+
+        currentActors.add(petComponent);
       }
+    }
 
-      await images.load("items/${equippedHorses[0]}-animation.png");
-      final horseComponent = HorseComponent(equippedHorses[0], Vector2(320, 195));
-      currentActors.add(horseComponent);
-
-      await images.load("items/${equippedCarts[0]}.png");
-      final cartComponent = CartComponent(equippedCarts[0], Vector2(240, 175));
-      currentActors.add(cartComponent);
-
-
-      // add all equipped pets to the screen
-      if (equippedPets.isNotEmpty) {
-        for (String pet in equippedPets) {
-          await images.load("items/$pet-animation.png");
-          final petComponent = PetComponent(pet);
-
-          currentActors.add(petComponent);
-        }
-      }
-
-      addAll(currentActors);
+    addAll(currentActors);
   }
 
   @override
@@ -94,11 +88,13 @@ class CaravanGame extends FlameGame with
     var horseLeadsImage = await images.load('General/CartToHorse.png');
     Sprite horseLeadSprite = Sprite(horseLeadsImage);
     final horseLeads = SpriteComponent(
-        sprite: horseLeadSprite, size: Vector2(180, 90), position: Vector2(235, 185));
-
+        sprite: horseLeadSprite,
+        size: Vector2(180, 90),
+        position: Vector2(235, 185 + 100));
 
     await images.load("characters/MainCharacterFinal-animation.png");
-    final mainCharacter = HumanComponentAnimated("MainCharacterFinal", Vector2(420, 220));
+    final mainCharacter =
+        HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
 
     for (var image in Skill.groupUpgradeImage.values) {
       await images.load("characters/$image.png");
@@ -129,8 +125,12 @@ class CaravanGame extends FlameGame with
 
         // TODO: These are temporary positioning until proper positioning is
         // implemented
-        for (int i = 1; i <= s.get(SaveKeysV1.groupUpgrades) && i <= Skill.groupUpgradeImage.length; i++) {
-          final human = HumanComponent(Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
+        for (int i = 1;
+            i <= s.get(SaveKeysV1.groupUpgrades) &&
+                i <= Skill.groupUpgradeImage.length;
+            i++) {
+          final human = HumanComponent(
+              Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
           add(human);
         }
 
@@ -146,7 +146,10 @@ class CaravanGame extends FlameGame with
           if (backgroundSteps != 0) {
             overlays.add("StepUpdate");
             dartasync.Timer(const Duration(seconds: 5),
-                   () => overlays.remove("StepUpdate"));
+                () => overlays.remove("StepUpdate"));
+
+                 
+
             s.addCoins(backgroundSteps * modifier);
             s.saveState(force: true);
 
@@ -198,12 +201,15 @@ class CaravanGame extends FlameGame with
 
     // Code below is modified from https://stackoverflow.com/questions/71131480/flutter-flame-how-to-use-parallax-with-camera-followcomponent
     final currentCameraPosition = camera.position;
-    final delta = dt > deltaThresholdToUpdateParralax ? 1.0 / (dt * framesPerSecond) : 1.0;
+    final delta = dt > deltaThresholdToUpdateParralax
+        ? 1.0 / (dt * framesPerSecond)
+        : 1.0;
     final baseVelocity = currentCameraPosition
       ..sub(lastCameraPosition)
       ..multiply(parralaxBgVelocityIncrease)
       ..multiply(Vector2(delta, delta));
-    parallaxComponent.parallax?.baseVelocity.setFrom(baseVelocity + Vector2(2, 2));
+    parallaxComponent.parallax?.baseVelocity
+        .setFrom(baseVelocity + Vector2(2, 2));
     lastCameraPosition.setFrom(camera.position);
   }
 
@@ -241,12 +247,18 @@ class CaravanGame extends FlameGame with
       ParallaxImageData('General/Details.png'),
       velocityMultiplier: Vector2(20, 0),
     );
+    final foregroundWithTracks = await loadParallaxLayer(
+      ParallaxImageData('/General/Foreground2.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+
     final parallax = Parallax(
       [
         skyLayer,
         cloudsFarLayer,
         midgroundLayer,
         foregroundLayer,
+        foregroundWithTracks,
         detailsLayer,
       ],
       baseVelocity: Vector2(20, 0),
@@ -254,5 +266,4 @@ class CaravanGame extends FlameGame with
 
     return ParallaxComponent(parallax: parallax);
   }
-
 }
