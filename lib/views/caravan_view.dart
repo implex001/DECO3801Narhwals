@@ -1,4 +1,5 @@
 import 'package:caravaneering/games/caravan_game.dart';
+import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:caravaneering/views/overlays/caravan_step_update_overlay.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:flame/game.dart';
@@ -25,18 +26,17 @@ class _MyHomePageState extends State<CaravanView> {
 
   @override
   Widget build(BuildContext context) {
-      return
-          Provider(
-            create: (context) => _game,
-            child:
-              GameWidget(
-                  game: _game,
-                  overlayBuilderMap: const {
-                    "Bar": flameNavbarOverlay,
-                    "StepUpdate": caravanStepUpdate,
-                  },
-                  initialActiveOverlays: const ["Bar"],
-              ),
-          );
+    return Provider(
+      create: (context) => _game,
+      child: GameWidget(
+        game: _game,
+        overlayBuilderMap: const {
+          "Bar": flameNavbarOverlay,
+          "StepUpdate": caravanStepUpdate,
+          "Coins": coinOverlay,
+        },
+        initialActiveOverlays: const ["Bar"],
+      ),
+    );
   }
 }

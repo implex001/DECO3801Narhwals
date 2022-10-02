@@ -6,12 +6,14 @@ import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
+import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/parallax.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CaravanGame extends FlameGame
@@ -37,7 +39,8 @@ class CaravanGame extends FlameGame
 
   int backgroundSteps = 0;
   late ParallaxComponent<FlameGame> parallaxComponent;
-
+  late CoinCollectAnimation coinCollectAnimation;
+  ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
   void renderEquipped() async {
     if (currentActors.isNotEmpty) {
       removeAll(currentActors);
@@ -144,8 +147,23 @@ class CaravanGame extends FlameGame
             overlays.add("StepUpdate");
             dartasync.Timer(const Duration(seconds: 5),
                 () => overlays.remove("StepUpdate"));
+
+                 
+
             s.addCoins(backgroundSteps * modifier);
             s.saveState(force: true);
+
+            coinCollectAnimation = CoinCollectAnimation(
+              startTop: 200,
+              startLeft: 200,
+              startTurn: 0,
+              endTop: MediaQuery.of(buildContext!).size.height / 40,
+              endLeft: MediaQuery.of(buildContext!).size.width - MediaQuery.of(buildContext!).size.width / 5,
+              endTurn: 20,
+              numCoins: 10,
+              endScale: 0.05,
+            );
+            showCoins();
           }
         });
         stepTracker.getStepStream().listen((event) {
@@ -195,15 +213,9 @@ class CaravanGame extends FlameGame
     lastCameraPosition.setFrom(camera.position);
   }
 
-  // Navigation Related Functions
-  @Deprecated("Use the Navigator class instead")
-  void navigateMiniGameOverlay() {
-    overlays.add("MiniGames");
-  }
-
-  @Deprecated("Use the Navigator class instead")
-  void exitMiniGameOverlay() {
-    overlays.remove("MiniGames");
+  void showCoins() {
+    overlays.add("Coins");
+    dartasync.Timer(const Duration(seconds: 5), () => overlays.remove("Coins"));
   }
 
   @override
