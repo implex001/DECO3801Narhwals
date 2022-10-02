@@ -1,13 +1,32 @@
 import 'package:caravaneering/games/jump_minigame.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
+import 'package:caravaneering/views/text_bubble.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+
+class ChatBubbleTriangle extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()..color = Colors.blue;
+    var path = Path();
+    path.lineTo(-10, 0);
+    path.lineTo(0, 10);
+    path.lineTo(10, 0);
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
 
 class MinigameOutro extends StatefulWidget {
   MinigameOutro({Key? key, required this.miniGame});
@@ -19,9 +38,11 @@ class MinigameOutro extends StatefulWidget {
 
 class _MinigameOutro extends State<MinigameOutro> {
   late JumpMiniGame miniGame;
+  late CoinCollectAnimation coinCollectAnimation;
   @override
   void initState() {
     super.initState();
+
     miniGame = widget.miniGame;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -60,25 +81,31 @@ class _MinigameOutro extends State<MinigameOutro> {
               child:
                   Image.asset('assets/images/cave/cave-guide.png', width: 80)),
           Positioned(
-              left: 370,
-              bottom: 70,
+              top: 10,
+              left: 200,
+              child: TextBubble(
+                text: "",
+                width: 400,
+                height: 100,
+                fontSize: 20,
+              )),
+          const Positioned(
+              top: 40,
+              left: 280,
+              child: Text('Congratulations!',
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      decoration: TextDecoration.none,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700))),
+          Positioned(
+              left: 340,
+              bottom: 60,
               child: Image.asset(
                 'assets/images/cave/chest_1.png',
                 fit: BoxFit.contain,
                 height: 150,
               )),
-          const Positioned(
-            top: 50,
-            left: 280,
-            child: Text(
-              "Congratulations!",
-              style: TextStyle(
-                fontSize: 30.0,
-                decoration: TextDecoration.none,
-                color: Colors.white,
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -102,10 +129,17 @@ class StatsView extends State<MiniGameStats> {
   late int? modifier;
   late int coinsEarned;
   late int obstacleCoins;
+  late bool showCoinAnimation;
 
   @override
   void initState() {
     super.initState();
+    showCoinAnimation = false;
+    Future.delayed(const Duration(milliseconds: 800)).then((value) {
+      setState(() {
+        showCoinAnimation = true;
+      });
+    });
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
     ]);
@@ -141,6 +175,15 @@ class StatsView extends State<MiniGameStats> {
             left: 50,
             child: Image.asset('assets/images/cave/cave-guide.png', width: 80)),
         Positioned(
+            top: 7,
+            left: 180,
+            child: TextBubble(
+              text: "",
+              width: 500,
+              height: 170,
+              fontSize: 20,
+            )),
+        Positioned(
           top: 30,
           left: 230,
           child: Container(
@@ -150,7 +193,7 @@ class StatsView extends State<MiniGameStats> {
             child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
-                    color: Colors.blueGrey,
+                    color: Colors.transparent,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40.0),
                       bottomLeft: Radius.circular(40.0),
@@ -166,7 +209,7 @@ class StatsView extends State<MiniGameStats> {
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                     Column(
@@ -176,7 +219,7 @@ class StatsView extends State<MiniGameStats> {
                               style: const TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                   ]),
@@ -188,7 +231,7 @@ class StatsView extends State<MiniGameStats> {
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                     Column(
@@ -198,7 +241,7 @@ class StatsView extends State<MiniGameStats> {
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                   ]),
@@ -210,7 +253,7 @@ class StatsView extends State<MiniGameStats> {
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                     Column(
@@ -220,7 +263,7 @@ class StatsView extends State<MiniGameStats> {
                               style: const TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                   ]),
@@ -232,7 +275,7 @@ class StatsView extends State<MiniGameStats> {
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                     Column(
@@ -242,7 +285,7 @@ class StatsView extends State<MiniGameStats> {
                               style: const TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w700))
                         ]),
                   ]),
@@ -250,21 +293,15 @@ class StatsView extends State<MiniGameStats> {
           ),
         ),
         Positioned(
-          left: 370,
-          bottom: 70,
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, "/caravan", (route) => false);
-              },
-              child: Image.asset(
-                'assets/images/cave/coin_chest.gif',
-                fit: BoxFit.contain,
-                height: 150,
-              )),
-        ),
+            left: 340,
+            bottom: 60,
+            child: Image.asset(
+              'assets/images/cave/coin_chest.gif',
+              fit: BoxFit.contain,
+              height: 150,
+            )),
         Positioned(
-          left: 385,
+          left: 360,
           bottom: 20,
           child: GestureDetector(
               onTap: () {
@@ -278,6 +315,20 @@ class StatsView extends State<MiniGameStats> {
               )),
         ),
         const CoinDisplayBar(),
+        FutureBuilder(
+            builder: (context, snapshot) => showCoinAnimation
+                ? CoinCollectAnimation(
+                    startLeft: 352,
+                    startTop: 233,
+                    startTurn: 0,
+                    endTop: MediaQuery.of(context).size.height / 40,
+                    endLeft: MediaQuery.of(context).size.width -
+                        MediaQuery.of(context).size.width / 5,
+                    endTurn: 20,
+                    numCoins: 10,
+                    endScale: 0.05,
+                  )
+                : Container())
       ],
     );
   }
