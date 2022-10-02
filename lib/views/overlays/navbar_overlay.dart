@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/overlays/main_menu.dart';
-import 'package:caravaneering/views/overlays/coming_soon.dart';
 
 /// Game engine function to build navbar overlay.
 /// For Flame use only
@@ -207,7 +206,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
           )),
       GestureDetector(
           onTap: () {
-            ComingSoonPage.showPage(context, "Story page coming soon!");
+            Navigator.pushNamed(context, "/world");
           },
           child: Image.asset(
             'assets/images/UI/Story.png',
