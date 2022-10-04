@@ -1,3 +1,4 @@
+import 'package:caravaneering/model/save_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:caravaneering/model/save_model.dart';
@@ -32,6 +33,18 @@ class MainMenuPage {
                     Provider.of<SaveModel>(context, listen: false)
                         .addGems(1000);
                     Provider.of<SaveModel>(context, listen: false).saveState();
+
+                    //Change Biome
+                    var biome = Provider.of<SaveModel>(context, listen: false)
+                        .get(SaveKeysV1.currentBiome);
+
+                    if (biome == "forest") {
+                      Provider.of<SaveModel>(context, listen: false)
+                          .changeMisc(SaveKeysV1.currentBiome, "snow");
+                    } else {
+                      Provider.of<SaveModel>(context, listen: false)
+                          .changeMisc(SaveKeysV1.currentBiome, "forest");
+                    }
                   },
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
