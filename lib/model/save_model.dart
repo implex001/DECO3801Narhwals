@@ -25,6 +25,10 @@ class SaveModel extends ChangeNotifier {
     return save.state[key];
   }
 
+  void addSteps(int number) {
+    changeMisc(SaveKeysV1.lifeTimeSteps, get(SaveKeysV1.lifeTimeSteps) + number);
+  }
+
   void addCoins(int number) {
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) + number);
   }
@@ -39,6 +43,10 @@ class SaveModel extends ChangeNotifier {
 
   void removeGems(int number) {
     changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) - number);
+  }
+
+  void addUnlockedEpisode(String episode) {
+    save.state[SaveKeysV1.unlockedEpisodes].add(episode);
   }
 
   // Equips a horse skin to a horse number

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/overlays/main_menu.dart';
-import 'package:caravaneering/views/overlays/coming_soon.dart';
 
 /// Game engine function to build navbar overlay.
 /// For Flame use only
@@ -232,29 +231,26 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    if (!isCaravanPage) {
-      return Container();
-    } else {
-      return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        GestureDetector(
-            onTap: () {
-              MinigameSelectorPage.showPage(context);
-            },
-            child: Image.asset(
-              mingameButtonImage,
-              fit: BoxFit.contain,
-              height: 30,
-            )),
-        GestureDetector(
-            onTap: () {
-              ComingSoonPage.showPage(context, "Story page coming soon!");
-            },
-            child: Image.asset(
-              'assets/images/UI/Story.png',
-              fit: BoxFit.contain,
-              height: 30,
-            )),
-      ]);
-    }
+
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      GestureDetector(
+          onTap: () {
+            MinigameSelectorPage.showPage(context);
+          },
+          child: Image.asset(
+            mingameButtonImage,
+            fit: BoxFit.contain,
+            height: 30,
+          )),
+      GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, "/world");
+          },
+          child: Image.asset(
+            'assets/images/UI/Story.png',
+            fit: BoxFit.contain,
+            height: 30,
+          )),
+    ]);
   }
 }
