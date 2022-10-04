@@ -15,6 +15,7 @@
     "equippedCarts": ["cart1"],
     "equippedPets": [],
     "unlockedEpisodes": [],
-    "lifeTimeSteps": 0
+    "lifeTimeSteps": 0,
+    "currentBiome": "forest"
   }
 }
