@@ -13,6 +13,8 @@
     "pets": [],
     "equippedHorses": ["horse-brown"],
     "equippedCarts": ["cart1"],
-    "equippedPets": []
+    "equippedPets": [],
+    "unlockedEpisodes": [],
+    "lifeTimeSteps": 0
   }
 }
