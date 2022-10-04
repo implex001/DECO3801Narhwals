@@ -21,22 +21,27 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Stack(
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.asset(
-            'assets/images/placeholders/WoodenBar.png',
-            height: 30,
-            fit: BoxFit.contain,
+          Stack(
+            children: [
+              Container(
+                height: 30,
+                child: Image.asset(
+                  'assets/images/UI/navBackground.png',
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [NavbarLeftOverlay(), NavbarRightOverlay()],
+              )
+            ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [NavbarLeftOverlay(), NavbarRightOverlay()],
-          )
-        ],
-      ),
-      NavbarBottomOverlay(),
-    ]);
+          NavbarBottomOverlay(),
+        ]);
   }
 }
 
@@ -53,6 +58,8 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
   String shopButtonImage = 'assets/images/UI/Shop.png';
   String skillsButtonImage = 'assets/images/UI/Skills.png';
   String caravanButtonImage = 'assets/images/UI/Caravan.png';
+  String backButtonImage = 'assets/images/UI/Back.png';
+  bool isCaravanPage = false;
 
   @override
   void didChangeDependencies() {
@@ -71,6 +78,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           skillsButtonImage = 'assets/images/UI/SkillsSelected.png';
           break;
         case "/caravan":
+          isCaravanPage = true;
           caravanButtonImage = 'assets/images/UI/CaravanSelected.png';
           break;
       }
@@ -79,6 +87,20 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isCaravanPage) {
+      return GestureDetector(
+          onTap: () {
+            if (route != "/caravan") {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/caravan", (route) => false);
+            }
+          },
+          child: Image.asset(
+            backButtonImage,
+            fit: BoxFit.contain,
+            height: 30,
+          ));
+    }
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(
           onTap: () {
@@ -107,18 +129,6 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           },
           child: Image.asset(
             skillsButtonImage,
-            fit: BoxFit.contain,
-            height: 30,
-          )),
-      GestureDetector(
-          onTap: () {
-            if (route != "/caravan") {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/caravan", (route) => false);
-            }
-          },
-          child: Image.asset(
-            caravanButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
@@ -198,7 +208,7 @@ class NavbarBottomOverlay extends StatefulWidget {
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
   String route = "";
   String mingameButtonImage = 'assets/images/UI/Minigames.png';
-  bool isCaravanPage = true;
+  bool isCaravanPage = false;
 
   @override
   void didChangeDependencies() {
@@ -212,14 +222,10 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
           break;
         case "/cave-intro":
           mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
-          isCaravanPage = false;
           break;
         case "/minigames/jump":
           mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
-          isCaravanPage = false;
           break;
-        default:
-          isCaravanPage = false;
       }
     }
   }
