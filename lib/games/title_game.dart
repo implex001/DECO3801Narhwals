@@ -20,28 +20,28 @@ class TitleScreenAnimation extends FlameGame {
   Future<void>? onLoad() async {
     camera.speed = 2000;
     parallaxComponent = await loadParallaxComponent([
-      ParallaxImageData('General/Sky.png'),
+      ParallaxImageData('General/ForestSky.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(80, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
     add(parallaxComponent);
     parallaxComponent2 = await loadParallaxComponent([
-      ParallaxImageData('General/Midground.png'),
+      ParallaxImageData('General/ForestMidground.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(100, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
     add(parallaxComponent2);
     parallaxComponent3 = await loadParallaxComponent([
-      ParallaxImageData('General/Foreground.png'),
+      ParallaxImageData('General/ForestForeground.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(70, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
     add(parallaxComponent3);
     parallaxGroundDetails = await loadParallaxComponent([
-      ParallaxImageData('General/Details.png'),
+      ParallaxImageData('General/ForestDetails.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(50, 0),
