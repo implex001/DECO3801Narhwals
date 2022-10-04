@@ -234,29 +234,29 @@ class CaravanGame extends FlameGame
 
   Future<ParallaxComponent> createParallaxComponent() async {
     final skyLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Sky.png'),
+      ParallaxImageData('General/ForestSky.png'),
       velocityMultiplier: Vector2(0, 0),
     );
     final cloudsFarLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Clouds.png'),
+      ParallaxImageData('General/ForestClouds.png'),
       velocityMultiplier: Vector2(1.8, 0),
     );
     final midgroundLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Midground.png'),
+      ParallaxImageData('General/ForestMidground.png'),
       velocityMultiplier: Vector2(3.8, 0),
     );
     final foregroundLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Foreground.png'),
+      ParallaxImageData('General/ForestForeground.png'),
       velocityMultiplier: Vector2(20, 0),
     );
     final detailsLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Details.png'),
+      ParallaxImageData('General/ForestDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
-    final foregroundWithTracks = await loadParallaxLayer(
-      ParallaxImageData('/General/Foreground2.png'),
-      velocityMultiplier: Vector2(20, 0),
-    );
+    // final foregroundWithTracks = await loadParallaxLayer(
+    //   ParallaxImageData('/General/ForestForeground.png'),
+    //   velocityMultiplier: Vector2(20, 0),
+    // );
 
     final parallax = Parallax(
       [
@@ -264,7 +264,6 @@ class CaravanGame extends FlameGame
         cloudsFarLayer,
         midgroundLayer,
         foregroundLayer,
-        foregroundWithTracks,
         detailsLayer,
       ],
       baseVelocity: Vector2(20, 0),
