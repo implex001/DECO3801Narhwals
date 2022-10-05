@@ -1,13 +1,16 @@
 import 'dart:async' as dartasync;
+import 'dart:ffi';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/model/shop/shop_items.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
 import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
+import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
@@ -36,13 +39,25 @@ class CaravanGame extends FlameGame
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
   List<String> equippedPets = List.from(ItemDetails.startingPets);
 
+  List<Map<String, dynamic>>? allOwnedHorses = [];
+  List<Map<String, dynamic>>? allOwnedCarts = [];
+
   List<Component> currentActors = [];
 
   int backgroundSteps = 0;
   ParallaxComponent<FlameGame>? parallaxComponent;
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
+
+  // Coordinates of horse and cart
+  Vector2 horseCoords = Vector2(320, 195 + 100);
+  Vector2 cartCoords = Vector2(240, 175 + 100);
+  // Current horse index in allHorsesOwned, for item selection
+  int horseOwnedIndex = 0;
+  int cartOwnedIndex = 0;
+
   void renderEquipped() async {
+    print(" renderedddddd ${equippedHorses[0]}");
     if (currentActors.isNotEmpty) {
       removeAll(currentActors);
       currentActors.clear();
@@ -57,7 +72,7 @@ class CaravanGame extends FlameGame
 
     await images.load("characters/MainCharacterFinal-animation.png");
     final mainCharacter =
-    HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
+        HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
 
     for (var image in Skill.groupUpgradeImage.values) {
       await images.load("characters/$image.png");
@@ -65,15 +80,13 @@ class CaravanGame extends FlameGame
 
     add(horseLeads);
     add(mainCharacter);
-
+    print("hello renderedddddd ${equippedHorses[0]}");
     await images.load("items/${equippedHorses[0]}-animation.png");
-    final horseComponent =
-        HorseComponent(equippedHorses[0], Vector2(320, 195 + 100));
+    final horseComponent = HorseComponent(equippedHorses[0], horseCoords);
     currentActors.add(horseComponent);
 
     await images.load("items/${equippedCarts[0]}.png");
-    final cartComponent =
-        CartComponent(equippedCarts[0], Vector2(240, 175 + 100));
+    final cartComponent = CartComponent(equippedCarts[0], cartCoords);
     currentActors.add(cartComponent);
 
     // add all equipped pets to the screen
@@ -107,13 +120,59 @@ class CaravanGame extends FlameGame
   }
 
   @override
+  void onTapDown(int pointerId, TapDownInfo info) {
+    super.onTapDown(pointerId, info);
+    Vector2 tappedCoords = info.eventPosition.game;
+    // The numbers are from caravan_drawables.dart
+    if (horseCoords.x < tappedCoords.x &&
+        tappedCoords.x < (horseCoords.x + 100) &&
+        horseCoords.y < tappedCoords.y &&
+        tappedCoords.y < (horseCoords.y + 86.54)) {
+      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
+      print(allOwnedHorses![horseOwnedIndex]["key"]);
+      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
+    }
+
+    if (cartCoords.x < tappedCoords.x &&
+        tappedCoords.x < (cartCoords.x + 80) &&
+        cartCoords.y < tappedCoords.y &&
+        tappedCoords.y < (cartCoords.y + 106)) {
+      cartOwnedIndex = (cartOwnedIndex + 1) % allOwnedCarts!.length;
+      save?.equipCart(1, allOwnedCarts![cartOwnedIndex]["key"]);
+    }
+  }
+
+  @override
   void onAttach() {
     super.onAttach();
-
+    print("on attached in call");
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
       save?.init().then((s) async {
+        List<Map<String, dynamic>>? allHorses =
+            ShopItems.shopItemsDefaults["horses"];
+        List<Map<String, dynamic>>? allCarts =
+            ShopItems.shopItemsDefaults["cart"];
+
+        // Gets all owned horses
+        allHorses?.forEach((horse) {
+          bool? isOwned = save?.checkIfItemOwned(horse);
+          isOwned = (isOwned == null) ? false : isOwned;
+          if (isOwned) {
+            allOwnedHorses!.add(horse);
+          }
+        });
+
+        // Gets all owned carts
+        allCarts?.forEach((cart) {
+          bool? isOwned = save?.checkIfItemOwned(cart);
+          isOwned = (isOwned == null) ? false : isOwned;
+          if (isOwned) {
+            allOwnedCarts!.add(cart);
+          }
+        });
+
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
@@ -158,8 +217,6 @@ class CaravanGame extends FlameGame
             dartasync.Timer(const Duration(seconds: 5),
                 () => overlays.remove("StepUpdate"));
 
-                 
-
             s.addCoins(backgroundSteps * modifier);
             s.addSteps(backgroundSteps * modifier);
             s.saveState(force: true);
@@ -169,7 +226,8 @@ class CaravanGame extends FlameGame
               startLeft: 200,
               startTurn: 0,
               endTop: MediaQuery.of(buildContext!).size.height / 40,
-              endLeft: MediaQuery.of(buildContext!).size.width - MediaQuery.of(buildContext!).size.width / 5,
+              endLeft: MediaQuery.of(buildContext!).size.width -
+                  MediaQuery.of(buildContext!).size.width / 5,
               endTurn: 20,
               numCoins: 10,
               endScale: 0.05,
@@ -194,6 +252,7 @@ class CaravanGame extends FlameGame
         if (save!.hasUpdatedEquipped) {
           save!.hasUpdatedEquipped = false;
           equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
+          print("save listener : ${equippedHorses[0]}");
           equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
           equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
           renderEquipped();
