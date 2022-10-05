@@ -69,7 +69,7 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MiniGameStats(miniGame: jumpMiniGame),
+              builder: (context) => MinigameOutro(miniGame: jumpMiniGame),
             ));
       }
     });

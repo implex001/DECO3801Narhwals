@@ -5,8 +5,10 @@ import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/skills.dart';
 import 'package:provider/provider.dart';
+import 'flicker.dart';
 import 'dart:math';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
+
 
 class SkillsView extends StatefulWidget {
   const SkillsView({super.key});
@@ -126,10 +128,12 @@ class _SkillsViewState extends State<SkillsView> {
                                           skill!.skillList[index];
                                         });
                                       },
-                                      child: Image.asset(buyState
-                                          ? skill!.skillList[index]["icon"]
-                                          : skill!
-                                          .skillList[index]["iconLocked"]));
+                                      child: selectedSkill == skill!.skillList[index] ? FlickerAnimation(iconPath: Image.asset(buyState
+                                      ? skill!.skillList[index]["icon"]
+                                      : skill!.skillList[index]["iconLocked"]))
+                                      : Image.asset(buyState
+                                      ? skill!.skillList[index]["icon"]
+                                      : skill!.skillList[index]["iconLocked"]));
                                 },
                               )),
                         ],
