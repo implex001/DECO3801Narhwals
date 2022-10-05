@@ -25,6 +25,7 @@ class SaveState {
     _state[SaveKeysV1.equippedHorses] = (_state[SaveKeysV1.equippedHorses] == null) ? [] :  List.from(_state[SaveKeysV1.equippedHorses]);
     _state[SaveKeysV1.equippedPets] = (_state[SaveKeysV1.equippedPets] == null) ? [] :  List.from(_state[SaveKeysV1.equippedPets]);
     _state[SaveKeysV1.equippedCarts] = (_state[SaveKeysV1.equippedCarts] == null) ? [] :  List.from(_state[SaveKeysV1.equippedCarts]);
+    _state[SaveKeysV1.unlockedEpisodes] = (_state[SaveKeysV1.unlockedEpisodes] == null) ? [] :  List.from(_state[SaveKeysV1.unlockedEpisodes]);
   }
 
   // Saves the state
@@ -87,6 +88,7 @@ class SaveState {
     _state[SaveKeysV1.equippedHorses] = (_state[SaveKeysV1.equippedHorses] == null) ? [] :  List.from(_state[SaveKeysV1.equippedHorses]);
     _state[SaveKeysV1.equippedPets] = (_state[SaveKeysV1.equippedPets] == null) ? [] :  List.from(_state[SaveKeysV1.equippedPets]);
     _state[SaveKeysV1.equippedCarts] = (_state[SaveKeysV1.equippedCarts] == null) ? [] :  List.from(_state[SaveKeysV1.equippedCarts]);
+    _state[SaveKeysV1.unlockedEpisodes] = (_state[SaveKeysV1.unlockedEpisodes] == null) ? [] :  List.from(_state[SaveKeysV1.unlockedEpisodes]);
     save();
   }
 
