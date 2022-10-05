@@ -1,5 +1,6 @@
 import "package:health/health.dart";
 import "package:pedometer/pedometer.dart";
+import 'package:permission_handler/permission_handler.dart';
 
 class StepTracker {
 
@@ -26,6 +27,11 @@ class StepTracker {
       return steps;
     }
     return null;
+  }
+
+  // Request Physical Activity Permission
+  Future<bool> requestPermission() async{
+    return await Permission.activityRecognition.request().isGranted;
   }
 
   // Returns a stream of the number of steps taken starting from 0

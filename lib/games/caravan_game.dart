@@ -6,20 +6,18 @@ import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
+import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame/extensions.dart';
 import 'package:flame/parallax.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
-class CaravanGame extends FlameGame with
-    VerticalDragDetector,
-    MultiTouchDragDetector,
-    MultiTouchTapDetector {
-
+class CaravanGame extends FlameGame
+    with VerticalDragDetector, MultiTouchDragDetector, MultiTouchTapDetector {
   static const String description = '''
     Caravan Game
   ''';
@@ -29,6 +27,7 @@ class CaravanGame extends FlameGame with
   static final parralaxBgVelocityIncrease = Vector2(3.0, 0);
   static const framesPerSecond = 60.0;
   static const deltaThresholdToUpdateParralax = 0.005;
+
   Vector2 lastCameraPosition = Vector2.zero();
   Vector2 cameraPosition = Vector2.zero();
   int worldBound = 300;
@@ -40,35 +39,54 @@ class CaravanGame extends FlameGame with
   List<Component> currentActors = [];
 
   int backgroundSteps = 0;
-  late ParallaxComponent<FlameGame> parallaxComponent;
-
-
+  ParallaxComponent<FlameGame>? parallaxComponent;
+  late CoinCollectAnimation coinCollectAnimation;
+  ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
   void renderEquipped() async {
-      if (currentActors.isNotEmpty) {
-        removeAll(currentActors);
-        currentActors.clear();
+    if (currentActors.isNotEmpty) {
+      removeAll(currentActors);
+      currentActors.clear();
+    }
+
+    var horseLeadsImage = await images.load('General/CartToHorse.png');
+    Sprite horseLeadSprite = Sprite(horseLeadsImage);
+    final horseLeads = SpriteComponent(
+        sprite: horseLeadSprite,
+        size: Vector2(180, 90),
+        position: Vector2(235, 185 + 100));
+
+    await images.load("characters/MainCharacterFinal-animation.png");
+    final mainCharacter =
+    HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
+
+    for (var image in Skill.groupUpgradeImage.values) {
+      await images.load("characters/$image.png");
+    }
+
+    add(horseLeads);
+    add(mainCharacter);
+
+    await images.load("items/${equippedHorses[0]}-animation.png");
+    final horseComponent =
+        HorseComponent(equippedHorses[0], Vector2(320, 195 + 100));
+    currentActors.add(horseComponent);
+
+    await images.load("items/${equippedCarts[0]}.png");
+    final cartComponent =
+        CartComponent(equippedCarts[0], Vector2(240, 175 + 100));
+    currentActors.add(cartComponent);
+
+    // add all equipped pets to the screen
+    if (equippedPets.isNotEmpty) {
+      for (String pet in equippedPets) {
+        await images.load("items/$pet-animation.png");
+        final petComponent = PetComponent(pet);
+
+        currentActors.add(petComponent);
       }
+    }
 
-      await images.load("items/${equippedHorses[0]}-animation.png");
-      final horseComponent = HorseComponent(equippedHorses[0], Vector2(320, 195));
-      currentActors.add(horseComponent);
-
-      await images.load("items/${equippedCarts[0]}.png");
-      final cartComponent = CartComponent(equippedCarts[0], Vector2(240, 175));
-      currentActors.add(cartComponent);
-
-
-      // add all equipped pets to the screen
-      if (equippedPets.isNotEmpty) {
-        for (String pet in equippedPets) {
-          await images.load("items/$pet-animation.png");
-          final petComponent = PetComponent(pet);
-
-          currentActors.add(petComponent);
-        }
-      }
-
-      addAll(currentActors);
+    addAll(currentActors);
   }
 
   @override
@@ -83,24 +101,9 @@ class CaravanGame extends FlameGame with
     );
     camera.speed = 100;
 
-    parallaxComponent = await createParallaxComponent();
-    add(parallaxComponent);
-
-    var horseLeadsImage = await images.load('General/CartToHorse.png');
-    Sprite horseLeadSprite = Sprite(horseLeadsImage);
-    final horseLeads = SpriteComponent(
-        sprite: horseLeadSprite, size: Vector2(180, 90), position: Vector2(235, 185));
-
-
-    await images.load("characters/MainCharacterFinal-animation.png");
-    final mainCharacter = HumanComponentAnimated("MainCharacterFinal", Vector2(420, 220));
-
     for (var image in Skill.groupUpgradeImage.values) {
       await images.load("characters/$image.png");
     }
-
-    add(horseLeads);
-    add(mainCharacter);
   }
 
   @override
@@ -110,10 +113,18 @@ class CaravanGame extends FlameGame with
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
-      save?.init().then((s) {
+      save?.init().then((s) async {
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
+
+        // Get Current Biome
+        if (s.get(SaveKeysV1.currentBiome) == 'snow') {
+          parallaxComponent = await createSnowBiome();
+        } else {
+          parallaxComponent = await createForestBiome();
+        }
+        add(parallaxComponent!);
 
         equippedHorses = List.from(s.get(SaveKeysV1.equippedHorses));
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
@@ -124,8 +135,12 @@ class CaravanGame extends FlameGame with
 
         // TODO: These are temporary positioning until proper positioning is
         // implemented
-        for (int i = 1; i <= s.get(SaveKeysV1.groupUpgrades) && i <= Skill.groupUpgradeImage.length; i++) {
-          final human = HumanComponent(Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
+        for (int i = 1;
+            i <= s.get(SaveKeysV1.groupUpgrades) &&
+                i <= Skill.groupUpgradeImage.length;
+            i++) {
+          final human = HumanComponent(
+              Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
           add(human);
         }
 
@@ -141,14 +156,36 @@ class CaravanGame extends FlameGame with
           if (backgroundSteps != 0) {
             overlays.add("StepUpdate");
             dartasync.Timer(const Duration(seconds: 5),
-                    () => overlays.remove("StepUpdate"));
+                () => overlays.remove("StepUpdate"));
+
+                 
+
             s.addCoins(backgroundSteps * modifier);
+            s.addSteps(backgroundSteps * modifier);
             s.saveState(force: true);
+
+            coinCollectAnimation = CoinCollectAnimation(
+              startTop: 200,
+              startLeft: 200,
+              startTurn: 0,
+              endTop: MediaQuery.of(buildContext!).size.height / 40,
+              endLeft: MediaQuery.of(buildContext!).size.width - MediaQuery.of(buildContext!).size.width / 5,
+              endTurn: 20,
+              numCoins: 10,
+              endScale: 0.05,
+            );
+            showCoins();
           }
         });
-        stepTracker.getStepStream().listen((event) {
-          s.addCoins(1 * modifier);
-        });
+
+        // Live step tracking
+        if (await stepTracker.requestPermission()) {
+          stepTracker.getStepStream().listen((event) {
+            s.addCoins(1 * modifier);
+            s.addSteps(1);
+          });
+        }
+
         s.startAutoSave();
       });
 
@@ -181,24 +218,21 @@ class CaravanGame extends FlameGame with
 
     // Code below is modified from https://stackoverflow.com/questions/71131480/flutter-flame-how-to-use-parallax-with-camera-followcomponent
     final currentCameraPosition = camera.position;
-    final delta = dt > deltaThresholdToUpdateParralax ? 1.0 / (dt * framesPerSecond) : 1.0;
+    final delta = dt > deltaThresholdToUpdateParralax
+        ? 1.0 / (dt * framesPerSecond)
+        : 1.0;
     final baseVelocity = currentCameraPosition
       ..sub(lastCameraPosition)
       ..multiply(parralaxBgVelocityIncrease)
       ..multiply(Vector2(delta, delta));
-    parallaxComponent.parallax?.baseVelocity.setFrom(baseVelocity + Vector2(2, 2));
+    parallaxComponent?.parallax?.baseVelocity
+        .setFrom(baseVelocity + Vector2(2, 2));
     lastCameraPosition.setFrom(camera.position);
   }
 
-  // Navigation Related Functions
-  @Deprecated("Use the Navigator class instead")
-  void navigateMiniGameOverlay() {
-    overlays.add("MiniGames");
-  }
-
-  @Deprecated("Use the Navigator class instead")
-  void exitMiniGameOverlay() {
-    overlays.remove("MiniGames");
+  void showCoins() {
+    overlays.add("Coins");
+    dartasync.Timer(const Duration(seconds: 5), () => overlays.remove("Coins"));
   }
 
   @override
@@ -209,27 +243,32 @@ class CaravanGame extends FlameGame with
     }
   }
 
-  Future<ParallaxComponent> createParallaxComponent() async {
+  Future<ParallaxComponent<FlameGame>> createForestBiome() async {
     final skyLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Sky.png'),
+      ParallaxImageData('General/ForestSky.png'),
       velocityMultiplier: Vector2(0, 0),
     );
     final cloudsFarLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Clouds.png'),
+      ParallaxImageData('General/ForestClouds.png'),
       velocityMultiplier: Vector2(1.8, 0),
     );
     final midgroundLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Midground.png'),
+      ParallaxImageData('General/ForestMidground.png'),
       velocityMultiplier: Vector2(3.8, 0),
     );
     final foregroundLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Foreground.png'),
+      ParallaxImageData('General/ForestForeground.png'),
       velocityMultiplier: Vector2(20, 0),
     );
     final detailsLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Details.png'),
+      ParallaxImageData('General/ForestDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
+    // final foregroundWithTracks = await loadParallaxLayer(
+    //   ParallaxImageData('/General/ForestForeground.png'),
+    //   velocityMultiplier: Vector2(20, 0),
+    // );
+
     final parallax = Parallax(
       [
         skyLayer,
@@ -244,4 +283,43 @@ class CaravanGame extends FlameGame with
     return ParallaxComponent(parallax: parallax);
   }
 
+  Future<ParallaxComponent<FlameGame>> createSnowBiome() async {
+    final skyLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowSky.png'),
+      velocityMultiplier: Vector2(0, 0),
+    );
+    final cloudsFarLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowClouds.png'),
+      velocityMultiplier: Vector2(1.8, 0),
+    );
+    final midgroundLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowMidground.png'),
+      velocityMultiplier: Vector2(3.8, 0),
+    );
+    final foregroundLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    final detailsLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowDetails.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    // final foregroundWithTracks = await loadParallaxLayer(
+    //   ParallaxImageData('/General/ForestForeground.png'),
+    //   velocityMultiplier: Vector2(20, 0),
+    // );
+
+    final parallax = Parallax(
+      [
+        skyLayer,
+        cloudsFarLayer,
+        midgroundLayer,
+        foregroundLayer,
+        detailsLayer,
+      ],
+      baseVelocity: Vector2(20, 0),
+    );
+
+    return ParallaxComponent(parallax: parallax);
+  }
 }

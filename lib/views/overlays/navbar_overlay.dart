@@ -1,11 +1,13 @@
+import 'dart:ffi';
+
 import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/model/save_keys.dart';
+import 'package:caravaneering/views/overlays/tips_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/overlays/main_menu.dart';
-import 'package:caravaneering/views/overlays/coming_soon.dart';
 
 /// Game engine function to build navbar overlay.
 /// For Flame use only
@@ -13,18 +15,41 @@ Widget flameNavbarOverlay(BuildContext buildContext, CaravanGame game) {
   return const NavBar();
 }
 
+class CoinDisplayBar extends StatelessWidget {
+  const CoinDisplayBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return NavbarRightOverlay();
+  }
+}
+
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Row(
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [NavbarLeftOverlay(), NavbarRightOverlay()],
-      ),
-      NavbarBottomOverlay(),
-    ]);
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: 30,
+                child: Image.asset(
+                  'assets/images/UI/navBackground.png',
+                  fit: BoxFit.fill,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [NavbarLeftOverlay(), NavbarRightOverlay()],
+              )
+            ],
+          ),
+          NavbarBottomOverlay(),
+        ]);
   }
 }
 
@@ -41,6 +66,8 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
   String shopButtonImage = 'assets/images/UI/Shop.png';
   String skillsButtonImage = 'assets/images/UI/Skills.png';
   String caravanButtonImage = 'assets/images/UI/Caravan.png';
+  String backButtonImage = 'assets/images/UI/Back.png';
+  bool isCaravanPage = false;
 
   @override
   void didChangeDependencies() {
@@ -59,6 +86,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           skillsButtonImage = 'assets/images/UI/SkillsSelected.png';
           break;
         case "/caravan":
+          isCaravanPage = true;
           caravanButtonImage = 'assets/images/UI/CaravanSelected.png';
           break;
       }
@@ -67,6 +95,20 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isCaravanPage) {
+      return GestureDetector(
+          onTap: () {
+            if (route != "/caravan") {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, "/caravan", (route) => false);
+            }
+          },
+          child: Image.asset(
+            backButtonImage,
+            fit: BoxFit.contain,
+            height: 30,
+          ));
+    }
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(
           onTap: () {
@@ -91,23 +133,10 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
-            Navigator.pushNamed(
-                context, "/skills");
+            Navigator.pushNamed(context, "/skills");
           },
           child: Image.asset(
             skillsButtonImage,
-            fit: BoxFit.contain,
-            height: 30,
-          )),
-      GestureDetector(
-          onTap: () {
-            if (route != "/caravan") {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/caravan", (route) => false);
-            }
-          },
-          child: Image.asset(
-            caravanButtonImage,
             fit: BoxFit.contain,
             height: 30,
           )),
@@ -123,48 +152,55 @@ class NavbarRightOverlay extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Stack(alignment: AlignmentDirectional.center, children: [
-          Image.asset(
-            'assets/images/UI/Coins.png',
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-          Consumer<SaveModel>(
-              builder: (context, save, build) {
-                return DefaultTextStyle(
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 20,
-                  ),
-                  child: Text(
-                    '${save.get(SaveKeysV1.coins)}',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-          )
-        ]),
-        Stack(alignment: AlignmentDirectional.center, children: [
-          Image.asset(
-            'assets/images/UI/Gems.png',
-            height: 30,
-            fit: BoxFit.contain,
-          ),
-          Consumer<SaveModel>(
-              builder: (context, save, build) {
-                return DefaultTextStyle(
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 20,
-                  ),
-                  child: Text(
-                    '${save.get(SaveKeysV1.gems)}',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
-          )
-        ]),
+        GestureDetector(
+          onTap: () {
+            TipPopUp.showTips(context, "Coins",
+                "You can earn coins by taking physical steps or through the minigames.");
+          },
+          child: Stack(alignment: AlignmentDirectional.center, children: [
+            Image.asset(
+              'assets/images/UI/Coins.png',
+              height: 30,
+              fit: BoxFit.contain,
+            ),
+            Consumer<SaveModel>(builder: (context, save, build) {
+              return DefaultTextStyle(
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 20,
+                ),
+                child: Text(
+                  '${save.get(SaveKeysV1.coins)}',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            })
+          ]),
+        ),
+        GestureDetector(
+          onTap: () {
+            TipPopUp.showTips(context, "Gems", "You can earn gems by.....");
+          },
+          child: Stack(alignment: AlignmentDirectional.center, children: [
+            Image.asset(
+              'assets/images/UI/Gems.png',
+              height: 30,
+              fit: BoxFit.contain,
+            ),
+            Consumer<SaveModel>(builder: (context, save, build) {
+              return DefaultTextStyle(
+                style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 20,
+                ),
+                child: Text(
+                  '${save.get(SaveKeysV1.gems)}',
+                  textAlign: TextAlign.center,
+                ),
+              );
+            })
+          ]),
+        )
       ],
     );
   }
@@ -180,6 +216,7 @@ class NavbarBottomOverlay extends StatefulWidget {
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
   String route = "";
   String mingameButtonImage = 'assets/images/UI/Minigames.png';
+  bool isCaravanPage = false;
 
   @override
   void didChangeDependencies() {
@@ -188,6 +225,9 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
         ModalRoute.of(context)!.settings.name != null) {
       route = ModalRoute.of(context)!.settings.name!;
       switch (route) {
+        case "/caravan":
+          isCaravanPage = true;
+          break;
         case "/cave-intro":
           mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
           break;
@@ -200,6 +240,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
 
   @override
   Widget build(BuildContext context) {
+
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
           onTap: () {
@@ -212,7 +253,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
           )),
       GestureDetector(
           onTap: () {
-            ComingSoonPage.showPage(context, "Story page coming soon!");
+            Navigator.pushNamed(context, "/world");
           },
           child: Image.asset(
             'assets/images/UI/Story.png',
