@@ -15,6 +15,15 @@ Widget flameNavbarOverlay(BuildContext buildContext, CaravanGame game) {
   return const NavBar();
 }
 
+class CoinDisplayBar extends StatelessWidget {
+  const CoinDisplayBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return NavbarRightOverlay();
+  }
+}
+
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
 

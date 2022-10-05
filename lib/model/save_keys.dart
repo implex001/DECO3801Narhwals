@@ -21,4 +21,5 @@ class SaveKeysV1{
   static const equippedPets = "equippedPets";
   static const unlockedEpisodes = "unlockedEpisodes";
   static const lifeTimeSteps = "lifeTimeSteps";
+  static const currentBiome = "currentBiome";
 }

@@ -8,13 +8,13 @@ class TextBubble extends StatelessWidget {
   EdgeInsetsGeometry? padding;
   double? fontSize;
 
-
-  TextBubble({Key? key,
-    required this.text,
-    this.width,
-    this.height,
-    this.padding,
-    this.fontSize = 12})
+  TextBubble(
+      {Key? key,
+      required this.text,
+      this.width,
+      this.height,
+      this.padding,
+      this.fontSize = 12})
       : super(key: key);
 
   @override
@@ -27,11 +27,11 @@ class TextBubble extends StatelessWidget {
         height: height,
         padding: padding,
         child: SizedBox(
-            child: Text(text,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: fontSize,
-                    decoration: TextDecoration.none)),
+          child: Text(text,
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: fontSize,
+                  decoration: TextDecoration.none)),
         ));
   }
 }

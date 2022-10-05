@@ -27,6 +27,7 @@ class CaravanGame extends FlameGame
   static final parralaxBgVelocityIncrease = Vector2(3.0, 0);
   static const framesPerSecond = 60.0;
   static const deltaThresholdToUpdateParralax = 0.005;
+
   Vector2 lastCameraPosition = Vector2.zero();
   Vector2 cameraPosition = Vector2.zero();
   int worldBound = 300;
@@ -38,7 +39,7 @@ class CaravanGame extends FlameGame
   List<Component> currentActors = [];
 
   int backgroundSteps = 0;
-  late ParallaxComponent<FlameGame> parallaxComponent;
+  ParallaxComponent<FlameGame>? parallaxComponent;
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
   void renderEquipped() async {
@@ -46,6 +47,24 @@ class CaravanGame extends FlameGame
       removeAll(currentActors);
       currentActors.clear();
     }
+
+    var horseLeadsImage = await images.load('General/CartToHorse.png');
+    Sprite horseLeadSprite = Sprite(horseLeadsImage);
+    final horseLeads = SpriteComponent(
+        sprite: horseLeadSprite,
+        size: Vector2(180, 90),
+        position: Vector2(235, 185 + 100));
+
+    await images.load("characters/MainCharacterFinal-animation.png");
+    final mainCharacter =
+    HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
+
+    for (var image in Skill.groupUpgradeImage.values) {
+      await images.load("characters/$image.png");
+    }
+
+    add(horseLeads);
+    add(mainCharacter);
 
     await images.load("items/${equippedHorses[0]}-animation.png");
     final horseComponent =
@@ -82,26 +101,9 @@ class CaravanGame extends FlameGame
     );
     camera.speed = 100;
 
-    parallaxComponent = await createParallaxComponent();
-    add(parallaxComponent);
-
-    var horseLeadsImage = await images.load('General/CartToHorse.png');
-    Sprite horseLeadSprite = Sprite(horseLeadsImage);
-    final horseLeads = SpriteComponent(
-        sprite: horseLeadSprite,
-        size: Vector2(180, 90),
-        position: Vector2(235, 185 + 100));
-
-    await images.load("characters/MainCharacterFinal-animation.png");
-    final mainCharacter =
-        HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
-
     for (var image in Skill.groupUpgradeImage.values) {
       await images.load("characters/$image.png");
     }
-
-    add(horseLeads);
-    add(mainCharacter);
   }
 
   @override
@@ -115,6 +117,14 @@ class CaravanGame extends FlameGame
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
+
+        // Get Current Biome
+        if (s.get(SaveKeysV1.currentBiome) == 'snow') {
+          parallaxComponent = await createSnowBiome();
+        } else {
+          parallaxComponent = await createForestBiome();
+        }
+        add(parallaxComponent!);
 
         equippedHorses = List.from(s.get(SaveKeysV1.equippedHorses));
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
@@ -175,6 +185,7 @@ class CaravanGame extends FlameGame
             s.addSteps(1);
           });
         }
+
         s.startAutoSave();
       });
 
@@ -214,7 +225,7 @@ class CaravanGame extends FlameGame
       ..sub(lastCameraPosition)
       ..multiply(parralaxBgVelocityIncrease)
       ..multiply(Vector2(delta, delta));
-    parallaxComponent.parallax?.baseVelocity
+    parallaxComponent?.parallax?.baseVelocity
         .setFrom(baseVelocity + Vector2(2, 2));
     lastCameraPosition.setFrom(camera.position);
   }
@@ -232,31 +243,31 @@ class CaravanGame extends FlameGame
     }
   }
 
-  Future<ParallaxComponent> createParallaxComponent() async {
+  Future<ParallaxComponent<FlameGame>> createForestBiome() async {
     final skyLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Sky.png'),
+      ParallaxImageData('General/ForestSky.png'),
       velocityMultiplier: Vector2(0, 0),
     );
     final cloudsFarLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Clouds.png'),
+      ParallaxImageData('General/ForestClouds.png'),
       velocityMultiplier: Vector2(1.8, 0),
     );
     final midgroundLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Midground.png'),
+      ParallaxImageData('General/ForestMidground.png'),
       velocityMultiplier: Vector2(3.8, 0),
     );
     final foregroundLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Foreground.png'),
+      ParallaxImageData('General/ForestForeground.png'),
       velocityMultiplier: Vector2(20, 0),
     );
     final detailsLayer = await loadParallaxLayer(
-      ParallaxImageData('General/Details.png'),
+      ParallaxImageData('General/ForestDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
-    final foregroundWithTracks = await loadParallaxLayer(
-      ParallaxImageData('/General/Foreground2.png'),
-      velocityMultiplier: Vector2(20, 0),
-    );
+    // final foregroundWithTracks = await loadParallaxLayer(
+    //   ParallaxImageData('/General/ForestForeground.png'),
+    //   velocityMultiplier: Vector2(20, 0),
+    // );
 
     final parallax = Parallax(
       [
@@ -264,7 +275,46 @@ class CaravanGame extends FlameGame
         cloudsFarLayer,
         midgroundLayer,
         foregroundLayer,
-        foregroundWithTracks,
+        detailsLayer,
+      ],
+      baseVelocity: Vector2(20, 0),
+    );
+
+    return ParallaxComponent(parallax: parallax);
+  }
+
+  Future<ParallaxComponent<FlameGame>> createSnowBiome() async {
+    final skyLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowSky.png'),
+      velocityMultiplier: Vector2(0, 0),
+    );
+    final cloudsFarLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowClouds.png'),
+      velocityMultiplier: Vector2(1.8, 0),
+    );
+    final midgroundLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowMidground.png'),
+      velocityMultiplier: Vector2(3.8, 0),
+    );
+    final foregroundLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    final detailsLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowDetails.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    // final foregroundWithTracks = await loadParallaxLayer(
+    //   ParallaxImageData('/General/ForestForeground.png'),
+    //   velocityMultiplier: Vector2(20, 0),
+    // );
+
+    final parallax = Parallax(
+      [
+        skyLayer,
+        cloudsFarLayer,
+        midgroundLayer,
+        foregroundLayer,
         detailsLayer,
       ],
       baseVelocity: Vector2(20, 0),
