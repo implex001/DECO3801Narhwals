@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/views/overlays/tips_overlay.dart';
@@ -99,8 +97,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
       return GestureDetector(
           onTap: () {
             if (route != "/caravan") {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/caravan", (route) => false);
+              Navigator.pop(context);
             }
           },
           child: Image.asset(
@@ -122,8 +119,8 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
       GestureDetector(
           onTap: () {
             if (route != "/shop") {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/shop", (route) => false);
+              Navigator.pushNamed(
+                  context, "/shop");
             }
           },
           child: Image.asset(
