@@ -37,12 +37,21 @@ class EpisodeFactory {
     'W1E5': 5000,
   };
 
+  static final Map<String, BiomeType> _episodeBiomes = {
+    'W1E1': BiomeType.forest,
+    'W1E2': BiomeType.forest,
+    'W1E3': BiomeType.forest,
+    'W1E4': BiomeType.forest,
+    'W1E5': BiomeType.mountain,
+  };
+
   static Episode createEpisode(String episodeName) {
     try {
       return Episode(episodeName,
           _episodes[episodeName]!,
           position: _episodePositions[episodeName],
-          requiredSteps: _episodeSteps[episodeName]!);
+          requiredSteps: _episodeSteps[episodeName]!,
+          biomeType: _episodeBiomes[episodeName]!);
     } catch (e) {
       throw Exception("Episode not found");
     }

@@ -7,6 +7,7 @@ import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
+import 'package:caravaneering/model/story.dart';
 import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -57,7 +58,7 @@ class CaravanGame extends FlameGame
     if (equippedPets.isNotEmpty) {
       for (String pet in equippedPets) {
         await images.load("items/$pet-animation.png");
-        final petComponent = PetComponent(pet);
+        var petComponent = PetComponent(pet);
         petComponent.position.x += xPosition;
         petComponent.position.y += parallaxRatio * 10;
 
@@ -67,14 +68,14 @@ class CaravanGame extends FlameGame
 
     // Main Character
     await images.load("characters/MainCharacterFinal-animation.png");
-    final mainCharacter =
+    var mainCharacter =
     HumanComponentAnimated("MainCharacterFinal", Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
     currentActors.add(mainCharacter);
 
     xPosition -= 50 + Random().nextDouble();
     // Dungeoneer
     await images.load("characters/Dungeoneer-animation.png");
-    final dungeoneer =
+    var dungeoneer =
     HumanComponentAnimated("Dungeoneer",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(dungeoneer);
@@ -82,7 +83,7 @@ class CaravanGame extends FlameGame
     xPosition -= 50 + Random().nextDouble();
     // Merchant
     await images.load("characters/Merchant-animation.png");
-    final merchant =
+    var merchant =
     HumanComponentAnimated("Merchant",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(merchant);
@@ -90,20 +91,20 @@ class CaravanGame extends FlameGame
     xPosition -= 200 + Random().nextDouble() * 5;
     // Horse
     await images.load("items/${equippedHorses[0]}-animation.png");
-    final horseComponent =
+    var horseComponent =
         HorseComponent(equippedHorses[0], Vector2(xPosition, parallaxRatio * 90));
     currentActors.add(horseComponent);
 
     //Cart
     await images.load("items/${equippedCarts[0]}.png");
-    final cartComponent =
+    var cartComponent =
         CartComponent(equippedCarts[0], Vector2(xPosition, parallaxRatio * 90));
     currentActors.add(cartComponent);
 
     // Horse Lead
     var horseLeadsImage = await images.load('General/CartToHorse.png');
     Sprite horseLeadSprite = Sprite(horseLeadsImage);
-    final horseLeads = SpriteComponent(
+    var horseLeads = SpriteComponent(
         sprite: horseLeadSprite,
         size: Vector2(180, 90),
         position: Vector2(xPosition, parallaxRatio * 90));
@@ -122,7 +123,7 @@ class CaravanGame extends FlameGame
       if (j == 0) {
         xPosition -= 60 + Random().nextDouble();
         await images.load("items/${Skill.groupUpgradeImage[4]}-animation.png");
-        final donkeyComponent = DonkeyComponent(
+        var donkeyComponent = DonkeyComponent(
             Skill.groupUpgradeImage[4]!,
             Vector2(xPosition, parallaxRatio * 95 + Random().nextDouble()));
         donkeyComponents.add(donkeyComponent);
@@ -131,7 +132,7 @@ class CaravanGame extends FlameGame
 
       xPosition -= 30 + Random().nextDouble();
       await images.load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
-      final human = HumanComponentAnimated(
+      var human = HumanComponentAnimated(
           Skill.groupUpgradeImage[j]!,
           Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
       currentActors.add(human);
@@ -140,7 +141,7 @@ class CaravanGame extends FlameGame
 
     // Merchant cart
     await images.load("items/MerchantCaravan_animation.png");
-    final merchantCart =
+    var merchantCart =
     BigCartComponent("MerchantCaravan_animation",
         Vector2(xPosition - 450, parallaxRatio * 55));
     currentActors.add(merchantCart);
@@ -175,19 +176,11 @@ class CaravanGame extends FlameGame
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
 
-        // Get Current Biome
-        if (s.get(SaveKeysV1.currentBiome) == 'snow') {
-          parallaxComponent = await createSnowBiome();
-        } else {
-          parallaxComponent = await createForestBiome();
-        }
-        add(parallaxComponent!);
 
         equippedHorses = List.from(s.get(SaveKeysV1.equippedHorses));
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
         equippedPets = List.from(s.get(SaveKeysV1.equippedPets));
         save!.hasUpdatedEquipped = true;
-        renderEquipped();
         int modifier = s.get(SaveKeysV1.personalUpgrades);
 
         // Set up step tracking
@@ -234,12 +227,13 @@ class CaravanGame extends FlameGame
       });
 
       // Add save state changes
-      save?.addListener(() {
+      save?.addListener(() async {
         if (save!.hasUpdatedEquipped) {
           save!.hasUpdatedEquipped = false;
           equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
           equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
           equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
+          await renderParallax();
           renderEquipped();
         }
       });
@@ -285,6 +279,19 @@ class CaravanGame extends FlameGame
         cameraPosition.x - info.delta.global.x > -worldBound) {
       cameraPosition.add(Vector2(-info.delta.global.x, 0));
     }
+  }
+
+  Future<void> renderParallax() async {
+    if (parallaxComponent != null) {
+      remove(parallaxComponent!);
+    }
+
+    if (save!.get(SaveKeysV1.currentBiome) == BiomeType.mountain.name) {
+      parallaxComponent = await createSnowBiome();
+    } else {
+      parallaxComponent = await createForestBiome();
+    }
+    add(parallaxComponent!);
   }
 
   Future<ParallaxComponent<FlameGame>> createForestBiome() async {
