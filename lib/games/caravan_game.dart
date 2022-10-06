@@ -1,4 +1,5 @@
 import 'dart:async' as dartasync;
+import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
 import 'package:caravaneering/model/save_keys.dart';
@@ -30,7 +31,7 @@ class CaravanGame extends FlameGame
 
   Vector2 lastCameraPosition = Vector2.zero();
   Vector2 cameraPosition = Vector2.zero();
-  int worldBound = 300;
+  int worldBound = 350;
 
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
@@ -42,49 +43,108 @@ class CaravanGame extends FlameGame
   ParallaxComponent<FlameGame>? parallaxComponent;
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
+
   void renderEquipped() async {
     if (currentActors.isNotEmpty) {
       removeAll(currentActors);
       currentActors.clear();
     }
 
-    var horseLeadsImage = await images.load('General/CartToHorse.png');
-    Sprite horseLeadSprite = Sprite(horseLeadsImage);
-    final horseLeads = SpriteComponent(
-        sprite: horseLeadSprite,
-        size: Vector2(180, 90),
-        position: Vector2(235, 185 + 100));
-
-    await images.load("characters/MainCharacterFinal-animation.png");
-    final mainCharacter =
-    HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
-
-    for (var image in Skill.groupUpgradeImage.values) {
-      await images.load("characters/$image.png");
-    }
-
-    add(horseLeads);
-    add(mainCharacter);
-
-    await images.load("items/${equippedHorses[0]}-animation.png");
-    final horseComponent =
-        HorseComponent(equippedHorses[0], Vector2(320, 195 + 100));
-    currentActors.add(horseComponent);
-
-    await images.load("items/${equippedCarts[0]}.png");
-    final cartComponent =
-        CartComponent(equippedCarts[0], Vector2(240, 175 + 100));
-    currentActors.add(cartComponent);
+    double parallaxRatio = 1080 / camera.viewport.effectiveSize.y;
+    double xPosition = 700;
 
     // add all equipped pets to the screen
     if (equippedPets.isNotEmpty) {
       for (String pet in equippedPets) {
         await images.load("items/$pet-animation.png");
         final petComponent = PetComponent(pet);
+        petComponent.position.x += xPosition;
+        petComponent.position.y += parallaxRatio * 10;
 
         currentActors.add(petComponent);
       }
     }
+
+    // Main Character
+    await images.load("characters/MainCharacterFinal-animation.png");
+    final mainCharacter =
+    HumanComponentAnimated("MainCharacterFinal", Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
+    currentActors.add(mainCharacter);
+
+    xPosition -= 50 + Random().nextDouble();
+    // Dungeoneer
+    await images.load("characters/Dungeoneer-animation.png");
+    final dungeoneer =
+    HumanComponentAnimated("Dungeoneer",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+    currentActors.add(dungeoneer);
+
+    xPosition -= 50 + Random().nextDouble();
+    // Merchant
+    await images.load("characters/Merchant-animation.png");
+    final merchant =
+    HumanComponentAnimated("Merchant",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+    currentActors.add(merchant);
+
+    xPosition -= 200 + Random().nextDouble() * 5;
+    // Horse
+    await images.load("items/${equippedHorses[0]}-animation.png");
+    final horseComponent =
+        HorseComponent(equippedHorses[0], Vector2(xPosition, parallaxRatio * 90));
+    currentActors.add(horseComponent);
+
+    //Cart
+    await images.load("items/${equippedCarts[0]}.png");
+    final cartComponent =
+        CartComponent(equippedCarts[0], Vector2(xPosition, parallaxRatio * 90));
+    currentActors.add(cartComponent);
+
+    // Horse Lead
+    var horseLeadsImage = await images.load('General/CartToHorse.png');
+    Sprite horseLeadSprite = Sprite(horseLeadsImage);
+    final horseLeads = SpriteComponent(
+        sprite: horseLeadSprite,
+        size: Vector2(180, 90),
+        position: Vector2(xPosition, parallaxRatio * 90));
+    currentActors.add(horseLeads);
+
+    xPosition -= 60;
+
+    List<DonkeyComponent> donkeyComponents = [];
+
+    // Misc group step upgrades
+    for (int i = 1;
+    i <= save!.get(SaveKeysV1.groupUpgrades);
+    i++) {
+      int j = i % Skill.groupUpgradeImage.length;
+
+      if (j == 0) {
+        xPosition -= 60 + Random().nextDouble();
+        await images.load("items/${Skill.groupUpgradeImage[4]}-animation.png");
+        final donkeyComponent = DonkeyComponent(
+            Skill.groupUpgradeImage[4]!,
+            Vector2(xPosition, parallaxRatio * 95 + Random().nextDouble()));
+        donkeyComponents.add(donkeyComponent);
+        continue;
+      }
+
+      xPosition -= 30 + Random().nextDouble();
+      await images.load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
+      final human = HumanComponentAnimated(
+          Skill.groupUpgradeImage[j]!,
+          Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+      currentActors.add(human);
+    }
+    currentActors.addAll(donkeyComponents);
+
+    // Merchant cart
+    await images.load("items/MerchantCaravan_animation.png");
+    final merchantCart =
+    BigCartComponent("MerchantCaravan_animation",
+        Vector2(xPosition - 450, parallaxRatio * 55));
+    currentActors.add(merchantCart);
+
 
     addAll(currentActors);
   }
@@ -101,9 +161,6 @@ class CaravanGame extends FlameGame
     );
     camera.speed = 100;
 
-    for (var image in Skill.groupUpgradeImage.values) {
-      await images.load("characters/$image.png");
-    }
   }
 
   @override
@@ -133,17 +190,6 @@ class CaravanGame extends FlameGame
         renderEquipped();
         int modifier = s.get(SaveKeysV1.personalUpgrades);
 
-        // TODO: These are temporary positioning until proper positioning is
-        // implemented
-        for (int i = 1;
-            i <= s.get(SaveKeysV1.groupUpgrades) &&
-                i <= Skill.groupUpgradeImage.length;
-            i++) {
-          final human = HumanComponent(
-              Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
-          add(human);
-        }
-
         // Set up step tracking
         stepTracker = StepTracker();
         stepTracker
@@ -157,8 +203,6 @@ class CaravanGame extends FlameGame
             overlays.add("StepUpdate");
             dartasync.Timer(const Duration(seconds: 5),
                 () => overlays.remove("StepUpdate"));
-
-                 
 
             s.addCoins(backgroundSteps * modifier);
             s.addSteps(backgroundSteps * modifier);
