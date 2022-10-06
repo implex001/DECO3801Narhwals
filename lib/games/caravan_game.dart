@@ -87,6 +87,22 @@ class CaravanGame extends FlameGame
     }
 
     addAll(currentActors);
+    final detailsLayer2 = await loadParallaxLayer( 
+      ParallaxImageData('General/ForestDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+        final t_parallax = Parallax(
+      [
+        detailsLayer2,
+      
+      ],
+      baseVelocity: Vector2(20, 0),
+    );
+
+    final t_parallaxComp  = ParallaxComponent(parallax: t_parallax);
+
+
+        add(t_parallaxComp);
   }
 
   @override
@@ -143,7 +159,23 @@ class CaravanGame extends FlameGame
               Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
           add(human);
         }
+        
+        final detailsLayer2 = await loadParallaxLayer( 
+      ParallaxImageData('General/ForestDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+        final t_parallax = Parallax(
+      [
+        detailsLayer2,
+      
+      ],
+      baseVelocity: Vector2(20, 0),
+    );
 
+    final t_parallaxComp  = ParallaxComponent(parallax: t_parallax);
+
+
+        add(t_parallaxComp);
         // Set up step tracking
         stepTracker = StepTracker();
         stepTracker
@@ -308,6 +340,22 @@ class CaravanGame extends FlameGame
     //   ParallaxImageData('/General/ForestForeground.png'),
     //   velocityMultiplier: Vector2(20, 0),
     // );
+       final detailsLayer2 = await loadParallaxLayer( 
+      ParallaxImageData('General/SnowDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+        final t_parallax = Parallax(
+      [
+        detailsLayer2,
+      
+      ],
+      baseVelocity: Vector2(20, 0),
+    );
+
+    // final t_parallaxComp  = ParallaxComponent(parallax: t_parallax);
+
+
+        // add(t_parallaxComp);
 
     final parallax = Parallax(
       [
@@ -316,6 +364,7 @@ class CaravanGame extends FlameGame
         midgroundLayer,
         foregroundLayer,
         detailsLayer,
+        detailsLayer2
       ],
       baseVelocity: Vector2(20, 0),
     );

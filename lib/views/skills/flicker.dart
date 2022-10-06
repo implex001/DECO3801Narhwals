@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class FlickerAnimation extends StatefulWidget {
   final Widget iconPath;
+  final double t_width;
+  final double t_height;
 
-  const FlickerAnimation({required this.iconPath});
+  const FlickerAnimation({required this.iconPath,required this.t_width,required this.t_height});
 
   @override
   State<StatefulWidget> createState() {
@@ -76,7 +78,7 @@ class _FlickerAnimation extends State<FlickerAnimation>
             return Stack(alignment: Alignment.center, children: [
               ScaleTransition(
                   scale: scenesize,
-                  child: Image.asset("assets/images/UI/qrscanner.png",width: 180,height: 180,fit: BoxFit.cover,)
+                  child: Image.asset("assets/images/UI/qrscanner.png",width: widget.t_width,height: widget.t_height,fit: BoxFit.cover,)
               ),
               widget.iconPath
             ]);

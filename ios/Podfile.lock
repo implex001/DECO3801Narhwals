@@ -38,6 +38,8 @@ PODS:
     - Flutter
   - pedometer (0.0.1):
     - Flutter
+  - permission_handler_apple (9.0.4):
+    - Flutter
   - platform_device_id (0.0.1):
     - Flutter
   - sensors_plus (0.0.1):
@@ -56,6 +58,7 @@ DEPENDENCIES:
   - health (from `.symlinks/plugins/health/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - pedometer (from `.symlinks/plugins/pedometer/ios`)
+  - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - platform_device_id (from `.symlinks/plugins/platform_device_id/ios`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
@@ -89,6 +92,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   pedometer:
     :path: ".symlinks/plugins/pedometer/ios"
+  permission_handler_apple:
+    :path: ".symlinks/plugins/permission_handler_apple/ios"
   platform_device_id:
     :path: ".symlinks/plugins/platform_device_id/ios"
   sensors_plus:
@@ -112,6 +117,7 @@ SPEC CHECKSUMS:
   health: 5a380c0f6c4f619535845992993964293962e99e
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   pedometer: 381969883680ade42559782cc41a3bbd453d8234
+  permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   platform_device_id: 81b3e2993881f87d0c82ef151dc274df4869aef5
   sensors_plus: 5717760720f7e6acd96fdbd75b7428f5ad755ec2
   vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
