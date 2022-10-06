@@ -92,6 +92,7 @@ class WorldGame extends FlameGame
 
   void playEpisode(story.Episode episode) {
     episode.reset();
+    save!.changeBiome(episode.biomeType);
     Navigator.push(
         buildContext!,
         MaterialPageRoute(

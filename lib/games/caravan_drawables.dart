@@ -8,12 +8,26 @@ class HorseComponent extends SpriteAnimationComponent{
   HorseComponent(String horseKey, Vector2 position) : super.fromFrameData(
     Flame.images.fromCache("items/$horseKey-animation.png"),
     SpriteAnimationData.sequenced(
-      textureSize: Vector2(260,225),
+      textureSize: Vector2(300,128),
       amount: 4,
-      amountPerRow: 2,
+      amountPerRow: 4,
       stepTime: 0.2,
     ),
-    size: Vector2(100, 86.54),
+    size: Vector2(225, 96),
+    position: position,
+  );
+}
+
+class DonkeyComponent extends SpriteAnimationComponent{
+  DonkeyComponent(String donkeyKey, Vector2 position) : super.fromFrameData(
+    Flame.images.fromCache("items/$donkeyKey-animation.png"),
+    SpriteAnimationData.sequenced(
+      textureSize: Vector2(64,64),
+      amount: 4,
+      amountPerRow: 4,
+      stepTime: 0.2,
+    ),
+    size: Vector2(96, 96),
     position: position,
   );
 }
@@ -32,14 +46,28 @@ class CartComponent extends SpriteAnimationComponent{
   );
 }
 
+class BigCartComponent extends SpriteAnimationComponent {
+   BigCartComponent(String cartKey, Vector2 position) : super.fromFrameData(
+      Flame.images.fromCache("items/$cartKey.png"),
+      SpriteAnimationData.sequenced(
+        textureSize: Vector2(300,128),
+        amount: 4,
+        amountPerRow: 4,
+        stepTime: 0.3,
+      ),
+      size: Vector2(450, 196),
+      position: position
+  );
+}
+
 class HumanComponentAnimated extends SpriteAnimationComponent{
   HumanComponentAnimated(String humanKey, Vector2 position) : super.fromFrameData(
     Flame.images.fromCache("characters/$humanKey-animation.png"),
     SpriteAnimationData.sequenced(
-      textureSize: Vector2(192,192),
-      amount: 2,
-      amountPerRow: 2,
-      stepTime: 0.5,
+      textureSize: Vector2(64,64),
+      amount: 6,
+      amountPerRow: 6,
+      stepTime: 0.2,
     ),
     size: Vector2(60, 60),
     position: position,

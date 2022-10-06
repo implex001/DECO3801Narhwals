@@ -10,9 +10,9 @@ class Skill {
 
   static const Map<int, String> groupUpgradeImage = {
     1: "Merchant",
-    2: "NPC-1",
-    3: "NPC-Backpack-1",
-    4: "Veteran"
+    2: "BaseNPC1",
+    3: "BaseNPC2",
+    4: "Donkey",
   };
 
   void setupTree() {
