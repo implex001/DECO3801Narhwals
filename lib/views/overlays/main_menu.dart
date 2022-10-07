@@ -43,7 +43,7 @@ class MainMenuPage {
                         image: AssetImage('assets/images/UI/CheatButton.png'),
                         fit: BoxFit.fitWidth,
                       ),
-                    ),
+                    ))),
                     const SizedBox(
                       height: 20,
                     ),
