@@ -82,21 +82,24 @@ class CaravanGame extends FlameGame
 
     // Main Character
     await images.load("characters/MainCharacterFinal-animation.png");
-    var mainCharacter = HumanComponentAnimated("MainCharacterFinal",
-        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
+
+    var mainCharacter =
+    HumanComponentAnimated("MainCharacterFinal", Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
     currentActors.add(mainCharacter);
 
     xPosition -= 50 + Random().nextDouble();
     // Dungeoneer
     await images.load("characters/Dungeoneer-animation.png");
-    var dungeoneer = HumanComponentAnimated("Dungeoneer",
+    var dungeoneer =
+    HumanComponentAnimated("Dungeoneer",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(dungeoneer);
 
     xPosition -= 50 + Random().nextDouble();
     // Merchant
     await images.load("characters/Merchant-animation.png");
-    var merchant = HumanComponentAnimated("Merchant",
+    var merchant =
+    HumanComponentAnimated("Merchant",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(merchant);
 
@@ -127,7 +130,10 @@ class CaravanGame extends FlameGame
     List<DonkeyComponent> donkeyComponents = [];
 
     // Misc group step upgrades
-    for (int i = 1; i <= save!.get(SaveKeysV1.groupUpgrades); i++) {
+
+    for (int i = 1;
+    i <= save!.get(SaveKeysV1.groupUpgrades);
+    i++) {
       int j = i % Skill.groupUpgradeImage.length;
 
       if (j == 0) {
@@ -140,9 +146,9 @@ class CaravanGame extends FlameGame
       }
 
       xPosition -= 30 + Random().nextDouble();
-      await images
-          .load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
-      var human = HumanComponentAnimated(Skill.groupUpgradeImage[j]!,
+      await images.load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
+      var human = HumanComponentAnimated(
+          Skill.groupUpgradeImage[j]!,
           Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
       currentActors.add(human);
     }
@@ -150,7 +156,8 @@ class CaravanGame extends FlameGame
 
     // Merchant cart
     await images.load("items/MerchantCaravan_animation.png");
-    var merchantCart = BigCartComponent("MerchantCaravan_animation",
+    var merchantCart =
+    BigCartComponent("MerchantCaravan_animation",
         Vector2(xPosition - 450, parallaxRatio * 55));
     currentActors.add(merchantCart);
 

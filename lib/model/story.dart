@@ -47,8 +47,8 @@ class Episode with Sequence<EpisodeChunk>, Coordinates, Biome {
   @override
   int get currentSequence => _currentSequence;
 
-  Episode(this.id, this._story,
-      {Vector2? position, this.requiredSteps = 0, biomeType = BiomeType.none}) {
+  Episode(this.id, this._story, {Vector2? position, this.requiredSteps = 0,
+    biomeType = BiomeType.none}) {
     this.position = position ?? Vector2.zero();
     this.biomeType = biomeType;
   }
