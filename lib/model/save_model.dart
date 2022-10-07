@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:caravaneering/model/save.dart';
 import 'package:caravaneering/model/save_keys.dart';
+import 'package:caravaneering/model/story.dart';
 import 'package:flutter/material.dart';
 
 class SaveModel extends ChangeNotifier {
@@ -100,6 +101,13 @@ class SaveModel extends ChangeNotifier {
     }
     save.state[item["type"]].add(item["key"]);
     hasChanged = true;
+    notifyListeners();
+  }
+
+  void changeBiome(BiomeType biome) {
+    save.state[SaveKeysV1.currentBiome] = biome.name;
+    hasChanged = true;
+    hasUpdatedEquipped = true;
     notifyListeners();
   }
 

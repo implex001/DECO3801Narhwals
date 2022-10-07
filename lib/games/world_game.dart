@@ -66,12 +66,12 @@ class WorldGame extends FlameGame
 
         Dot dot = Dot<story.Episode>(
             Vector2(episode.position.x / ratio, episode.position.y / ratio),
-                (e) {
-              for (Dot d in dots) {
-                d.hideSelected();
-              }
-              selectedEpisodeCallback(e);
-            }, episode);
+            (e) {
+          for (Dot d in dots) {
+            d.hideSelected();
+          }
+          selectedEpisodeCallback(e);
+        }, episode);
         if (unlocked.contains(episode.id)) {
           dot.unlocked = true;
           dot.showUnlocked();
@@ -91,14 +91,13 @@ class WorldGame extends FlameGame
   }
 
   void playEpisode(story.Episode episode) {
+    save!.changeBiome(episode.biomeType);
     episode.reset();
     Navigator.push(
         buildContext!,
         MaterialPageRoute(
-            builder: (context) =>
-                EpisodeView(
-                    episode: episode,
-                    onEnd: () => Navigator.pop(buildContext!))));
+            builder: (context) => EpisodeView(
+                episode: episode, onEnd: () => Navigator.pop(buildContext!))));
   }
 }
 
@@ -109,10 +108,11 @@ class Dot<T> extends CircleComponent with TapCallbacks {
   bool selected = false;
 
   Dot(Vector2 position, this.onTap, this.data)
-      : super(radius: 10,
-      position: position,
-      anchor: Anchor.center,
-      paint: Paint()..color = const Color(0x80FFFFFF));
+      : super(
+            radius: 10,
+            position: position,
+            anchor: Anchor.center,
+            paint: Paint()..color = const Color(0x80FFFFFF));
 
   @override
   void onTapUp(TapUpEvent event) {
@@ -155,9 +155,8 @@ class Dot<T> extends CircleComponent with TapCallbacks {
 class DisabledDot extends CircleComponent {
   DisabledDot(Vector2 position)
       : super(
-      radius: 5,
-      position: position,
-      paint: Paint()
-        ..color = const Color(0x80FFFFFF),
-      anchor: Anchor.center);
+            radius: 5,
+            position: position,
+            paint: Paint()..color = const Color(0x80FFFFFF),
+            anchor: Anchor.center);
 }

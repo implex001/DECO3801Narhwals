@@ -99,8 +99,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
       return GestureDetector(
           onTap: () {
             if (route != "/caravan") {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/caravan", (route) => false);
+              Navigator.pop(context);
             }
           },
           child: Image.asset(
@@ -122,8 +121,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
       GestureDetector(
           onTap: () {
             if (route != "/shop") {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, "/shop", (route) => false);
+              Navigator.pushNamed(context, "/shop");
             }
           },
           child: Image.asset(
@@ -240,7 +238,6 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
           onTap: () {

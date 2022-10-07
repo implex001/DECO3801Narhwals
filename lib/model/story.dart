@@ -1,6 +1,20 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
+enum BiomeType {
+  none,
+  desert,
+  forest,
+  mountain,
+  plains,
+  swamp,
+  tundra,
+}
+
+mixin Biome {
+  BiomeType biomeType = BiomeType.none;
+}
+
 mixin Coordinates {
   Vector2 position = Vector2.zero();
 }
@@ -24,17 +38,19 @@ class EpisodeChunk {
   }
 }
 
-class Episode with Sequence<EpisodeChunk>, Coordinates {
+class Episode with Sequence<EpisodeChunk>, Coordinates, Biome {
   final List<EpisodeChunk> _story;
   final String id;
   int _currentSequence = -1;
-  int requiredSteps = 0;
+  int requiredSteps;
 
   @override
   int get currentSequence => _currentSequence;
 
-  Episode(this.id, this._story, {Vector2? position, this.requiredSteps = 0}) {
+  Episode(this.id, this._story,
+      {Vector2? position, this.requiredSteps = 0, biomeType = BiomeType.none}) {
     this.position = position ?? Vector2.zero();
+    this.biomeType = biomeType;
   }
 
   @override
