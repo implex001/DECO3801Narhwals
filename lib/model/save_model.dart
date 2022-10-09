@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:caravaneering/model/save.dart';
 import 'package:caravaneering/model/save_keys.dart';
+import 'package:caravaneering/model/story.dart';
 import 'package:flutter/material.dart';
 
 class SaveModel extends ChangeNotifier {
@@ -26,7 +27,8 @@ class SaveModel extends ChangeNotifier {
   }
 
   void addSteps(int number) {
-    changeMisc(SaveKeysV1.lifeTimeSteps, get(SaveKeysV1.lifeTimeSteps) + number);
+    changeMisc(
+        SaveKeysV1.lifeTimeSteps, get(SaveKeysV1.lifeTimeSteps) + number);
   }
 
   void addCoins(int number) {
@@ -102,6 +104,13 @@ class SaveModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeBiome(BiomeType biome) {
+    save.state[SaveKeysV1.currentBiome] = biome.name;
+    hasChanged = true;
+    hasUpdatedEquipped = true;
+    notifyListeners();
+  }
+
   bool checkIfItemOwned(Map<String, dynamic> item) {
     if (save.state[item["type"]] == null) {
       return false;
@@ -110,8 +119,8 @@ class SaveModel extends ChangeNotifier {
   }
 
   Timer? startAutoSave() {
-    autoSave ??= Timer.periodic(
-        const Duration(seconds: 10), (timer) => saveState());
+    autoSave ??=
+        Timer.periodic(const Duration(seconds: 10), (timer) => saveState());
     return autoSave;
   }
 
@@ -146,7 +155,8 @@ class SaveModel extends ChangeNotifier {
   }
 
   Future<void> personalSkillUp() async {
-    changeMisc(SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
+    changeMisc(
+        SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
     await save.save();
   }
 

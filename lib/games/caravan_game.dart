@@ -1,11 +1,15 @@
 import 'dart:async' as dartasync;
+import 'dart:io';
+import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/model/shop/shop_items.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
+import 'package:caravaneering/model/story.dart';
 import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -30,61 +34,132 @@ class CaravanGame extends FlameGame
 
   Vector2 lastCameraPosition = Vector2.zero();
   Vector2 cameraPosition = Vector2.zero();
-  int worldBound = 300;
+  int worldBound = 350;
 
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
   List<String> equippedPets = List.from(ItemDetails.startingPets);
-
+  List<Map<String, dynamic>>? allOwnedHorses = [];
+  List<Map<String, dynamic>>? allOwnedCarts = [];
   List<Component> currentActors = [];
 
   int backgroundSteps = 0;
   ParallaxComponent<FlameGame>? parallaxComponent;
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
+
+  // Coordinates of horse and cart
+  Vector2 horseCoords = Vector2(0, 0);
+  Vector2 cartCoords = Vector2(0, 0);
+  // Current horse index in allHorsesOwned, for item selection
+  int horseOwnedIndex = 0;
+  int cartOwnedIndex = 0;
+
   void renderEquipped() async {
     if (currentActors.isNotEmpty) {
-      removeAll(currentActors);
+      // Changed this from removalAll, because it gave me an error
+      // saying cannot remove if not child of parent - Nhu
+      currentActors.forEach((actor) {
+        actor.removeFromParent();
+      });
       currentActors.clear();
     }
 
-    var horseLeadsImage = await images.load('General/CartToHorse.png');
-    Sprite horseLeadSprite = Sprite(horseLeadsImage);
-    final horseLeads = SpriteComponent(
-        sprite: horseLeadSprite,
-        size: Vector2(180, 90),
-        position: Vector2(235, 185 + 100));
-
-    await images.load("characters/MainCharacterFinal-animation.png");
-    final mainCharacter =
-    HumanComponentAnimated("MainCharacterFinal", Vector2(420, 320));
-
-    for (var image in Skill.groupUpgradeImage.values) {
-      await images.load("characters/$image.png");
-    }
-
-    add(horseLeads);
-    add(mainCharacter);
-
-    await images.load("items/${equippedHorses[0]}-animation.png");
-    final horseComponent =
-        HorseComponent(equippedHorses[0], Vector2(320, 195 + 100));
-    currentActors.add(horseComponent);
-
-    await images.load("items/${equippedCarts[0]}.png");
-    final cartComponent =
-        CartComponent(equippedCarts[0], Vector2(240, 175 + 100));
-    currentActors.add(cartComponent);
+    double parallaxRatio = 1080 / camera.viewport.effectiveSize.y;
+    double xPosition = 700;
 
     // add all equipped pets to the screen
     if (equippedPets.isNotEmpty) {
       for (String pet in equippedPets) {
         await images.load("items/$pet-animation.png");
-        final petComponent = PetComponent(pet);
+        var petComponent = PetComponent(pet);
+        petComponent.position.x += xPosition;
+        petComponent.position.y += parallaxRatio * 10;
 
         currentActors.add(petComponent);
       }
     }
+
+    // Main Character
+    await images.load("characters/MainCharacterFinal-animation.png");
+
+    var mainCharacter =
+    HumanComponentAnimated("MainCharacterFinal", Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
+    currentActors.add(mainCharacter);
+
+    xPosition -= 50 + Random().nextDouble();
+    // Dungeoneer
+    await images.load("characters/Dungeoneer-animation.png");
+    var dungeoneer =
+    HumanComponentAnimated("Dungeoneer",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+    currentActors.add(dungeoneer);
+
+    xPosition -= 50 + Random().nextDouble();
+    // Merchant
+    await images.load("characters/Merchant-animation.png");
+    var merchant =
+    HumanComponentAnimated("Merchant",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+    currentActors.add(merchant);
+
+    xPosition -= 200 + Random().nextDouble() * 5;
+    // Horse
+    horseCoords = Vector2(xPosition, parallaxRatio * 90);
+    await images.load("items/${equippedHorses[0]}-animation.png");
+    var horseComponent = HorseComponent(equippedHorses[0], horseCoords);
+    currentActors.add(horseComponent);
+
+    //Cart
+    await images.load("items/${equippedCarts[0]}.png");
+    cartCoords = Vector2(xPosition, parallaxRatio * 90);
+    var cartComponent = CartComponent(equippedCarts[0], cartCoords);
+    currentActors.add(cartComponent);
+
+    // Horse Lead
+    var horseLeadsImage = await images.load('General/CartToHorse.png');
+    Sprite horseLeadSprite = Sprite(horseLeadsImage);
+    var horseLeads = SpriteComponent(
+        sprite: horseLeadSprite,
+        size: Vector2(180, 90),
+        position: Vector2(xPosition, parallaxRatio * 90));
+    currentActors.add(horseLeads);
+
+    xPosition -= 60;
+
+    List<DonkeyComponent> donkeyComponents = [];
+
+    // Misc group step upgrades
+
+    for (int i = 1;
+    i <= save!.get(SaveKeysV1.groupUpgrades);
+    i++) {
+      int j = i % Skill.groupUpgradeImage.length;
+
+      if (j == 0) {
+        xPosition -= 60 + Random().nextDouble();
+        await images.load("items/${Skill.groupUpgradeImage[4]}-animation.png");
+        var donkeyComponent = DonkeyComponent(Skill.groupUpgradeImage[4]!,
+            Vector2(xPosition, parallaxRatio * 95 + Random().nextDouble()));
+        donkeyComponents.add(donkeyComponent);
+        continue;
+      }
+
+      xPosition -= 30 + Random().nextDouble();
+      await images.load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
+      var human = HumanComponentAnimated(
+          Skill.groupUpgradeImage[j]!,
+          Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+      currentActors.add(human);
+    }
+    currentActors.addAll(donkeyComponents);
+
+    // Merchant cart
+    await images.load("items/MerchantCaravan_animation.png");
+    var merchantCart =
+    BigCartComponent("MerchantCaravan_animation",
+        Vector2(xPosition - 450, parallaxRatio * 55));
+    currentActors.add(merchantCart);
 
     addAll(currentActors);
   }
@@ -100,49 +175,74 @@ class CaravanGame extends FlameGame
       relativeOffset: Anchor.topLeft,
     );
     camera.speed = 100;
+  }
 
-    for (var image in Skill.groupUpgradeImage.values) {
-      await images.load("characters/$image.png");
+  @override
+  void onTapDown(int pointerId, TapDownInfo info) {
+    super.onTapDown(pointerId, info);
+    Vector2 tappedCoords = info.eventPosition.game;
+    // The numbers are from caravan_drawables.dart
+    if (horseCoords.x < tappedCoords.x &&
+        tappedCoords.x < (horseCoords.x + 225) &&
+        horseCoords.y < tappedCoords.y &&
+        tappedCoords.y < (horseCoords.y + 96)) {
+      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
+      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
+    }
+
+    if (cartCoords.x < tappedCoords.x &&
+        tappedCoords.x < (cartCoords.x + 80) &&
+        cartCoords.y < tappedCoords.y &&
+        tappedCoords.y < (cartCoords.y + 106)) {
+      cartOwnedIndex = (cartOwnedIndex + 1) % allOwnedCarts!.length;
+      save?.equipCart(1, allOwnedCarts![cartOwnedIndex]["key"]);
     }
   }
 
   @override
   void onAttach() {
     super.onAttach();
+    print("in attached");
 
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
       save?.init().then((s) async {
+        List<Map<String, dynamic>>? allHorses =
+            ShopItems.shopItemsDefaults["horses"];
+        print("in attached");
+        print(allHorses);
+        List<Map<String, dynamic>>? allCarts =
+            ShopItems.shopItemsDefaults["cart"];
+
+        // Gets all owned horses
+        allHorses?.forEach((horse) {
+          bool? isOwned = save?.checkIfItemOwned(horse);
+          print("in onattached");
+          print(horse);
+          isOwned = (isOwned == null) ? false : isOwned;
+          if (isOwned) {
+            allOwnedHorses!.add(horse);
+          }
+        });
+
+        // Gets all owned carts
+        allCarts?.forEach((cart) {
+          bool? isOwned = save?.checkIfItemOwned(cart);
+          isOwned = (isOwned == null) ? false : isOwned;
+          if (isOwned) {
+            allOwnedCarts!.add(cart);
+          }
+        });
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
-
-        // Get Current Biome
-        if (s.get(SaveKeysV1.currentBiome) == 'snow') {
-          parallaxComponent = await createSnowBiome();
-        } else {
-          parallaxComponent = await createForestBiome();
-        }
-        add(parallaxComponent!);
 
         equippedHorses = List.from(s.get(SaveKeysV1.equippedHorses));
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
         equippedPets = List.from(s.get(SaveKeysV1.equippedPets));
         save!.hasUpdatedEquipped = true;
-        renderEquipped();
         int modifier = s.get(SaveKeysV1.personalUpgrades);
-
-        // TODO: These are temporary positioning until proper positioning is
-        // implemented
-        for (int i = 1;
-            i <= s.get(SaveKeysV1.groupUpgrades) &&
-                i <= Skill.groupUpgradeImage.length;
-            i++) {
-          final human = HumanComponent(
-              Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
-          add(human);
-        }
 
         // Set up step tracking
         stepTracker = StepTracker();
@@ -158,8 +258,6 @@ class CaravanGame extends FlameGame
             dartasync.Timer(const Duration(seconds: 5),
                 () => overlays.remove("StepUpdate"));
 
-                 
-
             s.addCoins(backgroundSteps * modifier);
             s.addSteps(backgroundSteps * modifier);
             s.saveState(force: true);
@@ -169,7 +267,8 @@ class CaravanGame extends FlameGame
               startLeft: 200,
               startTurn: 0,
               endTop: MediaQuery.of(buildContext!).size.height / 40,
-              endLeft: MediaQuery.of(buildContext!).size.width - MediaQuery.of(buildContext!).size.width / 5,
+              endLeft: MediaQuery.of(buildContext!).size.width -
+                  MediaQuery.of(buildContext!).size.width / 5,
               endTurn: 20,
               numCoins: 10,
               endScale: 0.05,
@@ -190,12 +289,13 @@ class CaravanGame extends FlameGame
       });
 
       // Add save state changes
-      save?.addListener(() {
+      save?.addListener(() async {
         if (save!.hasUpdatedEquipped) {
           save!.hasUpdatedEquipped = false;
           equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
           equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
           equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
+          await renderParallax();
           renderEquipped();
         }
       });
@@ -241,6 +341,19 @@ class CaravanGame extends FlameGame
         cameraPosition.x - info.delta.global.x > -worldBound) {
       cameraPosition.add(Vector2(-info.delta.global.x, 0));
     }
+  }
+
+  Future<void> renderParallax() async {
+    if (parallaxComponent != null) {
+      remove(parallaxComponent!);
+    }
+
+    if (save!.get(SaveKeysV1.currentBiome) == BiomeType.mountain.name) {
+      parallaxComponent = await createSnowBiome();
+    } else {
+      parallaxComponent = await createForestBiome();
+    }
+    add(parallaxComponent!);
   }
 
   Future<ParallaxComponent<FlameGame>> createForestBiome() async {

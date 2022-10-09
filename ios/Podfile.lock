@@ -10,6 +10,8 @@ PODS:
     - Amplify (= 1.23.0)
     - AWSPluginsCore (= 1.23.0)
     - Flutter
+  - amplify_secure_storage (0.0.1):
+    - Flutter
   - amplify_storage_s3_ios (0.0.1):
     - Amplify (= 1.23.0)
     - amplify_flutter_ios
@@ -50,6 +52,7 @@ PODS:
 DEPENDENCIES:
   - amplify_auth_cognito_ios (from `.symlinks/plugins/amplify_auth_cognito_ios/ios`)
   - amplify_flutter_ios (from `.symlinks/plugins/amplify_flutter_ios/ios`)
+  - amplify_secure_storage (from `.symlinks/plugins/amplify_secure_storage/ios`)
   - amplify_storage_s3_ios (from `.symlinks/plugins/amplify_storage_s3_ios/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
@@ -76,6 +79,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amplify_auth_cognito_ios/ios"
   amplify_flutter_ios:
     :path: ".symlinks/plugins/amplify_flutter_ios/ios"
+  amplify_secure_storage:
+    :path: ".symlinks/plugins/amplify_secure_storage/ios"
   amplify_storage_s3_ios:
     :path: ".symlinks/plugins/amplify_storage_s3_ios/ios"
   audioplayers_darwin:
@@ -105,9 +110,10 @@ SPEC CHECKSUMS:
   Amplify: 010d6a71db20812d9e3062db1fe827393d01e584
   amplify_auth_cognito_ios: 672d66106aa0a3f3b014f24e58563031736eca4f
   amplify_flutter_ios: b850afebaa322d97d55aae63851fb8209ea36743
+  amplify_secure_storage: 501cbdac671a050090d48dfcc002d5637d3f4a55
   amplify_storage_s3_ios: 04d453c5c3615d4e0824259c4fe1b861222db968
   AmplifyPlugins: d939707cf36dfcd53c5fd6533e842e323a2287ab
-  audioplayers_darwin: 387322cb364026a1782298c982693b1b6aa9fa1b
+  audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   AWSCore: c67277201b6aca10e4cf24638eadaa67c85ebf03
   AWSPluginsCore: 120cfa265293694921b6595fe00d1cb5ab558847
   AWSS3: 09801b290f8818f532694cabd5d503c7474eb3df
