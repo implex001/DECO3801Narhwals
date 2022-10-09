@@ -27,7 +27,8 @@ class SaveModel extends ChangeNotifier {
   }
 
   void addSteps(int number) {
-    changeMisc(SaveKeysV1.lifeTimeSteps, get(SaveKeysV1.lifeTimeSteps) + number);
+    changeMisc(
+        SaveKeysV1.lifeTimeSteps, get(SaveKeysV1.lifeTimeSteps) + number);
   }
 
   void addCoins(int number) {
@@ -118,8 +119,8 @@ class SaveModel extends ChangeNotifier {
   }
 
   Timer? startAutoSave() {
-    autoSave ??= Timer.periodic(
-        const Duration(seconds: 10), (timer) => saveState());
+    autoSave ??=
+        Timer.periodic(const Duration(seconds: 10), (timer) => saveState());
     return autoSave;
   }
 
@@ -154,7 +155,8 @@ class SaveModel extends ChangeNotifier {
   }
 
   Future<void> personalSkillUp() async {
-    changeMisc(SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
+    changeMisc(
+        SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
     await save.save();
   }
 

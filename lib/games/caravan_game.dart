@@ -1,9 +1,11 @@
 import 'dart:async' as dartasync;
+import 'dart:io';
 import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
+import 'package:caravaneering/model/shop/shop_items.dart';
 import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
@@ -37,7 +39,8 @@ class CaravanGame extends FlameGame
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
   List<String> equippedPets = List.from(ItemDetails.startingPets);
-
+  List<Map<String, dynamic>>? allOwnedHorses = [];
+  List<Map<String, dynamic>>? allOwnedCarts = [];
   List<Component> currentActors = [];
 
   int backgroundSteps = 0;
@@ -45,9 +48,20 @@ class CaravanGame extends FlameGame
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
 
+  // Coordinates of horse and cart
+  Vector2 horseCoords = Vector2(0, 0);
+  Vector2 cartCoords = Vector2(0, 0);
+  // Current horse index in allHorsesOwned, for item selection
+  int horseOwnedIndex = 0;
+  int cartOwnedIndex = 0;
+
   void renderEquipped() async {
     if (currentActors.isNotEmpty) {
-      removeAll(currentActors);
+      // Changed this from removalAll, because it gave me an error
+      // saying cannot remove if not child of parent - Nhu
+      currentActors.forEach((actor) {
+        actor.removeFromParent();
+      });
       currentActors.clear();
     }
 
@@ -68,6 +82,7 @@ class CaravanGame extends FlameGame
 
     // Main Character
     await images.load("characters/MainCharacterFinal-animation.png");
+
     var mainCharacter =
     HumanComponentAnimated("MainCharacterFinal", Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
     currentActors.add(mainCharacter);
@@ -90,15 +105,15 @@ class CaravanGame extends FlameGame
 
     xPosition -= 200 + Random().nextDouble() * 5;
     // Horse
+    horseCoords = Vector2(xPosition, parallaxRatio * 90);
     await images.load("items/${equippedHorses[0]}-animation.png");
-    var horseComponent =
-        HorseComponent(equippedHorses[0], Vector2(xPosition, parallaxRatio * 90));
+    var horseComponent = HorseComponent(equippedHorses[0], horseCoords);
     currentActors.add(horseComponent);
 
     //Cart
     await images.load("items/${equippedCarts[0]}.png");
-    var cartComponent =
-        CartComponent(equippedCarts[0], Vector2(xPosition, parallaxRatio * 90));
+    cartCoords = Vector2(xPosition, parallaxRatio * 90);
+    var cartComponent = CartComponent(equippedCarts[0], cartCoords);
     currentActors.add(cartComponent);
 
     // Horse Lead
@@ -115,6 +130,7 @@ class CaravanGame extends FlameGame
     List<DonkeyComponent> donkeyComponents = [];
 
     // Misc group step upgrades
+
     for (int i = 1;
     i <= save!.get(SaveKeysV1.groupUpgrades);
     i++) {
@@ -123,8 +139,7 @@ class CaravanGame extends FlameGame
       if (j == 0) {
         xPosition -= 60 + Random().nextDouble();
         await images.load("items/${Skill.groupUpgradeImage[4]}-animation.png");
-        var donkeyComponent = DonkeyComponent(
-            Skill.groupUpgradeImage[4]!,
+        var donkeyComponent = DonkeyComponent(Skill.groupUpgradeImage[4]!,
             Vector2(xPosition, parallaxRatio * 95 + Random().nextDouble()));
         donkeyComponents.add(donkeyComponent);
         continue;
@@ -146,7 +161,6 @@ class CaravanGame extends FlameGame
         Vector2(xPosition - 450, parallaxRatio * 55));
     currentActors.add(merchantCart);
 
-
     addAll(currentActors);
   }
 
@@ -161,21 +175,68 @@ class CaravanGame extends FlameGame
       relativeOffset: Anchor.topLeft,
     );
     camera.speed = 100;
+  }
 
+  @override
+  void onTapDown(int pointerId, TapDownInfo info) {
+    super.onTapDown(pointerId, info);
+    Vector2 tappedCoords = info.eventPosition.game;
+    // The numbers are from caravan_drawables.dart
+    if (horseCoords.x < tappedCoords.x &&
+        tappedCoords.x < (horseCoords.x + 225) &&
+        horseCoords.y < tappedCoords.y &&
+        tappedCoords.y < (horseCoords.y + 96)) {
+      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
+      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
+    }
+
+    if (cartCoords.x < tappedCoords.x &&
+        tappedCoords.x < (cartCoords.x + 80) &&
+        cartCoords.y < tappedCoords.y &&
+        tappedCoords.y < (cartCoords.y + 106)) {
+      cartOwnedIndex = (cartOwnedIndex + 1) % allOwnedCarts!.length;
+      save?.equipCart(1, allOwnedCarts![cartOwnedIndex]["key"]);
+    }
   }
 
   @override
   void onAttach() {
     super.onAttach();
+    print("in attached");
 
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
       save?.init().then((s) async {
+        List<Map<String, dynamic>>? allHorses =
+            ShopItems.shopItemsDefaults["horses"];
+        print("in attached");
+        print(allHorses);
+        List<Map<String, dynamic>>? allCarts =
+            ShopItems.shopItemsDefaults["cart"];
+
+        // Gets all owned horses
+        allHorses?.forEach((horse) {
+          bool? isOwned = save?.checkIfItemOwned(horse);
+          print("in onattached");
+          print(horse);
+          isOwned = (isOwned == null) ? false : isOwned;
+          if (isOwned) {
+            allOwnedHorses!.add(horse);
+          }
+        });
+
+        // Gets all owned carts
+        allCarts?.forEach((cart) {
+          bool? isOwned = save?.checkIfItemOwned(cart);
+          isOwned = (isOwned == null) ? false : isOwned;
+          if (isOwned) {
+            allOwnedCarts!.add(cart);
+          }
+        });
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
-
 
         equippedHorses = List.from(s.get(SaveKeysV1.equippedHorses));
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
@@ -206,7 +267,8 @@ class CaravanGame extends FlameGame
               startLeft: 200,
               startTurn: 0,
               endTop: MediaQuery.of(buildContext!).size.height / 40,
-              endLeft: MediaQuery.of(buildContext!).size.width - MediaQuery.of(buildContext!).size.width / 5,
+              endLeft: MediaQuery.of(buildContext!).size.width -
+                  MediaQuery.of(buildContext!).size.width / 5,
               endTurn: 20,
               numCoins: 10,
               endScale: 0.05,
