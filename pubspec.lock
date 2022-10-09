@@ -7,49 +7,49 @@ packages:
       name: amplify_auth_cognito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+5"
+    version: "1.0.0-next.0+4"
   amplify_auth_cognito_android:
     dependency: transitive
     description:
       name: amplify_auth_cognito_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+2"
+    version: "1.0.0-next.0+1"
   amplify_auth_cognito_dart:
     dependency: transitive
     description:
       name: amplify_auth_cognito_dart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.6"
+    version: "0.1.5"
   amplify_auth_cognito_ios:
     dependency: transitive
     description:
       name: amplify_auth_cognito_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+3"
+    version: "1.0.0-next.0+1"
   amplify_core:
     dependency: transitive
     description:
       name: amplify_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+1"
+    version: "1.0.0-next.0"
   amplify_datastore_plugin_interface:
     dependency: transitive
     description:
       name: amplify_datastore_plugin_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+1"
+    version: "1.0.0-next.0"
   amplify_flutter:
     dependency: "direct main"
     description:
       name: amplify_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+3"
+    version: "1.0.0-next.0+1"
   amplify_flutter_android:
     dependency: transitive
     description:
@@ -63,14 +63,14 @@ packages:
       name: amplify_flutter_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+1"
+    version: "1.0.0-next.0"
   amplify_secure_storage:
     dependency: transitive
     description:
       name: amplify_secure_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.0"
   amplify_secure_storage_dart:
     dependency: transitive
     description:
@@ -84,7 +84,7 @@ packages:
       name: amplify_storage_s3
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-next.0+2"
+    version: "1.0.0-next.0"
   amplify_storage_s3_android:
     dependency: transitive
     description:
@@ -734,7 +734,7 @@ packages:
       name: stream_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.0"
   stream_transform:
     dependency: transitive
     description:
@@ -769,7 +769,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.14"
+    version: "0.4.9"
   tuple:
     dependency: transitive
     description:
@@ -797,7 +797,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.4"
+    version: "2.1.2"
   vibration:
     dependency: "direct main"
     description:
@@ -834,5 +834,5 @@ packages:
     source: hosted
     version: "6.1.0"
 sdks:
-  dart: ">=2.18.0 <3.0.0"
+  dart: ">=2.17.6 <3.0.0"
   flutter: ">=3.0.0"
