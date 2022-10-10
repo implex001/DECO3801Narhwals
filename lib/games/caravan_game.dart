@@ -141,8 +141,8 @@ class CaravanGame extends FlameGame
 
       if (j == 0) {
         xPosition -= 60 + Random().nextDouble();
-        await images.load("items/${Skill.groupUpgradeImage[4]}-animation.png");
-        var donkeyComponent = DonkeyComponent(Skill.groupUpgradeImage[4]!,
+        await images.load("items/${Skill.groupUpgradeImage[3]}-animation.png");
+        var donkeyComponent = DonkeyComponent(Skill.groupUpgradeImage[3]!,
             Vector2(xPosition, parallaxRatio * 95 + Random().nextDouble()));
         donkeyComponents.add(donkeyComponent);
         continue;
