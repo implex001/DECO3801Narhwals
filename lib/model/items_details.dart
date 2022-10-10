@@ -17,8 +17,8 @@ class ItemDetails{
   static List<dynamic> startingPets = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedPets];
 
   static const Map<String, Map<String, dynamic>> items = {
-    "brown-horse": {
-      "key": "brown-yellow",
+    "horse-brown": {
+      "key": "horse-brown",
       "name": "Brown horse",
       "type": horseKey,
       "cost": 0,
@@ -107,8 +107,8 @@ class ItemDetails{
       "location": "assets/images/items/horse-purple.png",
       "description": "The best horse money can buy!",
     },
-    "cart1": {
-      "key": "cart1",
+    "cart_flat": {
+      "key": "cart_flat",
       "name": "Cart level 1",
       "type": cartKey,
       "cost": 10,
@@ -124,32 +124,32 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Sticks.png",
-      "locationAnimated": "assets/images/items/CartPlanks.png",
+      "locationAnimated": "assets/images/items/CartSticks.png",
       "description": "Best cart money can buy!",
     },
-    "cart3": {
+    "cart_sticks_pine": {
       "key": "cart_sticks_pine",
       "name": "Pine Stick Cart",
       "type": cartKey,
       "cost": 100,
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Sticks_Pine.png",
-      "locationAnimated": "assets/images/items/CartSticks.png",
+      "locationAnimated": "assets/images/items/CartSticksPine.png",
       "description": "Best cart money can buy!",
     },
-    "cart4": {
-      "key": "cart4",
-      "name": "Cart level 4",
+    "cart_plank": {
+      "key": "cart_plank",
+      "name": "Plank Cart",
       "type": cartKey,
       "cost": 200,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/Cart_Planks_Pine.png",
-      "locationAnimated": "assets/images/items/CartTarp.png",
+      "location": "assets/images/items/Cart_Planks.png",
+      "locationAnimated": "assets/images/items/CartPlanks.png",
       "description": "Best cart money can buy!",
     },
-    "cart5": {
-      "key": "cart5",
-      "name": "Cart level 5",
+    "cart_planks_pine": {
+      "key": "cart_planks_pine",
+      "name": "Pine Plank Cart",
       "type": cartKey,
       "cost": 400,
       "purchaseCurrency": coins,
@@ -173,7 +173,7 @@ class ItemDetails{
       "type": cartKey,
       "cost": 1000,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/Cart-Tarp-Purple.png",
+      "location": "assets/images/items/Cart_Tarp_Purple.png",
       "locationAnimated": "assets/images/items/CartTarpPurple.png",
       "description": "Best cart money can buy!",
     },
@@ -183,8 +183,8 @@ class ItemDetails{
       "type": cartKey,
       "cost": 1000,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/Cart-Tarp-Blue.png",
-      "locationAnimated": "assets/images/items/CartTarpBlue.png",
+      "location": "assets/images/items/Cart_Tarp_Blue.png",
+      "locationAnimated": "assets/images/items/CartTarpNavy.png",
       "description": "Best cart money can buy!",
     },
     "cart-red": {
@@ -193,7 +193,7 @@ class ItemDetails{
       "type": cartKey,
       "cost": 400,
       "purchaseCurrency": gems,
-      "location": "assets/images/items/Cart-Tarp-Red.png",
+      "location": "assets/images/items/Cart_Tarp_Red.png",
       "locationAnimated": "assets/images/items/CartTarpRed.png",
       "description": "Best cart money can buy!",
     },
@@ -203,7 +203,7 @@ class ItemDetails{
       "type": cartKey,
       "cost": 400,
       "purchaseCurrency": gems,
-      "location": "assets/images/items/Cart-Tarp-Aqua.png",
+      "location": "assets/images/items/Cart_Tarp_Aqua.png",
       "locationAnimated": "assets/images/items/CartTarpAqua.png",
       "description": "Best cart money can buy!",
     },

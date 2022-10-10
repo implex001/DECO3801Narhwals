@@ -184,6 +184,11 @@ class CaravanGame extends FlameGame
   }
 
   void updateOwnedItems() {
+    var basicHorse = ItemDetails.items["horse-brown"];
+    allOwnedHorses!.add(basicHorse!);
+    var basicCart = ItemDetails.items["cart_flat"];
+    allOwnedCarts!.add(basicCart!);
+
     List<Map<String, dynamic>>? allHorses =
         ShopItems.shopItemsDefaults["horses"];
 

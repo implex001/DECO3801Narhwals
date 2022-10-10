@@ -12,7 +12,7 @@
     "carts": [],
     "pets": [],
     "equippedHorses": ["horse-brown"],
-    "equippedCarts": ["cart1"],
+    "equippedCarts": ["cart_flat"],
     "equippedPets": [],
     "unlockedEpisodes": [],
     "lifeTimeSteps": 0,
