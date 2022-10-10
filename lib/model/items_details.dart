@@ -113,7 +113,8 @@ class ItemDetails{
       "type": cartKey,
       "cost": 10,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/cart1.png",
+      "location": "assets/images/items/CartFlat.png",
+      "locationAnimated": "assets/images/items/CaravanFlat_animation.png",
       "description": "Guess this counts as a cart...",
     },
     "cart2": {
@@ -122,7 +123,8 @@ class ItemDetails{
       "type": cartKey,
       "cost": 50,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/cart2.png",
+      "location": "assets/images/items/CartPlanks.png",
+      "locationAnimated": "assets/images/items/CaravanPlanks_animation.png",
       "description": "Best cart money can buy!",
     },
     "cart3": {
@@ -131,7 +133,8 @@ class ItemDetails{
       "type": cartKey,
       "cost": 100,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/cart3.png",
+      "location": "assets/images/items/CartSticks.png",
+      "locationAnimated": "assets/images/items/CaravanSticks_animation.png",
       "description": "Best cart money can buy!",
     },
     "cart4": {
@@ -140,7 +143,8 @@ class ItemDetails{
       "type": cartKey,
       "cost": 200,
       "purchaseCurrency": coins,
-      "location": "assets/images/items/cart4.png",
+      "location": "assets/images/items/CartTarp.png",
+      "locationAnimated": "assets/images/items/CaravanTarp_animation.png",
       "description": "Best cart money can buy!",
     },
     "cart5": {

@@ -49,11 +49,11 @@ class EpisodeFactory {
   };
 
   static final Map<String, int> _episodeSteps = {
-    'W1E1': 100,
-    'W1E2': 1000,
-    'W1E3': 3000,
-    'W1E4': 4000,
-    'W1E5': 5000,
+    'W1E1': 5,
+    'W1E2': 10,
+    'W1E3': 20,
+    'W1E4': 25,
+    'W1E5': 30,
   };
 
   static final Map<String, BiomeType> _episodeBiomes = {

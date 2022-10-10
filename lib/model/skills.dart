@@ -9,10 +9,9 @@ class Skill {
   static const treeHeight = 12;
 
   static const Map<int, String> groupUpgradeImage = {
-    1: "Merchant",
+    1: "BaseNPC2",
     2: "BaseNPC1",
-    3: "BaseNPC2",
-    4: "Donkey",
+    3: "Donkey",
   };
 
   void setupTree() {

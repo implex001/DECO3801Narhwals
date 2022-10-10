@@ -28,7 +28,12 @@ class _CaveIntroView extends State<CaveIntroView> {
         padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
         child: Center(
           child: Container(
-            color: Color.fromRGBO(0x7d, 0x8e, 0x97, 20),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/cave/outside cave.png'),
+                fit: BoxFit.fill,
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +269,7 @@ class _CaveIntroView extends State<CaveIntroView> {
                                                           title: "title")));
                                         },
                                         child: Container(
-                                          height: 40,
+                                          height: 38,
                                           width: 88,
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(
@@ -287,7 +292,7 @@ class _CaveIntroView extends State<CaveIntroView> {
                                               ));
                                         },
                                         child: Container(
-                                          height: 40,
+                                          height: 38,
                                           width: 88,
                                           decoration: const BoxDecoration(
                                             image: DecorationImage(

@@ -2,6 +2,7 @@ import 'dart:async' as dartasync;
 import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
+import 'package:caravaneering/helpers/convert_asset_path.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/shop/shop_items.dart';
@@ -51,11 +52,10 @@ class CaravanGame extends FlameGame
   // Coordinates of horse and cart
   Vector2 horseCoords = Vector2(0, 0);
   Vector2 cartCoords = Vector2(0, 0);
+
   // Current horse index in allHorsesOwned, for item selection
   int horseOwnedIndex = 0;
   int cartOwnedIndex = 0;
-
-
 
   Future<void> renderEquipped() async {
     updateOwnedItems();
@@ -86,23 +86,21 @@ class CaravanGame extends FlameGame
     // Main Character
     await images.load("characters/MainCharacterFinal-animation.png");
 
-    var mainCharacter =
-    HumanComponentAnimated("MainCharacterFinal", Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
+    var mainCharacter = HumanComponentAnimated("MainCharacterFinal",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
     currentActors.add(mainCharacter);
 
     xPosition -= 50 + Random().nextDouble();
     // Dungeoneer
     await images.load("characters/Dungeoneer-animation.png");
-    var dungeoneer =
-    HumanComponentAnimated("Dungeoneer",
+    var dungeoneer = HumanComponentAnimated("Dungeoneer",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(dungeoneer);
 
     xPosition -= 50 + Random().nextDouble();
     // Merchant
     await images.load("characters/Merchant-animation.png");
-    var merchant =
-    HumanComponentAnimated("Merchant",
+    var merchant = HumanComponentAnimated("Merchant",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(merchant);
 
@@ -113,12 +111,6 @@ class CaravanGame extends FlameGame
     var horseComponent = HorseComponent(equippedHorses[0], horseCoords);
     currentActors.add(horseComponent);
 
-    //Cart
-    await images.load("items/${equippedCarts[0]}.png");
-    cartCoords = Vector2(xPosition, parallaxRatio * 90);
-    var cartComponent = CartComponent(equippedCarts[0], cartCoords);
-    currentActors.add(cartComponent);
-
     // Horse Lead
     var horseLeadsImage = await images.load('General/CartToHorse.png');
     Sprite horseLeadSprite = Sprite(horseLeadsImage);
@@ -128,30 +120,48 @@ class CaravanGame extends FlameGame
         position: Vector2(xPosition, parallaxRatio * 90));
     currentActors.add(horseLeads);
 
+    //Cart
+    String cartPath;
+    bool cartAnimated = true;
+    if (ItemDetails.items[equippedCarts[0]]!["locationAnimated"] != null) {
+      xPosition -= 40;
+      cartPath = ItemDetails.items[equippedCarts[0]]!["locationAnimated"];
+    } else {
+      // Fallback to static image
+      cartAnimated = false;
+      cartPath = ItemDetails.items[equippedCarts[0]]!["location"];
+    }
+
+    cartPath = flutterToFlamePath(cartPath);
+    await images.load(cartPath);
+    cartCoords = Vector2(xPosition, parallaxRatio * 90);
+    var cartComponent = (cartAnimated)
+        ? CartComponentAnimated(cartPath, cartCoords)
+        : CartComponent(cartPath, cartCoords);
+    currentActors.add(cartComponent);
+
     xPosition -= 60;
 
     List<DonkeyComponent> donkeyComponents = [];
 
     // Misc group step upgrades
 
-    for (int i = 1;
-    i <= save!.get(SaveKeysV1.groupUpgrades);
-    i++) {
+    for (int i = 1; i <= save!.get(SaveKeysV1.groupUpgrades); i++) {
       int j = i % Skill.groupUpgradeImage.length;
 
       if (j == 0) {
         xPosition -= 60 + Random().nextDouble();
-        await images.load("items/${Skill.groupUpgradeImage[4]}-animation.png");
-        var donkeyComponent = DonkeyComponent(Skill.groupUpgradeImage[4]!,
+        await images.load("items/${Skill.groupUpgradeImage[3]}-animation.png");
+        var donkeyComponent = DonkeyComponent(Skill.groupUpgradeImage[3]!,
             Vector2(xPosition, parallaxRatio * 95 + Random().nextDouble()));
         donkeyComponents.add(donkeyComponent);
         continue;
       }
 
       xPosition -= 30 + Random().nextDouble();
-      await images.load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
-      var human = HumanComponentAnimated(
-          Skill.groupUpgradeImage[j]!,
+      await images
+          .load("characters/${Skill.groupUpgradeImage[j]}-animation.png");
+      var human = HumanComponentAnimated(Skill.groupUpgradeImage[j]!,
           Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
       currentActors.add(human);
     }
@@ -159,8 +169,7 @@ class CaravanGame extends FlameGame
 
     // Merchant cart
     await images.load("items/MerchantCaravan_animation.png");
-    var merchantCart =
-    BigCartComponent("MerchantCaravan_animation",
+    var merchantCart = BigCartComponent("MerchantCaravan_animation",
         Vector2(xPosition - 450, parallaxRatio * 55));
     currentActors.add(merchantCart);
 
@@ -355,7 +364,6 @@ class CaravanGame extends FlameGame
       parallaxComponent = await createForestBiome();
     }
     add(parallaxComponent!);
-
   }
 
   Future<void> renderForegroundParallax() async {
@@ -467,7 +475,6 @@ class CaravanGame extends FlameGame
     final parallax = Parallax(
       [
         detailsLayer,
-
       ],
       baseVelocity: Vector2(5, 0),
     );
