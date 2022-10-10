@@ -11,6 +11,8 @@ import 'package:caravaneering/views/shop/shop_shelf.dart';
 import 'package:caravaneering/views/shop/shop_nav.dart';
 import 'package:caravaneering/views/shop/shop_description_panel.dart';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
+import '../skills/flicker.dart';
+
 
 
 /*
@@ -77,13 +79,13 @@ class _ShopState extends State<ShopView> {
     // The different menu icon hotspots on the right side of the shop
     menuItems = {
       // List elements are: X coord1, Y coord1, X coord2, Y coord2
-      ItemDetails.petKey: [
+      ItemDetails.horseKey: [
         navImageWidth/5.04 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/5.04 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
       ],
       ItemDetails.cartKey: [
         navImageWidth/1.87 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/1.87 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
       ],
-      ItemDetails.horseKey: [
+      ItemDetails.petKey: [
         navImageWidth/1.16 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/1.16 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
       ],
     };
@@ -225,14 +227,17 @@ class _ShopState extends State<ShopView> {
                               children: <Widget>[
                                 (shop == null) ? Container() : ShopShelf(
                                   items: shop!.getShopItems(1, 3),
+                                  shopingItem: itemShowing,
                                   itemClickFunction: itemClicked,
                                 ),
                                 (shop == null) ? Container() : ShopShelf(
                                   items: shop!.getShopItems(4, 6),
+                                  shopingItem: itemShowing,
                                   itemClickFunction: itemClicked,
                                 ),
                                 (shop == null) ? Container() : ShopShelf(
                                   items: shop!.getShopItems(7, 9),
+                                  shopingItem: itemShowing,
                                   itemClickFunction: itemClicked,
                                 ),
                               ]
