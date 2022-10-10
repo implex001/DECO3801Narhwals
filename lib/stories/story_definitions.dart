@@ -4,8 +4,23 @@ import 'package:flame/components.dart';
 class EpisodeFactory {
   static const Map<String, List<EpisodeChunk>> _episodes = {
     'W1E1': [
-      EpisodeChunk('Tester 1', 'assets/images/placeholders/E1.1.png'),
-      EpisodeChunk('Tester 2', 'assets/images/placeholders/E1.2.png')
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 1.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 2.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 3.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 4.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 5.0.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 5.1.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 6.0.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Intro 6.1.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 1.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 2.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 3.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 4.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 5.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 6.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 7.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 8.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Story 9.png'),
     ],
     'W1E2': [
       EpisodeChunk('Tester 1', 'assets/images/placeholders/E1.1.png'),
