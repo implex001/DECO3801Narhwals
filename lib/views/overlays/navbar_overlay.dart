@@ -236,25 +236,27 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      GestureDetector(
-          onTap: () {
-            MinigameSelectorPage.showPage(context);
-          },
-          child: Image.asset(
-            mingameButtonImage,
-            fit: BoxFit.contain,
-            height: 30,
-          )),
-      GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, "/world");
-          },
-          child: Image.asset(
-            'assets/images/UI/Story.png',
-            fit: BoxFit.contain,
-            height: 30,
-          )),
-    ]);
+    return (!isCaravanPage)
+        ? Container()
+        : Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            GestureDetector(
+                onTap: () {
+                  MinigameSelectorPage.showPage(context);
+                },
+                child: Image.asset(
+                  mingameButtonImage,
+                  fit: BoxFit.contain,
+                  height: 30,
+                )),
+            GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, "/world");
+                },
+                child: Image.asset(
+                  'assets/images/UI/Story.png',
+                  fit: BoxFit.contain,
+                  height: 30,
+                )),
+          ]);
   }
 }
