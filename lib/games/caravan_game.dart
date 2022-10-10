@@ -1,5 +1,4 @@
 import 'dart:async' as dartasync;
-import 'dart:io';
 import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
@@ -45,6 +44,7 @@ class CaravanGame extends FlameGame
 
   int backgroundSteps = 0;
   ParallaxComponent<FlameGame>? parallaxComponent;
+  ParallaxComponent<FlameGame>? parallaxComponentForeground;
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
 
@@ -55,7 +55,7 @@ class CaravanGame extends FlameGame
   int horseOwnedIndex = 0;
   int cartOwnedIndex = 0;
 
-  void renderEquipped() async {
+  Future<void> renderEquipped() async {
     if (currentActors.isNotEmpty) {
       // Changed this from removalAll, because it gave me an error
       // saying cannot remove if not child of parent - Nhu
@@ -162,22 +162,6 @@ class CaravanGame extends FlameGame
     currentActors.add(merchantCart);
 
     addAll(currentActors);
-    final detailsLayer2 = await loadParallaxLayer( 
-      ParallaxImageData('General/ForestDetailForeground.png'),
-      velocityMultiplier: Vector2(20, 0),
-    );
-        final t_parallax = Parallax(
-      [
-        detailsLayer2,
-      
-      ],
-      baseVelocity: Vector2(20, 0),
-    );
-
-    final t_parallaxComp  = ParallaxComponent(parallax: t_parallax);
-
-
-        add(t_parallaxComp);
   }
 
   @override
@@ -260,35 +244,6 @@ class CaravanGame extends FlameGame
         save!.hasUpdatedEquipped = true;
         int modifier = s.get(SaveKeysV1.personalUpgrades);
 
-
-        // TODO: These are temporary positioning until proper positioning is
-        // implemented
-        for (int i = 1;
-            i <= s.get(SaveKeysV1.groupUpgrades) &&
-                i <= Skill.groupUpgradeImage.length;
-            i++) {
-          final human = HumanComponent(
-              Skill.groupUpgradeImage[i]!, Vector2(420.0 + i * 30, 220));
-          add(human);
-        }
-        
-        final detailsLayer2 = await loadParallaxLayer( 
-      ParallaxImageData('General/ForestDetailForeground.png'),
-      velocityMultiplier: Vector2(20, 0),
-    );
-        final t_parallax = Parallax(
-      [
-        detailsLayer2,
-      
-      ],
-      baseVelocity: Vector2(20, 0),
-    );
-
-    final t_parallaxComp  = ParallaxComponent(parallax: t_parallax);
-
-
-        add(t_parallaxComp);
-
         // Set up step tracking
         stepTracker = StepTracker();
         stepTracker
@@ -341,7 +296,8 @@ class CaravanGame extends FlameGame
           equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
           equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
           await renderParallax();
-          renderEquipped();
+          await renderEquipped();
+          await renderForegroundParallax();
         }
       });
     }
@@ -372,6 +328,8 @@ class CaravanGame extends FlameGame
       ..multiply(Vector2(delta, delta));
     parallaxComponent?.parallax?.baseVelocity
         .setFrom(baseVelocity + Vector2(2, 2));
+    parallaxComponentForeground?.parallax?.baseVelocity
+        .setFrom(baseVelocity + Vector2(2, 2));
     lastCameraPosition.setFrom(camera.position);
   }
 
@@ -399,6 +357,21 @@ class CaravanGame extends FlameGame
       parallaxComponent = await createForestBiome();
     }
     add(parallaxComponent!);
+
+  }
+
+  Future<void> renderForegroundParallax() async {
+    if (parallaxComponentForeground != null) {
+      remove(parallaxComponentForeground!);
+    }
+
+    if (save!.get(SaveKeysV1.currentBiome) == BiomeType.mountain.name) {
+      parallaxComponentForeground = await createSnowBiomeForeground();
+    } else {
+      parallaxComponentForeground = await createForestBiomeForeground();
+    }
+
+    add(parallaxComponentForeground!);
   }
 
   Future<ParallaxComponent<FlameGame>> createForestBiome() async {
@@ -422,10 +395,6 @@ class CaravanGame extends FlameGame
       ParallaxImageData('General/ForestDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
-    // final foregroundWithTracks = await loadParallaxLayer(
-    //   ParallaxImageData('/General/ForestForeground.png'),
-    //   velocityMultiplier: Vector2(20, 0),
-    // );
 
     final parallax = Parallax(
       [
@@ -435,9 +404,24 @@ class CaravanGame extends FlameGame
         foregroundLayer,
         detailsLayer,
       ],
-      baseVelocity: Vector2(20, 0),
+      baseVelocity: Vector2(5, 0),
     );
 
+    return ParallaxComponent(parallax: parallax);
+  }
+
+  Future<ParallaxComponent<FlameGame>> createForestBiomeForeground() async {
+    final detailsLayer = await loadParallaxLayer(
+      ParallaxImageData('General/ForestDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+
+    final parallax = Parallax(
+      [
+        detailsLayer,
+      ],
+      baseVelocity: Vector2(5, 0),
+    );
     return ParallaxComponent(parallax: parallax);
   }
 
@@ -462,26 +446,6 @@ class CaravanGame extends FlameGame
       ParallaxImageData('General/SnowDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
-    // final foregroundWithTracks = await loadParallaxLayer(
-    //   ParallaxImageData('/General/ForestForeground.png'),
-    //   velocityMultiplier: Vector2(20, 0),
-    // );
-       final detailsLayer2 = await loadParallaxLayer( 
-      ParallaxImageData('General/SnowDetailForeground.png'),
-      velocityMultiplier: Vector2(20, 0),
-    );
-        final t_parallax = Parallax(
-      [
-        detailsLayer2,
-      
-      ],
-      baseVelocity: Vector2(20, 0),
-    );
-
-    // final t_parallaxComp  = ParallaxComponent(parallax: t_parallax);
-
-
-        // add(t_parallaxComp);
 
     final parallax = Parallax(
       [
@@ -490,11 +454,25 @@ class CaravanGame extends FlameGame
         midgroundLayer,
         foregroundLayer,
         detailsLayer,
-        detailsLayer2
       ],
       baseVelocity: Vector2(20, 0),
     );
 
+    return ParallaxComponent(parallax: parallax);
+  }
+
+  Future<ParallaxComponent<FlameGame>> createSnowBiomeForeground() async {
+    final detailsLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    final parallax = Parallax(
+      [
+        detailsLayer,
+
+      ],
+      baseVelocity: Vector2(5, 0),
+    );
     return ParallaxComponent(parallax: parallax);
   }
 }
