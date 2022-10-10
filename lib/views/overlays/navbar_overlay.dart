@@ -119,8 +119,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
       GestureDetector(
           onTap: () {
             if (route != "/shop") {
-              Navigator.pushNamed(
-                  context, "/shop");
+              Navigator.pushNamed(context, "/shop");
             }
           },
           child: Image.asset(
@@ -237,7 +236,6 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       GestureDetector(
           onTap: () {

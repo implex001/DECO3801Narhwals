@@ -101,4 +101,3 @@ class PetComponent extends SpriteAnimationComponent{
     position: PetAnimationDetails.pets[petKey]!["position"],
   );
 }
-
