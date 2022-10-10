@@ -91,18 +91,25 @@ class CaravanGame extends FlameGame
     currentActors.add(mainCharacter);
 
     xPosition -= 50 + Random().nextDouble();
+    // Merchant
+    await images.load("characters/Merchant-animation.png");
+    var merchant = HumanComponentAnimated("Merchant",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
+    currentActors.add(merchant);
+
+    xPosition -= 50 + Random().nextDouble();
     // Dungeoneer
     await images.load("characters/Dungeoneer-animation.png");
     var dungeoneer = HumanComponentAnimated("Dungeoneer",
         Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
     currentActors.add(dungeoneer);
 
-    xPosition -= 50 + Random().nextDouble();
-    // Merchant
-    await images.load("characters/Merchant-animation.png");
-    var merchant = HumanComponentAnimated("Merchant",
-        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble() * 5));
-    currentActors.add(merchant);
+    xPosition -= 180 + Random().nextDouble() * 5;
+    // Dungeoneer Horse
+    horseCoords = Vector2(xPosition, parallaxRatio * 90);
+    await images.load("items/VeteranHorse_animation-animation.png");
+    var dungeoneerHorse = HorseComponent("VeteranHorse_animation", horseCoords);
+    currentActors.add(dungeoneerHorse);
 
     xPosition -= 200 + Random().nextDouble() * 5;
     // Horse
@@ -177,6 +184,11 @@ class CaravanGame extends FlameGame
   }
 
   void updateOwnedItems() {
+    var basicHorse = ItemDetails.items["horse-brown"];
+    allOwnedHorses!.add(basicHorse!);
+    var basicCart = ItemDetails.items["cart_flat"];
+    allOwnedCarts!.add(basicCart!);
+
     List<Map<String, dynamic>>? allHorses =
         ShopItems.shopItemsDefaults["horses"];
 
