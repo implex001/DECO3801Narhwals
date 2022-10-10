@@ -29,14 +29,14 @@ class ShopItems{
   // The current items in the shop for each shop type
   static Map<String, List<Map<String, dynamic>>> shopItemsDefaults = {
     ItemDetails.horseKey: [
-      ItemDetails.items["horse-yellow"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-dark-grey"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-light-grey"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-tan"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-black"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-grey"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-cream"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-red"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-white"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-green"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
       ItemDetails.items["horse-blue"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-dark-blue"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-light-green"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-dark-green"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-pink"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
       ItemDetails.items["horse-purple"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
     ],
     ItemDetails.cartKey: [
