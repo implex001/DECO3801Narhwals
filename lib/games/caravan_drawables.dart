@@ -33,8 +33,8 @@ class DonkeyComponent extends SpriteAnimationComponent{
 }
 
 class CartComponent extends SpriteAnimationComponent{
-  CartComponent(String cartKey, Vector2 position) : super.fromFrameData(
-    Flame.images.fromCache("items/$cartKey.png"),
+  CartComponent(String imagePath, Vector2 position) : super.fromFrameData(
+    Flame.images.fromCache(imagePath),
     SpriteAnimationData.sequenced(
       textureSize: Vector2(242,256),
       amount: 1,
@@ -43,6 +43,20 @@ class CartComponent extends SpriteAnimationComponent{
     ),
     size: Vector2(80, 106),
     position: position
+  );
+}
+
+class CartComponentAnimated extends SpriteAnimationComponent{
+  CartComponentAnimated(String imagePath, Vector2 position) : super.fromFrameData(
+      Flame.images.fromCache(imagePath),
+      SpriteAnimationData.sequenced(
+        textureSize: Vector2(300,256),
+        amount: 4,
+        amountPerRow: 4,
+        stepTime: 0.1,
+      ),
+      size: Vector2(225, 192),
+      position: position
   );
 }
 
