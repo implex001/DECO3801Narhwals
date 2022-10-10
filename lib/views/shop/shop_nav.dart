@@ -22,15 +22,16 @@ class _ShopNavState extends State<ShopNav> {
   String shopNavImage = 'assets/images/shop/bg-shop-nav.png';
   @override
   Widget build(BuildContext context) {
+    // print("shopType are: ${widget.shopType}")
     switch (widget.shopType) {
-      case ItemDetails.petKey:
-        shopNavImage = 'assets/images/shop/bg-shop-nav-pets.png';
+      case ItemDetails.horseKey:
+        shopNavImage = 'assets/images/shop/Shop-Right-Bottom-Horse.gif';
         break;
       case ItemDetails.cartKey:
-        shopNavImage = 'assets/images/shop/bg-shop-nav-carts.png';
+        shopNavImage = 'assets/images/shop/Shop-Right-Bottom-Cart.gif';
         break;
-      case ItemDetails.horseKey:
-        shopNavImage = 'assets/images/shop/bg-shop-nav-horses.png';
+      case ItemDetails.petKey:
+       shopNavImage = 'assets/images/shop/Shop-Right-Bottom-Pet.gif';
         break;
     }
 

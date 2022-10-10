@@ -1,5 +1,4 @@
 import 'dart:async' as dartasync;
-import 'dart:io';
 import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
@@ -45,6 +44,7 @@ class CaravanGame extends FlameGame
 
   int backgroundSteps = 0;
   ParallaxComponent<FlameGame>? parallaxComponent;
+  ParallaxComponent<FlameGame>? parallaxComponentForeground;
   late CoinCollectAnimation coinCollectAnimation;
   ValueNotifier<bool> coinAnimationPlaying = ValueNotifier(false);
 
@@ -55,7 +55,10 @@ class CaravanGame extends FlameGame
   int horseOwnedIndex = 0;
   int cartOwnedIndex = 0;
 
-  void renderEquipped() async {
+
+
+  Future<void> renderEquipped() async {
+    updateOwnedItems();
     if (currentActors.isNotEmpty) {
       // Changed this from removalAll, because it gave me an error
       // saying cannot remove if not child of parent - Nhu
@@ -164,6 +167,30 @@ class CaravanGame extends FlameGame
     addAll(currentActors);
   }
 
+  void updateOwnedItems() {
+    List<Map<String, dynamic>>? allHorses =
+        ShopItems.shopItemsDefaults["horses"];
+
+    List<Map<String, dynamic>>? allCarts = ShopItems.shopItemsDefaults["cart"];
+    // Gets all owned horses
+    allHorses?.forEach((horse) {
+      bool? isOwned = save?.checkIfItemOwned(horse);
+      isOwned = (isOwned == null) ? false : isOwned;
+      if (isOwned) {
+        allOwnedHorses!.add(horse);
+      }
+    });
+
+    // Gets all owned carts
+    allCarts?.forEach((cart) {
+      bool? isOwned = save?.checkIfItemOwned(cart);
+      isOwned = (isOwned == null) ? false : isOwned;
+      if (isOwned) {
+        allOwnedCarts!.add(cart);
+      }
+    });
+  }
+
   @override
   Future<void>? onLoad() async {
     //Set orientation
@@ -182,58 +209,29 @@ class CaravanGame extends FlameGame
     super.onTapDown(pointerId, info);
     Vector2 tappedCoords = info.eventPosition.game;
     // The numbers are from caravan_drawables.dart
-    if (horseCoords.x < tappedCoords.x &&
-        tappedCoords.x < (horseCoords.x + 225) &&
-        horseCoords.y < tappedCoords.y &&
-        tappedCoords.y < (horseCoords.y + 96)) {
-      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
-      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
-    }
-
     if (cartCoords.x < tappedCoords.x &&
         tappedCoords.x < (cartCoords.x + 80) &&
         cartCoords.y < tappedCoords.y &&
         tappedCoords.y < (cartCoords.y + 106)) {
       cartOwnedIndex = (cartOwnedIndex + 1) % allOwnedCarts!.length;
       save?.equipCart(1, allOwnedCarts![cartOwnedIndex]["key"]);
+    } else if (horseCoords.x < tappedCoords.x &&
+        tappedCoords.x < (horseCoords.x + 225) &&
+        horseCoords.y < tappedCoords.y &&
+        tappedCoords.y < (horseCoords.y + 96)) {
+      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
+      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
     }
   }
 
   @override
   void onAttach() {
     super.onAttach();
-    print("in attached");
 
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
       save?.init().then((s) async {
-        List<Map<String, dynamic>>? allHorses =
-            ShopItems.shopItemsDefaults["horses"];
-        print("in attached");
-        print(allHorses);
-        List<Map<String, dynamic>>? allCarts =
-            ShopItems.shopItemsDefaults["cart"];
-
-        // Gets all owned horses
-        allHorses?.forEach((horse) {
-          bool? isOwned = save?.checkIfItemOwned(horse);
-          print("in onattached");
-          print(horse);
-          isOwned = (isOwned == null) ? false : isOwned;
-          if (isOwned) {
-            allOwnedHorses!.add(horse);
-          }
-        });
-
-        // Gets all owned carts
-        allCarts?.forEach((cart) {
-          bool? isOwned = save?.checkIfItemOwned(cart);
-          isOwned = (isOwned == null) ? false : isOwned;
-          if (isOwned) {
-            allOwnedCarts!.add(cart);
-          }
-        });
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
@@ -296,7 +294,8 @@ class CaravanGame extends FlameGame
           equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
           equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
           await renderParallax();
-          renderEquipped();
+          await renderEquipped();
+          await renderForegroundParallax();
         }
       });
     }
@@ -327,6 +326,8 @@ class CaravanGame extends FlameGame
       ..multiply(Vector2(delta, delta));
     parallaxComponent?.parallax?.baseVelocity
         .setFrom(baseVelocity + Vector2(2, 2));
+    parallaxComponentForeground?.parallax?.baseVelocity
+        .setFrom(baseVelocity + Vector2(2, 2));
     lastCameraPosition.setFrom(camera.position);
   }
 
@@ -354,6 +355,21 @@ class CaravanGame extends FlameGame
       parallaxComponent = await createForestBiome();
     }
     add(parallaxComponent!);
+
+  }
+
+  Future<void> renderForegroundParallax() async {
+    if (parallaxComponentForeground != null) {
+      remove(parallaxComponentForeground!);
+    }
+
+    if (save!.get(SaveKeysV1.currentBiome) == BiomeType.mountain.name) {
+      parallaxComponentForeground = await createSnowBiomeForeground();
+    } else {
+      parallaxComponentForeground = await createForestBiomeForeground();
+    }
+
+    add(parallaxComponentForeground!);
   }
 
   Future<ParallaxComponent<FlameGame>> createForestBiome() async {
@@ -377,10 +393,6 @@ class CaravanGame extends FlameGame
       ParallaxImageData('General/ForestDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
-    // final foregroundWithTracks = await loadParallaxLayer(
-    //   ParallaxImageData('/General/ForestForeground.png'),
-    //   velocityMultiplier: Vector2(20, 0),
-    // );
 
     final parallax = Parallax(
       [
@@ -390,9 +402,24 @@ class CaravanGame extends FlameGame
         foregroundLayer,
         detailsLayer,
       ],
-      baseVelocity: Vector2(20, 0),
+      baseVelocity: Vector2(5, 0),
     );
 
+    return ParallaxComponent(parallax: parallax);
+  }
+
+  Future<ParallaxComponent<FlameGame>> createForestBiomeForeground() async {
+    final detailsLayer = await loadParallaxLayer(
+      ParallaxImageData('General/ForestDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+
+    final parallax = Parallax(
+      [
+        detailsLayer,
+      ],
+      baseVelocity: Vector2(5, 0),
+    );
     return ParallaxComponent(parallax: parallax);
   }
 
@@ -417,10 +444,6 @@ class CaravanGame extends FlameGame
       ParallaxImageData('General/SnowDetails.png'),
       velocityMultiplier: Vector2(20, 0),
     );
-    // final foregroundWithTracks = await loadParallaxLayer(
-    //   ParallaxImageData('/General/ForestForeground.png'),
-    //   velocityMultiplier: Vector2(20, 0),
-    // );
 
     final parallax = Parallax(
       [
@@ -433,6 +456,21 @@ class CaravanGame extends FlameGame
       baseVelocity: Vector2(20, 0),
     );
 
+    return ParallaxComponent(parallax: parallax);
+  }
+
+  Future<ParallaxComponent<FlameGame>> createSnowBiomeForeground() async {
+    final detailsLayer = await loadParallaxLayer(
+      ParallaxImageData('General/SnowDetailForeground.png'),
+      velocityMultiplier: Vector2(20, 0),
+    );
+    final parallax = Parallax(
+      [
+        detailsLayer,
+
+      ],
+      baseVelocity: Vector2(5, 0),
+    );
     return ParallaxComponent(parallax: parallax);
   }
 }

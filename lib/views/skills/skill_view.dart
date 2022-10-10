@@ -130,7 +130,7 @@ class _SkillsViewState extends State<SkillsView> {
                                       },
                                       child: selectedSkill == skill!.skillList[index] ? FlickerAnimation(iconPath: Image.asset(buyState
                                       ? skill!.skillList[index]["icon"]
-                                      : skill!.skillList[index]["iconLocked"]))
+                                      : skill!.skillList[index]["iconLocked"]),t_width: 180,t_height: 180,)
                                       : Image.asset(buyState
                                       ? skill!.skillList[index]["icon"]
                                       : skill!.skillList[index]["iconLocked"]));
