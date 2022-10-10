@@ -55,7 +55,10 @@ class CaravanGame extends FlameGame
   int horseOwnedIndex = 0;
   int cartOwnedIndex = 0;
 
+
+
   Future<void> renderEquipped() async {
+    updateOwnedItems();
     if (currentActors.isNotEmpty) {
       // Changed this from removalAll, because it gave me an error
       // saying cannot remove if not child of parent - Nhu
@@ -164,6 +167,30 @@ class CaravanGame extends FlameGame
     addAll(currentActors);
   }
 
+  void updateOwnedItems() {
+    List<Map<String, dynamic>>? allHorses =
+        ShopItems.shopItemsDefaults["horses"];
+
+    List<Map<String, dynamic>>? allCarts = ShopItems.shopItemsDefaults["cart"];
+    // Gets all owned horses
+    allHorses?.forEach((horse) {
+      bool? isOwned = save?.checkIfItemOwned(horse);
+      isOwned = (isOwned == null) ? false : isOwned;
+      if (isOwned) {
+        allOwnedHorses!.add(horse);
+      }
+    });
+
+    // Gets all owned carts
+    allCarts?.forEach((cart) {
+      bool? isOwned = save?.checkIfItemOwned(cart);
+      isOwned = (isOwned == null) ? false : isOwned;
+      if (isOwned) {
+        allOwnedCarts!.add(cart);
+      }
+    });
+  }
+
   @override
   Future<void>? onLoad() async {
     //Set orientation
@@ -182,58 +209,29 @@ class CaravanGame extends FlameGame
     super.onTapDown(pointerId, info);
     Vector2 tappedCoords = info.eventPosition.game;
     // The numbers are from caravan_drawables.dart
-    if (horseCoords.x < tappedCoords.x &&
-        tappedCoords.x < (horseCoords.x + 225) &&
-        horseCoords.y < tappedCoords.y &&
-        tappedCoords.y < (horseCoords.y + 96)) {
-      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
-      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
-    }
-
     if (cartCoords.x < tappedCoords.x &&
         tappedCoords.x < (cartCoords.x + 80) &&
         cartCoords.y < tappedCoords.y &&
         tappedCoords.y < (cartCoords.y + 106)) {
       cartOwnedIndex = (cartOwnedIndex + 1) % allOwnedCarts!.length;
       save?.equipCart(1, allOwnedCarts![cartOwnedIndex]["key"]);
+    } else if (horseCoords.x < tappedCoords.x &&
+        tappedCoords.x < (horseCoords.x + 225) &&
+        horseCoords.y < tappedCoords.y &&
+        tappedCoords.y < (horseCoords.y + 96)) {
+      horseOwnedIndex = (horseOwnedIndex + 1) % allOwnedHorses!.length;
+      save?.equipHorse(1, allOwnedHorses![horseOwnedIndex]["key"]);
     }
   }
 
   @override
   void onAttach() {
     super.onAttach();
-    print("in attached");
 
     if (save == null) {
       // Set up save
       save = Provider.of<SaveModel>(buildContext!);
       save?.init().then((s) async {
-        List<Map<String, dynamic>>? allHorses =
-            ShopItems.shopItemsDefaults["horses"];
-        print("in attached");
-        print(allHorses);
-        List<Map<String, dynamic>>? allCarts =
-            ShopItems.shopItemsDefaults["cart"];
-
-        // Gets all owned horses
-        allHorses?.forEach((horse) {
-          bool? isOwned = save?.checkIfItemOwned(horse);
-          print("in onattached");
-          print(horse);
-          isOwned = (isOwned == null) ? false : isOwned;
-          if (isOwned) {
-            allOwnedHorses!.add(horse);
-          }
-        });
-
-        // Gets all owned carts
-        allCarts?.forEach((cart) {
-          bool? isOwned = save?.checkIfItemOwned(cart);
-          isOwned = (isOwned == null) ? false : isOwned;
-          if (isOwned) {
-            allOwnedCarts!.add(cart);
-          }
-        });
         //If first save set date to yesterday
         DateTime? lastsave = s.getLastTime();
         lastsave ??= DateTime.now().subtract(const Duration(days: 1));
