@@ -138,6 +138,8 @@ class StatsView extends State<MiniGameStats> {
     Future.delayed(const Duration(milliseconds: 800)).then((value) {
       setState(() {
         showCoinAnimation = true;
+        Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
+        Provider.of<SaveModel>(context, listen: false).saveState();
       });
     });
     SystemChrome.setPreferredOrientations([
@@ -148,8 +150,6 @@ class StatsView extends State<MiniGameStats> {
     modifier = (modifier == null) ? 1 : modifier;
     obstacleCoins = score.value;
     coinsEarned = (500 + 10 + score.value) * modifier!;
-    Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
-    Provider.of<SaveModel>(context, listen: false).saveState();
   }
 
   @override
@@ -305,8 +305,7 @@ class StatsView extends State<MiniGameStats> {
           bottom: 20,
           child: GestureDetector(
               onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, "/caravan", (route) => false);
+                Navigator.popUntil(context, (route) => route.isFirst);
               },
               child: Image.asset(
                 'assets/images/UI/Back.png',

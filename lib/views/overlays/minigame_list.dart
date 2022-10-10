@@ -28,8 +28,8 @@ class MinigameSelectorPage {
                 GestureDetector(
                   onTap: () {
                     Navigator.pop(context);
-                    Navigator.pushNamedAndRemoveUntil(
-                      context, "/cave-intro", (route) => false,
+                    Navigator.pushNamed(
+                      context, "/cave-intro"
                     );
                   },
                   child: Container(
