@@ -56,11 +56,11 @@ class _CaveIntroView extends State<CaveIntroView> {
             children: [
               Transform.scale(
                 scale: 1.5,
-                child: CreatureIcon(
-                  image: const AssetImage(
+                child: const CreatureIcon(
+                  image: AssetImage(
                     'assets/images/animals/bat badge.png',
                   ),
-                  bgColor: Colors.green[800]!,
+                  bgColor: Colors.transparent,
                   audio: "audio/bat.mp3",
                 ),
               ),
@@ -83,11 +83,11 @@ class _CaveIntroView extends State<CaveIntroView> {
             children: [
               Transform.scale(
                 scale: 1.5,
-                child: CreatureIcon(
-                  image: const AssetImage(
+                child: const CreatureIcon(
+                  image: AssetImage(
                     'assets/images/animals/rat badge.png',
                   ),
-                  bgColor: Colors.green[800]!,
+                  bgColor: Colors.transparent,
                   audio: "audio/rat.mp3",
                 ),
               ),
@@ -110,11 +110,11 @@ class _CaveIntroView extends State<CaveIntroView> {
             children: [
               Transform.scale(
                 scale: 1.5,
-                child: CreatureIcon(
-                  image: const AssetImage(
+                child: const CreatureIcon(
+                  image: AssetImage(
                     'assets/images/animals/snake badge.png',
                   ),
-                  bgColor: Colors.green[800]!,
+                  bgColor: Colors.transparent,
                   audio: "audio/snake.mp3",
                 ),
               ),
