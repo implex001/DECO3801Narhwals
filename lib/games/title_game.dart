@@ -1,3 +1,6 @@
+import 'dart:math';
+import 'package:caravaneering/games/caravan_drawables.dart';
+import 'package:caravaneering/helpers/convert_asset_path.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
@@ -9,7 +12,7 @@ class TitleScreenAnimation extends FlameGame {
   static const String description = '''
     Caravan Game
   ''';
-
+  List<Component> currentActors = [];
   late ParallaxComponent<FlameGame> parallaxComponent;
   late ParallaxComponent<FlameGame> parallaxComponent2;
   late ParallaxComponent<FlameGame> parallaxComponent3;
@@ -48,15 +51,40 @@ class TitleScreenAnimation extends FlameGame {
         velocityMultiplierDelta: Vector2(0.5, 0));
     add(parallaxGroundDetails);
 
-    var character = await images.load('characters/MainCharacterFinal.png');
-    final spiteSize = Vector2(152 * 1.4, 142 * 1.4);
-    SpriteAnimationData spriteData = SpriteAnimationData.sequenced(
-        amount: 9, stepTime: 0.03, textureSize: Vector2(152.0, 142.0));
-    var characterAnimation =
-        SpriteAnimationComponent.fromFrameData(character, spriteData)
-          ..x = 150
-          ..y = 30
-          ..size = spiteSize;
+    // Adding the main character and basic horse/cart
+    // Characters and Items
+    double parallaxRatio = 1080 / camera.viewport.effectiveSize.y;
+    double xPosition = 500;
+
+    // Main character
+    await images.load("characters/MainCharacterFinal-animation.png");
+    var mainCharacter = HumanComponentAnimated("MainCharacterFinal",
+        Vector2(xPosition, parallaxRatio * 100 + Random().nextDouble()));
+    currentActors.add(mainCharacter);
+
+    // Brown Horse
+    xPosition -= 200 + Random().nextDouble() * 5;
+    Vector2 horseCoords = Vector2(xPosition, parallaxRatio * 90);
+    await images.load("items/horse-brown-animation.png");
+    var horseComponent = HorseComponent("horse-brown", horseCoords);
+    currentActors.add(horseComponent);
+
+    // Horse Lead
+    var horseLeadsImage = await images.load('General/CartToHorse.png');
+    Sprite horseLeadSprite = Sprite(horseLeadsImage);
+    var horseLeads = SpriteComponent(
+        sprite: horseLeadSprite,
+        size: Vector2(180, 90),
+        position: Vector2(xPosition, parallaxRatio * 90));
+    currentActors.add(horseLeads);
+
+    //Cart
+    String cartPath = flutterToFlamePath("/items/CartFlat.png");
+    await images.load(cartPath);
+    Vector2 cartCoords = Vector2(xPosition - 40, parallaxRatio * 90);
+    var cartComponent = CartComponentAnimated(cartPath, cartCoords);
+    currentActors.add(cartComponent);
+    addAll(currentActors);
   }
 
   @override

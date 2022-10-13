@@ -1,9 +1,6 @@
-import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
 import 'package:caravaneering/views/text_bubble.dart';
 import 'package:flutter/material.dart';
-
-import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/views/cave/creature_icon.dart';
 
 late int selectedLevel;
