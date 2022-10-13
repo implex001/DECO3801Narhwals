@@ -169,11 +169,13 @@ class SaveModel extends ChangeNotifier {
   Future<void> personalSkillUp() async {
     changeMisc(
         SaveKeysV1.personalUpgrades, get(SaveKeysV1.personalUpgrades) + 1);
+    hasUpdatedEquipped = true;
     await save.save();
   }
 
   Future<void> groupSkillUp() async {
     changeMisc(SaveKeysV1.groupUpgrades, get(SaveKeysV1.groupUpgrades) + 1);
+    hasUpdatedEquipped = true;
     await save.save();
   }
 }

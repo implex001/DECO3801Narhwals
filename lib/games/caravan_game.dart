@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:caravaneering/games/caravan_drawables.dart';
 import 'package:caravaneering/helpers/convert_asset_path.dart';
+import 'package:caravaneering/helpers/work_queue.dart';
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/model/step_tracker.dart';
@@ -55,6 +56,36 @@ class CaravanGame extends FlameGame
   // Current horse index in allHorsesOwned, for item selection
   int horseOwnedIndex = 0;
   int cartOwnedIndex = 0;
+
+  WorkQueue renderQueue = WorkQueue();
+
+  Future<void> renderAll() async {
+
+    if (save!.hasUpdatedBiome) {
+      await renderParallax();
+    }
+
+    if (save!.hasUpdatedEquipped || save!.hasUpdatedBiome) {
+      save!.hasUpdatedEquipped = false;
+      equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
+      equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
+      equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
+
+      equippedHorses.addAll(save
+      !.getOwnedItems("horses")
+          .map((e) => e["key"]));
+      equippedCarts.addAll(save
+      !.getOwnedItems("cart")
+          .map((e) => e["key"]));
+
+      final lastPos = parallaxComponent?.parallax?.layers[3].currentOffset();
+      await renderEquipped();
+      await renderForegroundParallax();
+      parallaxComponentForeground?.parallax?.layers[0].currentOffset().setFrom(lastPos!);
+      save!.hasUpdatedBiome = false;
+    }
+
+  }
 
   Future<void> renderEquipped() async {
     updateOwnedItems();
@@ -300,33 +331,9 @@ class CaravanGame extends FlameGame
       });
 
       // Add save state changes
-      save?.addListener(() async {
-
-        if (save!.hasUpdatedBiome) {
-          await renderParallax();
-        }
-
-        if (save!.hasUpdatedEquipped || save!.hasUpdatedBiome) {
-          save!.hasUpdatedEquipped = false;
-          equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
-          equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
-          equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
-
-          equippedHorses.addAll(save
-              !.getOwnedItems("horses")
-              .map((e) => e["key"]));
-          equippedCarts.addAll(save
-              !.getOwnedItems("cart")
-              .map((e) => e["key"]));
-
-          final lastPos = parallaxComponent?.parallax?.layers[3].currentOffset();
-          await renderEquipped();
-          await renderForegroundParallax();
-          parallaxComponentForeground?.parallax?.layers[0].currentOffset().setFrom(lastPos!);
-          save!.hasUpdatedBiome = false;
-        }
-
-      });
+      save?.addListener(() => renderQueue.add(renderAll));
+    } else {
+      save!.forceRefresh();
     }
   }
 
