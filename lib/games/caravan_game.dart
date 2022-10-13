@@ -180,7 +180,7 @@ class CaravanGame extends FlameGame
         Vector2(xPosition - 450, parallaxRatio * 55));
     currentActors.add(merchantCart);
 
-    addAll(currentActors);
+    return addAll(currentActors);
   }
 
   void updateOwnedItems() {
@@ -261,6 +261,7 @@ class CaravanGame extends FlameGame
         equippedCarts = List.from(s.get(SaveKeysV1.equippedCarts));
         equippedPets = List.from(s.get(SaveKeysV1.equippedPets));
         save!.hasUpdatedEquipped = true;
+        save!.hasUpdatedBiome = true;
         int modifier = s.get(SaveKeysV1.personalUpgrades);
 
         // Set up step tracking
@@ -309,15 +310,23 @@ class CaravanGame extends FlameGame
 
       // Add save state changes
       save?.addListener(() async {
-        if (save!.hasUpdatedEquipped) {
+        if (save!.hasUpdatedBiome) {
+          await renderParallax();
+        }
+
+        if (save!.hasUpdatedEquipped || save!.hasUpdatedBiome) {
           save!.hasUpdatedEquipped = false;
           equippedHorses = List.from(save!.get(SaveKeysV1.equippedHorses));
           equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
           equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
-          await renderParallax();
+
+          final lastPos = parallaxComponent?.parallax?.layers[3].currentOffset();
           await renderEquipped();
           await renderForegroundParallax();
+          parallaxComponentForeground?.parallax?.layers[0].currentOffset().setFrom(lastPos!);
+          save!.hasUpdatedBiome = false;
         }
+
       });
     }
   }
@@ -336,7 +345,10 @@ class CaravanGame extends FlameGame
   void update(double dt) {
     super.update(dt);
 
-    // Code below is modified from https://stackoverflow.com/questions/71131480/flutter-flame-how-to-use-parallax-with-camera-followcomponent
+    updateParallaxPosition(dt);
+  }
+
+  void updateParallaxPosition(double dt) {
     final currentCameraPosition = camera.position;
     final delta = dt > deltaThresholdToUpdateParralax
         ? 1.0 / (dt * framesPerSecond)

@@ -10,6 +10,7 @@ class SaveModel extends ChangeNotifier {
   bool hasChanged = false;
   bool hasErasedData = false;
   bool hasUpdatedEquipped = false;
+  bool hasUpdatedBiome = false;
   Timer? autoSave;
 
   Future<SaveModel> init() async {
@@ -106,8 +107,7 @@ class SaveModel extends ChangeNotifier {
 
   void changeBiome(BiomeType biome) {
     save.state[SaveKeysV1.currentBiome] = biome.name;
-    hasChanged = true;
-    hasUpdatedEquipped = true;
+    hasUpdatedBiome = true;
     notifyListeners();
   }
 
