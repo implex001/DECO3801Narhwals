@@ -34,7 +34,7 @@ class CaravanGame extends FlameGame
 
   Vector2 lastCameraPosition = Vector2.zero();
   Vector2 cameraPosition = Vector2.zero();
-  int worldBound = 350;
+  int worldBound = 1300;
 
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
