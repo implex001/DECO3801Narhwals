@@ -13,36 +13,43 @@ class TitleScreenAnimation extends FlameGame {
     Caravan Game
   ''';
   List<Component> currentActors = [];
-  late ParallaxComponent<FlameGame> parallaxComponent;
-  late ParallaxComponent<FlameGame> parallaxComponent2;
-  late ParallaxComponent<FlameGame> parallaxComponent3;
+  late ParallaxComponent<FlameGame> sky;
+  late ParallaxComponent<FlameGame> midground;
+  late ParallaxComponent<FlameGame> foreground;
   late ParallaxComponent<FlameGame> parallaxGroundDetails;
+  late ParallaxComponent<FlameGame> clouds;
   SpriteAnimationComponent charAnimation = SpriteAnimationComponent();
 
   @override
   Future<void>? onLoad() async {
     camera.speed = 2000;
-    parallaxComponent = await loadParallaxComponent([
+    sky = await loadParallaxComponent([
       ParallaxImageData('General/ForestSky.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(80, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
-    add(parallaxComponent);
-    parallaxComponent2 = await loadParallaxComponent([
+    add(sky);
+    clouds = await loadParallaxComponent(
+        [ParallaxImageData('General/ForestClouds.png')],
+        repeat: ImageRepeat.repeatX,
+        baseVelocity: Vector2(30, 0),
+        velocityMultiplierDelta: Vector2(0.5, 0));
+    add(clouds);
+    midground = await loadParallaxComponent([
       ParallaxImageData('General/ForestMidground.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(100, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
-    add(parallaxComponent2);
-    parallaxComponent3 = await loadParallaxComponent([
+    add(midground);
+    foreground = await loadParallaxComponent([
       ParallaxImageData('General/ForestForeground.png'),
     ],
         repeat: ImageRepeat.repeatX,
         baseVelocity: Vector2(70, 0),
         velocityMultiplierDelta: Vector2(0.5, 0));
-    add(parallaxComponent3);
+    add(foreground);
     parallaxGroundDetails = await loadParallaxComponent([
       ParallaxImageData('General/ForestDetails.png'),
     ],
