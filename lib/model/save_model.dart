@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:caravaneering/model/save.dart';
 import 'package:caravaneering/model/save_keys.dart';
+import 'package:caravaneering/model/shop/shop_items.dart';
 import 'package:caravaneering/model/story.dart';
 import 'package:flutter/material.dart';
 
@@ -118,10 +119,21 @@ class SaveModel extends ChangeNotifier {
     return save.state[item["type"]].contains(item["key"]);
   }
 
+  List<Map<String, dynamic>> getOwnedItems(String type) {
+    return ShopItems
+        .shopItemsDefaults[type]!
+        .where((element) => checkIfItemOwned(element))
+        .toList();
+  }
+
   Timer? startAutoSave() {
     autoSave ??=
         Timer.periodic(const Duration(seconds: 10), (timer) => saveState());
     return autoSave;
+  }
+
+  void forceRefresh(){
+    notifyListeners();
   }
 
   void saveState({force = false}) async {
