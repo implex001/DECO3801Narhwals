@@ -32,28 +32,28 @@ class Skill {
       }
       int cost = pow(10, (i + 1)).round();
       skillList.add({
-        "icon": "assets/images/skills/Upgrade_Strength.png",
-        "iconLocked": "assets/images/skills/Upgrade_StrengthLocked.png",
+        "icon": "assets/images/skills/Skill-Personal.png",
+        "iconLocked": "assets/images/skills/Skill-Personal-Locked.png",
         "introduction": "Personal Upgrade, Upgrade your personal caravan to"
             " increase the points you get from idle activites. Costs:$cost",
         "buyState": pState,
         "index": i * 2,
         "cost": cost,
-        "location": "assets/images/skills/Upgrade_Strength.png"
+        "location": "assets/images/skills/Skill-Personal.png"
       });
       gState = false;
       if (group > i + 1) {
         gState = true;
       }
       skillList.add({
-        "icon": "assets/images/skills/UpgradeCoins.png",
-        "iconLocked": "assets/images/skills/UpgradeCoinsLocked.png",
+        "icon": "assets/images/skills/Skill-Group.png",
+        "iconLocked": "assets/images/skills/Skill-Group-Locked.png",
         "introduction": "Group Upgrade, Bring more people to your caravan to"
             " increase the points you earn from minigames. Costs:$cost",
         "buyState": gState,
         "index": i * 2 + 1,
         "cost": cost,
-        "location": "assets/images/skills/UpgradeCoins.png"
+        "location": "assets/images/skills/Skill-Group.png"
       });
     }
   }
