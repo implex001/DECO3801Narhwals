@@ -93,12 +93,10 @@ flutter:
     - assets/images/skills/Skills-Lines.png
     - assets/images/skills/Skills-Popup.png
     - assets/images/skills/SkillsBackground.png
-    - assets/images/skills/Upgrade_Strength.png
-    - assets/images/skills/Upgrade_StrengthLocked.png
-    - assets/images/skills/UpgradeCoins.png
-    - assets/images/skills/UpgradeCoinsLocked.png
-    - assets/images/skills/UpgradeSpeed.png
-    - assets/images/skills/UpgradeSpeedLocked.png
+    - assets/images/skills/Skill-Group.png
+    - assets/images/skills/Skill-Group-Locked.png
+    - assets/images/skills/Skill-Personal.png
+    - assets/images/skills/Skill-Personal-Locked.png
     - assets/images/UI/BuyButton.png
     - assets/images/cave/coin_chest.gif
     - assets/images/shop/Shop-RightAnimated.gif
