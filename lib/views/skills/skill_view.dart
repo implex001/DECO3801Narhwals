@@ -18,7 +18,13 @@ class SkillsView extends StatefulWidget {
 }
 
 class _SkillsViewState extends State<SkillsView> {
-  Map<String, dynamic> selectedSkill = {};
+  Map<String, dynamic> selectedSkill = {
+    "icon": "assets/images/skills/Skill-Personal.png",
+    "iconLocked": "assets/images/skills/Skill-Personal-Locked.png",
+    "introduction": "introduction",
+    "buyState": false,
+    "index": 0,
+  };
   Skill? skill;
 
   // Whether the item description is currently shown
