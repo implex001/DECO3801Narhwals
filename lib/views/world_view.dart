@@ -7,6 +7,7 @@ import 'package:caravaneering/model/story.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:caravaneering/views/play_sound.dart';
 
 class WorldView extends StatefulWidget {
   const WorldView({Key? key}) : super(key: key);
@@ -32,7 +33,10 @@ class _WorldViewState extends State<WorldView> {
         GameWidget(game: _game),
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              PlaySoundUtil.instance().play("audio/button_click.mp3");
+              Navigator.pop(context);
+            },
             child: Image.asset("assets/images/UI/Back.png", height: 30),
           ),
           if (_episode != null)

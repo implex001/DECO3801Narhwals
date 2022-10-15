@@ -1,5 +1,6 @@
 import 'package:caravaneering/model/items_details.dart';
 import 'package:flutter/material.dart';
+import 'package:caravaneering/views/play_sound.dart';
 
 /*
  * Creates the right hand side of the shop that contains the shop navigation
@@ -36,7 +37,10 @@ class _ShopNavState extends State<ShopNav> {
     }
 
     return GestureDetector(
-      onTapDown: (TapDownDetails details) => widget.onTapFunction(details),
+      onTapDown: (TapDownDetails details) {
+        PlaySoundUtil.instance().play("audio/button_click.mp3");
+        widget.onTapFunction(details);
+      },
       child: Container(
         height: widget.navImageHeight,
         width: widget.navImageWidth,

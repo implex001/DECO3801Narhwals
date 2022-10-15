@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'flicker.dart';
 import 'dart:math';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
+import 'package:caravaneering/views/play_sound.dart';
 
 
 class SkillsView extends StatefulWidget {
@@ -36,7 +37,27 @@ class _SkillsViewState extends State<SkillsView> {
       return;
     }
 
+    PlaySoundUtil.instance().play("audio/purchase.mp3");
     bool enoughCurrency =  skill!.save.get('coins') >= selectedSkill["cost"];
+    for (int i = 0; i < skill!.skillList.length; i ++) {
+      int selectedIndex = selectedSkill["index"];
+      bool isLeft = selectedIndex % 2 == 0;
+      if (isLeft) {
+        if (i < selectedSkill["index"] && (i % 2 == 0)) {
+          if (skill!.skillList[i]["buyState"] == false) {
+            enoughCurrency = false;
+            break;
+          }
+        }
+      } else {
+        if (i < selectedSkill["index"] && (i % 2 != 0)) {
+          if (skill!.skillList[i]["buyState"] == false) {
+            enoughCurrency = false;
+            break;
+          }
+        }
+      }
+    }
     PurchaseConfirmationPage.showPage(context, enoughCurrency, selectedSkill, purchaseItem);
   }
 
@@ -108,8 +129,8 @@ class _SkillsViewState extends State<SkillsView> {
                               child: GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, // 每行三列
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // 每行两列
                                   childAspectRatio: 2.5, // 显示区域宽高相等
                                   // 上下左右的内边距
                                   mainAxisSpacing: 5.0,
@@ -150,7 +171,7 @@ class _SkillsViewState extends State<SkillsView> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                SizedBox(
+                               const SizedBox(
                                   height: 24,
                                 ),
                                 Image.asset(
@@ -159,7 +180,7 @@ class _SkillsViewState extends State<SkillsView> {
                                       : selectedSkill["iconLocked"],
                                   width: 64,
                                 ),
-                                SizedBox(
+                              const  SizedBox(
                                   height: 24,
                                 ),
                                 Padding(
@@ -167,14 +188,14 @@ class _SkillsViewState extends State<SkillsView> {
                                   child: Text(
                                     selectedSkill["introduction"],
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style:const TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,
                                         decoration: TextDecoration.none,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ),
-                                SizedBox(
+                               const SizedBox(
                                   height: 24,
                                 ),
                                 if (!selectedSkillBuyState)

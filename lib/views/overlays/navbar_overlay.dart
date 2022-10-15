@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/overlays/main_menu.dart';
+import 'package:caravaneering/views/play_sound.dart';
 
 /// Game engine function to build navbar overlay.
 /// For Flame use only
@@ -72,7 +73,10 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     super.didChangeDependencies();
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
+          PlaySoundUtil.instance().play("audio/button_click.mp3");
+          
       route = ModalRoute.of(context)!.settings.name!;
+      // print("当前页面 --- ${route} ");
       switch (route) {
         case "/menu":
           menuButtonImage = 'assets/images/UI/MenuSelected.png';
@@ -222,6 +226,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
       route = ModalRoute.of(context)!.settings.name!;
+       PlaySoundUtil.instance().play("audio/button_click.mp3");
       switch (route) {
         case "/caravan":
           isCaravanPage = true;
@@ -243,6 +248,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
         : Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             GestureDetector(
                 onTap: () {
+                   PlaySoundUtil.instance().play("audio/button_click.mp3");
                   MinigameSelectorPage.showPage(context);
                 },
                 child: Image.asset(
@@ -252,6 +258,7 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
                 )),
             GestureDetector(
                 onTap: () {
+                   PlaySoundUtil.instance().play("audio/button_click.mp3");
                   Navigator.pushNamed(context, "/world");
                 },
                 child: Image.asset(
