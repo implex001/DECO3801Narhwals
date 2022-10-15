@@ -5,13 +5,12 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/parallax.dart';
 import 'dart:async';
-//import 'package:caravaneering/views/title_screen.dart';
 import 'package:flutter/material.dart';
 
+/* 
+Renders the animation for the title screen (parallax background, character, horse, cart)
+*/
 class TitleScreenAnimation extends FlameGame {
-  static const String description = '''
-    Caravan Game
-  ''';
   List<Component> currentActors = [];
   late ParallaxComponent<FlameGame> sky;
   late ParallaxComponent<FlameGame> midground;
@@ -22,6 +21,7 @@ class TitleScreenAnimation extends FlameGame {
 
   @override
   Future<void>? onLoad() async {
+    // Parallax Background
     camera.speed = 2000;
     sky = await loadParallaxComponent([
       ParallaxImageData('General/ForestSky.png'),
@@ -92,15 +92,5 @@ class TitleScreenAnimation extends FlameGame {
     var cartComponent = CartComponentAnimated(cartPath, cartCoords);
     currentActors.add(cartComponent);
     addAll(currentActors);
-  }
-
-  @override
-  Color backgroundColor() {
-    return const Color(0xFFFFFFFF);
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
   }
 }
