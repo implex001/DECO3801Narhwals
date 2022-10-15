@@ -9,7 +9,6 @@ import 'flicker.dart';
 import 'dart:math';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
 
-
 class SkillsView extends StatefulWidget {
   const SkillsView({super.key});
 
@@ -30,17 +29,18 @@ class _SkillsViewState extends State<SkillsView> {
   // Whether the item description is currently shown
   bool showItemDescription = false;
 
-    // Pop up window to confirm the purchase
+  // Pop up window to confirm the purchase
   Future<void> confirmPurchase() async {
     if (skill == null) {
       return;
     }
 
-    bool enoughCurrency =  skill!.save.get('coins') >= selectedSkill["cost"];
-    PurchaseConfirmationPage.showPage(context, enoughCurrency, selectedSkill, purchaseItem);
+    bool enoughCurrency = skill!.save.get('coins') >= selectedSkill["cost"];
+    PurchaseConfirmationPage.showPage(
+        context, enoughCurrency, selectedSkill, purchaseItem);
   }
 
-    // Attempts to purchase an item
+  // Attempts to purchase an item
   void purchaseItem() {
     if (skill == null) {
       return;
@@ -67,7 +67,6 @@ class _SkillsViewState extends State<SkillsView> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     bool selectedSkillBuyState = selectedSkill["buyState"];
@@ -76,120 +75,143 @@ class _SkillsViewState extends State<SkillsView> {
     final height = size.height;
     double safePadding = max(MediaQuery.of(context).padding.right, 15);
 
-
-    return Stack(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-            child: Container(
-              height: height,
-              width: width,
-              child: Row(
-                children: [
-                  Expanded(
-                      flex: 2,
-                      child: Stack(
-                        alignment: Alignment.center,
+    return Stack(children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+        child: Container(
+          height: height,
+          width: width,
+          child: Row(
+            children: [
+              Expanded(
+                  flex: 2,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(
+                        "assets/images/skills/SkillsBackground.png",
+                        height: height,
+                        width: width,
+                        fit: BoxFit.fill,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Image.asset(
-                            "assets/images/skills/SkillsBackground.png",
-                            height: height,
-                            width: width,
+                            "assets/images/skills/Skills Solid Line.png",
                             fit: BoxFit.fill,
                           ),
                           Image.asset(
-                            "assets/images/skills/Skills-Lines.png",
-                            height: height,
-                            width: width,
+                            "assets/images/skills/Skills Dashed Line.png",
                             fit: BoxFit.fill,
                           ),
-                          // ***** 调节点 *****
-                          SingleChildScrollView(
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2, // 每行三列
-                                  childAspectRatio: 2.5, // 显示区域宽高相等
-                                  // 上下左右的内边距
-                                  mainAxisSpacing: 5.0,
-                                  // 主轴元素间距
-                                  crossAxisSpacing: 5.0,
-                                ),
-                                itemCount: skill!.skillList.length,
-                                itemBuilder: (context, index) {
-                                  bool buyState = skill!
-                                      .skillList[index]["buyState"];
-                                  return GestureDetector(
-                                      behavior: HitTestBehavior.translucent,
-                                      onTap: () {
-                                        setState(() {
-                                          selectedSkill =
-                                          skill!.skillList[index];
-                                        });
-                                      },
-                                      child: selectedSkill == skill!.skillList[index] ? FlickerAnimation(iconPath: Image.asset(buyState
-                                      ? skill!.skillList[index]["icon"]
-                                      : skill!.skillList[index]["iconLocked"]),t_width: 180,t_height: 180,)
-                                      : Image.asset(buyState
+                          Image.asset(
+                            "assets/images/skills/Skills Solid Line.png",
+                            fit: BoxFit.fill,
+                          ),
+                        ],
+                      ),
+                      /*
+                      Image.asset(
+                        "assets/images/skills/Skills-Lines.png",
+                        height: height,
+                        width: width,
+                        fit: BoxFit.fill,
+                      ),
+                      */
+                      // ***** 调节点 *****
+                      SingleChildScrollView(
+                          child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // 每行三列
+                          childAspectRatio: 2.5, // 显示区域宽高相等
+                          // 上下左右的内边距
+                          mainAxisSpacing: 5.0,
+                          // 主轴元素间距
+                          crossAxisSpacing: 5.0,
+                        ),
+                        itemCount: skill!.skillList.length,
+                        itemBuilder: (context, index) {
+                          bool buyState = skill!.skillList[index]["buyState"];
+                          return GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                setState(() {
+                                  selectedSkill = skill!.skillList[index];
+                                });
+                              },
+                              child: selectedSkill == skill!.skillList[index]
+                                  ? FlickerAnimation(
+                                      iconPath: Image.asset(buyState
+                                          ? skill!.skillList[index]["icon"]
+                                          : skill!.skillList[index]
+                                              ["iconLocked"]),
+                                      t_width: 180,
+                                      t_height: 180,
+                                    )
+                                  : Image.asset(buyState
                                       ? skill!.skillList[index]["icon"]
                                       : skill!.skillList[index]["iconLocked"]));
-                                },
-                              )),
-                        ],
+                        },
                       )),
-                  Expanded(
-                      child: Container(
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                image:
-                                AssetImage(
-                                    "assets/images/skills/Skills-Popup.png"),
-                                fit: BoxFit.fitWidth,
-                              )),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  height: 24,
-                                ),
-                                Image.asset(
-                                  selectedSkillBuyState
-                                      ? selectedSkill["icon"]
-                                      : selectedSkill["iconLocked"],
-                                  width: 64,
-                                ),
-                                SizedBox(
-                                  height: 24,
-                                ),
-                                Padding(
-                                  padding:  EdgeInsets.only(left: safePadding,right: safePadding),
-                                  child: Text(
-                                    selectedSkill["introduction"],
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18,
-                                        decoration: TextDecoration.none,
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 24,
-                                ),
-                                if (!selectedSkillBuyState)
-                                  (TextButton(
-                                      onPressed: confirmPurchase,
-                                      child: Image.asset(
-                                          "assets/images/UI/BuyButton.png",
-                                          height: 20,)))
-                              ]))),
-                ],
-              ),
-            ),
+                    ],
+                  )),
+              Expanded(
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                        image:
+                            AssetImage("assets/images/skills/Skills-Popup.png"),
+                        fit: BoxFit.fitWidth,
+                      )),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 24,
+                            ),
+                            Image.asset(
+                              selectedSkillBuyState
+                                  ? selectedSkill["icon"]
+                                  : selectedSkill["iconLocked"],
+                              width: 64,
+                            ),
+                            SizedBox(
+                              height: 24,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: safePadding, right: safePadding),
+                              child: Text(
+                                selectedSkill["introduction"],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    decoration: TextDecoration.none,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 24,
+                            ),
+                            if (!selectedSkillBuyState)
+                              (TextButton(
+                                  onPressed: confirmPurchase,
+                                  child: Image.asset(
+                                    "assets/images/UI/BuyButton.png",
+                                    height: 20,
+                                  )))
+                          ]))),
+            ],
           ),
-          const NavBar(),
-        ]
-    );
+        ),
+      ),
+      const NavBar(),
+    ]);
   }
 }
