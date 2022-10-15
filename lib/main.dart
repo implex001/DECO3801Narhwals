@@ -1,3 +1,4 @@
+import 'package:caravaneering/model/audio_navigator_observer.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/caravan_view.dart';
 import 'package:caravaneering/views/jump_minigame_view.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         '/world': (context) => const WorldView(),
         '/minigames/jump': (context) => const JumpMiniGameView()
       },
+      navigatorObservers: [AudioNavigatorObserver()],
     );
   }
 }

@@ -33,7 +33,7 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": coins,
       "location": "assets/images/items/horse-tan.png",
-      "description": "The best horse money can buy!",
+      "description": "A nice tan horse but not a horse with a tan.",
     },
     "horse-black": {
       "key": "horse-black",
@@ -42,7 +42,7 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": coins,
       "location": "assets/images/items/horse-black.png",
-      "description": "The best horse money can buy!",
+      "description": "As dark as a shadow, good luck finding it at night!",
     },
     "horse-grey": {
       "key": "horse-grey",
@@ -51,7 +51,7 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": coins,
       "location": "assets/images/items/horse-grey.png",
-      "description": "The best horse money can buy!",
+      "description": "This old grey mare ain't what she used to be.",
     },
     "horse-cream": {
       "key": "horse-cream",
@@ -60,7 +60,8 @@ class ItemDetails{
       "cost": 100,
       "purchaseCurrency": coins,
       "location": "assets/images/items/horse-cream.png",
-      "description": "The best horse money can buy!",
+      "description": "This horse might just be the cream of the crop. "
+          "Or at least the cream of some crop.",
     },
     "horse-red": {
       "key": "horse-red",
@@ -69,7 +70,8 @@ class ItemDetails{
       "cost": 100,
       "purchaseCurrency": coins,
       "location": "assets/images/items/horse-red.png",
-      "description": "The best horse money can buy!",
+      "description": "I've heard painting things red makes them go faster? "
+          "Only one way to find out!",
     },
     "horse-white": {
       "key": "horse-white",
@@ -78,7 +80,7 @@ class ItemDetails{
       "cost": 1000,
       "purchaseCurrency": coins,
       "location": "assets/images/items/horse-white.png",
-      "description": "The best horse money can buy!",
+      "description": "A regal horse from a more noble time.",
     },
     "horse-green": {
       "key": "horse-green",
@@ -87,7 +89,8 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": gems,
       "location": "assets/images/items/horse-green.png",
-      "description": "The best horse money can buy!",
+      "description": "The closest to camouflage you can find, blends right in"
+          "with the leaves and the trees!",
     },
     "horse-blue": {
       "key": "horse-blue",
@@ -96,7 +99,7 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": gems,
       "location": "assets/images/items/horse-blue.png",
-      "description": "The best horse money can buy!",
+      "description": "A stern blue horse to go with your look of blue steel.",
     },
     "horse-purple": {
       "key": "horse-purple",
@@ -105,7 +108,8 @@ class ItemDetails{
       "cost": 50,
       "purchaseCurrency": gems,
       "location": "assets/images/items/horse-purple.png",
-      "description": "The best horse money can buy!",
+      "description": "They say purple is the colour of royalty. Who knows, "
+          "maybe this horse once belonged to a distant monarch?",
     },
     "cart_flat": {
       "key": "cart_flat",
@@ -125,7 +129,7 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Sticks.png",
       "locationAnimated": "assets/images/items/CartSticks.png",
-      "description": "Best cart money can buy!",
+      "description": "A real farmer's cart.",
     },
     "cart_sticks_pine": {
       "key": "cart_sticks_pine",
@@ -135,7 +139,8 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Sticks_Pine.png",
       "locationAnimated": "assets/images/items/CartSticksPine.png",
-      "description": "Best cart money can buy!",
+      "description": "You work with what you have and in this case, that was "
+          "pine.",
     },
     "cart_plank": {
       "key": "cart_plank",
@@ -145,7 +150,7 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Planks.png",
       "locationAnimated": "assets/images/items/CartPlanks.png",
-      "description": "Best cart money can buy!",
+      "description": "Something sturdy to carry all the essentials.",
     },
     "cart_planks_pine": {
       "key": "cart_planks_pine",
@@ -155,7 +160,8 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Planks_Pine.png",
       "locationAnimated": "assets/images/items/CartPlanksPine.png",
-      "description": "Best cart money can buy!",
+      "description": "A wood blend works when you know your woods...which I "
+          "don't.",
     },
     "cart-tarp": {
       "key": "cart-tarp",
@@ -165,7 +171,7 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Tarp.png",
       "locationAnimated": "assets/images/items/CartTarp.png",
-      "description": "Best cart money can buy!",
+      "description": "Something to keep the rain off in your travels.",
     },
     "cart-purple": {
       "key": "cart-purple",
@@ -175,7 +181,7 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Tarp_Purple.png",
       "locationAnimated": "assets/images/items/CartTarpPurple.png",
-      "description": "Best cart money can buy!",
+      "description": "Something purple to add to your 'royal' entourage.",
     },
     "cart-blue": {
       "key": "cart-blue",
@@ -185,7 +191,7 @@ class ItemDetails{
       "purchaseCurrency": coins,
       "location": "assets/images/items/Cart_Tarp_Blue.png",
       "locationAnimated": "assets/images/items/CartTarpNavy.png",
-      "description": "Best cart money can buy!",
+      "description": "A beautiful dash of blue to blend in with the sky.",
     },
     "cart-red": {
       "key": "cart-red",
@@ -195,7 +201,8 @@ class ItemDetails{
       "purchaseCurrency": gems,
       "location": "assets/images/items/Cart_Tarp_Red.png",
       "locationAnimated": "assets/images/items/CartTarpRed.png",
-      "description": "Best cart money can buy!",
+      "description": "Prepared to go fast? I'm sure painting things red isn't"
+          " just an urban myth...",
     },
     "cart-aqua": {
       "key": "cart-aqua",
@@ -205,7 +212,7 @@ class ItemDetails{
       "purchaseCurrency": gems,
       "location": "assets/images/items/Cart_Tarp_Aqua.png",
       "locationAnimated": "assets/images/items/CartTarpAqua.png",
-      "description": "Best cart money can buy!",
+      "description": "Stand out in the crowd with something brighter!",
     },
     "cat-white": {
       "key": "cat-white",
