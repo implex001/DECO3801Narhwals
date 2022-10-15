@@ -29,21 +29,7 @@ class _TitleScreen extends StatelessWidget {
           alignment: AlignmentDirectional.center,
           children: <Widget>[
             GameWidget(game: TitleScreenAnimation()),
-            Positioned(
-                top: 250,
-                left: 200,
-                child: Image.asset(
-                    'assets/images/General/AnimatedHorseCart.gif',
-                    height: 100,
-                    fit: BoxFit.contain)),
-            Positioned(
-                top: 280,
-                left: 450,
-                child: Image.asset(
-                  'assets/images/General/AnimatedCharacter.gif',
-                  height: 70,
-                  fit: BoxFit.contain,
-                )),
+
             Container(
                 width: 450.0,
                 height: 200,
