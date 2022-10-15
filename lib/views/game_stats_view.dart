@@ -70,11 +70,11 @@ class _MinigameOutro extends State<MinigameOutro> {
             ),
           ),
           Positioned(
-              top: 160,
-              right: 50,
+              top: 140,
+              right: 80,
               child: Image.asset(
-                  'assets/images/characters/MainCharacterFinalFlipped.png',
-                  width: 200)),
+                  'assets/images/characters/MainCharacterForward.png',
+                  width: 140)),
           Positioned(
               top: 150,
               left: 50,
@@ -165,11 +165,11 @@ class StatsView extends State<MiniGameStats> {
           ),
         ),
         Positioned(
-            top: 160,
-            right: 50,
+            top: 140,
+            right: 80,
             child: Image.asset(
-                'assets/images/characters/MainCharacterFinalFlipped.png',
-                width: 200)),
+                'assets/images/characters/MainCharacterForward.png',
+                width: 140)),
         Positioned(
             top: 150,
             left: 50,
