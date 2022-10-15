@@ -151,7 +151,8 @@ class NavbarRightOverlay extends StatelessWidget {
         GestureDetector(
           onTap: () {
             TipPopUp.showTips(context, "Coins",
-                "You can earn coins by taking physical steps or through the minigames.");
+                "This is your basic currency. You can earn coins by taking "
+                    "physical steps or through the minigames.");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
@@ -175,7 +176,8 @@ class NavbarRightOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            TipPopUp.showTips(context, "Gems", "You can earn gems by.....");
+            TipPopUp.showTips(context, "Gems", "This is your special currency. "
+                "You can earn gems through special or time-gated activities.");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
