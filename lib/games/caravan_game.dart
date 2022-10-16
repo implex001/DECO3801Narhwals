@@ -10,6 +10,7 @@ import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
 import 'package:caravaneering/model/story.dart';
+import 'package:caravaneering/model/play_sound.dart';
 import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -60,6 +61,8 @@ class CaravanGame extends FlameGame
 
   WorkQueue renderQueue = WorkQueue();
 
+  /// Adds all caravan components. If there are existing components, they
+  /// are removed
   Future<void> renderAll() async {
     if (save!.hasUpdatedBiome) {
       await renderParallax();
@@ -84,14 +87,13 @@ class CaravanGame extends FlameGame
     }
   }
 
+  /// Adds components relating to the main caravan moving on the path
   Future<void> renderEquipped() async {
     updateOwnedItems();
     if (currentActors.isNotEmpty) {
-      // Changed this from removalAll, because it gave me an error
-      // saying cannot remove if not child of parent - Nhu
-      currentActors.forEach((actor) {
+      for (var actor in currentActors) {
         actor.removeFromParent();
-      });
+      }
       currentActors.clear();
     }
 
@@ -313,6 +315,7 @@ class CaravanGame extends FlameGame
               endScale: 0.05,
             );
             showCoins();
+            PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
           }
         });
 

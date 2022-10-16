@@ -1,8 +1,7 @@
-import 'package:caravaneering/model/save_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:caravaneering/model/save_model.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 class MainMenuPage {
   // Pop up window for main menu page

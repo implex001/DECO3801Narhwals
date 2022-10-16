@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/items_details.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 class PurchaseConfirmationPage {
   // Pop up window for shop purchase confirmation page

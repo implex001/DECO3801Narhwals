@@ -1,6 +1,6 @@
 import 'package:caravaneering/model/items_details.dart';
 import 'package:flutter/material.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// Creates the right hand side of the shop that contains the shop navigation
 class ShopNav extends StatefulWidget {

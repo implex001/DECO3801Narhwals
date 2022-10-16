@@ -13,6 +13,15 @@ class SaveState {
   static const String _saveFilename = "save";
   final S3Integration _s3Instance = S3Integration();
   String _deviceId = "";
+  static const List<String> loadables = [
+    SaveKeysV1.horses,
+    SaveKeysV1.carts,
+    SaveKeysV1.pets,
+    SaveKeysV1.equippedHorses,
+    SaveKeysV1.equippedPets,
+    SaveKeysV1.equippedCarts,
+    SaveKeysV1.unlockedEpisodes
+  ];
 
   /// Loads the default state values from app_settings.json file. If you would
   /// like more items added to the state then please add it into the
@@ -21,30 +30,9 @@ class SaveState {
       Map.from(GlobalConfiguration().getValue("stateDefaults"));
 
   SaveState() {
-    _state[SaveKeysV1.horses] = (_state[SaveKeysV1.horses] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.horses]);
-    _state[SaveKeysV1.carts] = (_state[SaveKeysV1.carts] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.carts]);
-    _state[SaveKeysV1.pets] = (_state[SaveKeysV1.pets] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.pets]);
-    _state[SaveKeysV1.equippedHorses] =
-        (_state[SaveKeysV1.equippedHorses] == null)
-            ? []
-            : List.from(_state[SaveKeysV1.equippedHorses]);
-    _state[SaveKeysV1.equippedPets] = (_state[SaveKeysV1.equippedPets] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.equippedPets]);
-    _state[SaveKeysV1.equippedCarts] =
-        (_state[SaveKeysV1.equippedCarts] == null)
-            ? []
-            : List.from(_state[SaveKeysV1.equippedCarts]);
-    _state[SaveKeysV1.unlockedEpisodes] =
-        (_state[SaveKeysV1.unlockedEpisodes] == null)
-            ? []
-            : List.from(_state[SaveKeysV1.unlockedEpisodes]);
+    for (String key in loadables) {
+      _state[key] = (_state[key] == null) ? [] : List.from(_state[key]);
+    }
   }
 
   /// Saves the state
@@ -101,30 +89,9 @@ class SaveState {
   /// Resets the state data. Note this does not delete the local or cloud file
   void resetData() {
     _state = Map.from(GlobalConfiguration().getValue("stateDefaults"));
-    _state[SaveKeysV1.horses] = (_state[SaveKeysV1.horses] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.horses]);
-    _state[SaveKeysV1.carts] = (_state[SaveKeysV1.carts] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.carts]);
-    _state[SaveKeysV1.pets] = (_state[SaveKeysV1.pets] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.pets]);
-    _state[SaveKeysV1.equippedHorses] =
-        (_state[SaveKeysV1.equippedHorses] == null)
-            ? []
-            : List.from(_state[SaveKeysV1.equippedHorses]);
-    _state[SaveKeysV1.equippedPets] = (_state[SaveKeysV1.equippedPets] == null)
-        ? []
-        : List.from(_state[SaveKeysV1.equippedPets]);
-    _state[SaveKeysV1.equippedCarts] =
-        (_state[SaveKeysV1.equippedCarts] == null)
-            ? []
-            : List.from(_state[SaveKeysV1.equippedCarts]);
-    _state[SaveKeysV1.unlockedEpisodes] =
-        (_state[SaveKeysV1.unlockedEpisodes] == null)
-            ? []
-            : List.from(_state[SaveKeysV1.unlockedEpisodes]);
+    for (String key in loadables) {
+      _state[key] = (_state[key] == null) ? [] : List.from(_state[key]);
+    }
     save();
   }
 

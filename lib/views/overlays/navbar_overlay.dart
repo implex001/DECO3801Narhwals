@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:caravaneering/model/save_model.dart';
 import 'package:caravaneering/views/overlays/minigame_list.dart';
 import 'package:caravaneering/views/overlays/main_menu.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// Game engine function to build navbar overlay.
 /// For Flame use only

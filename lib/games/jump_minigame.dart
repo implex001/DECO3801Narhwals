@@ -70,9 +70,8 @@ class JumpMiniGame extends MiniGame {
       if (hasVibrator!) {
         Vibration.vibrate(duration: 50);
       }
-      // Check if jump is correct
-      // Uncomment to enable jump type checking
-      if (/*currentPrompt.value?.requiredType == event.type &&*/ !promptCompleted) {
+
+      if (!promptCompleted) {
         score.value++;
         promptCompleted = true;
       }

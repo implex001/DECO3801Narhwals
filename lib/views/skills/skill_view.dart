@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'flicker.dart';
 import 'dart:math';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// View for the skill shop
 class SkillsView extends StatefulWidget {

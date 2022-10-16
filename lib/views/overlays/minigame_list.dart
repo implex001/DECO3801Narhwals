@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// Modal with minigames to choose
 class MinigameSelectorPage {

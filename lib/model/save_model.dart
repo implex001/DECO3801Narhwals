@@ -5,7 +5,7 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/shop/shop_items.dart';
 import 'package:caravaneering/model/story.dart';
 import 'package:flutter/material.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// State definition and manipulation of user save
 class SaveModel extends ChangeNotifier {
@@ -40,7 +40,6 @@ class SaveModel extends ChangeNotifier {
 
   /// Increments coins by [number]
   void addCoins(int number) {
-    PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
     changeMisc(SaveKeysV1.coins, get(SaveKeysV1.coins) + number);
   }
 

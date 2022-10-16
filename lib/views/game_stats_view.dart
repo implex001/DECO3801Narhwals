@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 class ChatBubbleTriangle extends CustomPainter {
   @override
@@ -125,15 +125,14 @@ class MiniGameStats extends StatefulWidget {
   final JumpMiniGame miniGame;
 
   @override
-  State<MiniGameStats> createState() => StatsView(miniGame: miniGame);
+  State<MiniGameStats> createState() => StatsView();
 }
 
 class StatsView extends State<MiniGameStats> {
-  StatsView({Key? key, required this.miniGame});
+  StatsView({Key? key});
 
-  final JumpMiniGame miniGame;
-  late ValueNotifier<int> score = miniGame.score;
-  late Duration time = miniGame.currentTime.value;
+  late ValueNotifier<int> score = widget.miniGame.score;
+  late Duration time = widget.miniGame.currentTime.value;
 
   late int? modifier;
   late int coinsEarned;
@@ -149,6 +148,7 @@ class StatsView extends State<MiniGameStats> {
         showCoinAnimation = true;
         Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
         Provider.of<SaveModel>(context, listen: false).saveState();
+        PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
       });
     });
     SystemChrome.setPreferredOrientations([
