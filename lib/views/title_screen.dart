@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import '../games/title_game.dart';
 import 'package:caravaneering/main.dart';
+import 'package:caravaneering/play_sound.dart';
 
 class TitleScreen extends StatelessWidget {
   const TitleScreen({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _TitleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
+          PlaySoundUtil.instance().play("audio/start.mp3");
           Navigator.pushNamedAndRemoveUntil(
               context, "/caravan", (route) => false);
         },

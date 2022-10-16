@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/items_details.dart';
+import 'package:caravaneering/play_sound.dart';
 
 class PurchaseConfirmationPage {
   // Pop up window for shop purchase confirmation page
@@ -37,7 +38,10 @@ class PurchaseConfirmationPage {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget> [
                     GestureDetector(
-                      onTap: () {Navigator.pop(context);},
+                      // onTap: () {Navigator.pop(context);},
+                      onTap: () {
+                        PlaySoundUtil.instance().play("audio/button_click.mp3");
+                        Navigator.pop(context);},
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                         height: 40,
@@ -53,6 +57,7 @@ class PurchaseConfirmationPage {
                     GestureDetector(
                       onTap: () {
                         if (enoughCurrency) {
+                          PlaySoundUtil.instance().play("audio/purchase.mp3");
                           purchase();
                           Navigator.pop(context);
                         }
