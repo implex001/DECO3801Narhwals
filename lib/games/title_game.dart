@@ -86,7 +86,7 @@ class TitleScreenAnimation extends FlameGame {
     currentActors.add(horseLeads);
 
     //Cart
-    String cartPath = flutterToFlamePath("/items/CartFlat.png");
+    String cartPath = flutterToFlamePath("items/CartFlat.png");
     await images.load(cartPath);
     Vector2 cartCoords = Vector2(xPosition - 40, parallaxRatio * 90);
     var cartComponent = CartComponentAnimated(cartPath, cartCoords);
