@@ -249,11 +249,7 @@ class _CaveIntroView extends State<CaveIntroView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        "/caravan",
-                        (route) => false,
-                      );
+                      Navigator.popUntil(context, (route) => route.isFirst);
                     },
                     child: Container(
                       height: 38,
