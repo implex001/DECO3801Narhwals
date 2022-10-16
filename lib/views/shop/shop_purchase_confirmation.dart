@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/items_details.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 class PurchaseConfirmationPage {
   // Pop up window for shop purchase confirmation page
-  static Future<void> showPage(BuildContext context, bool enoughCurrency, Map<String, dynamic> item, Function purchase) async {
+  static Future<void> showPage(BuildContext context, bool enoughCurrency,
+      Map<String, dynamic> item, Function purchase) async {
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -14,14 +15,19 @@ class PurchaseConfirmationPage {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                   (item.containsKey('name')) ? "${item["name"]} for ${item["cost"].toString()}" : "${item["cost"].toString()}",
+                  (item.containsKey('name'))
+                      ? "${item["name"]} for ${item["cost"].toString()}"
+                      : "${item["cost"].toString()}",
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.grey[300],
                   ),
                 ),
                 Image(
-                  image: AssetImage((item["purchaseCurrency"] == ItemDetails.gems) ? ItemDetails.gemImagePath : ItemDetails.coinImagePath),
+                  image: AssetImage(
+                      (item["purchaseCurrency"] == ItemDetails.gems)
+                          ? ItemDetails.gemImagePath
+                          : ItemDetails.coinImagePath),
                   height: 32,
                 ),
               ],
@@ -36,19 +42,21 @@ class PurchaseConfirmationPage {
               ),
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget> [
+                  children: <Widget>[
                     GestureDetector(
                       // onTap: () {Navigator.pop(context);},
                       onTap: () {
                         PlaySoundUtil.instance().play("audio/button_click.mp3");
-                        Navigator.pop(context);},
+                        Navigator.pop(context);
+                      },
                       child: Container(
                         margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                         height: 40,
                         width: 140,
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/UI/CancelButton.png'),
+                            image:
+                                AssetImage('assets/images/UI/CancelButton.png'),
                             fit: BoxFit.fitWidth,
                           ),
                         ),
@@ -68,14 +76,15 @@ class PurchaseConfirmationPage {
                         width: 88,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage(enoughCurrency ? 'assets/images/UI/BuyButton.png' : 'assets/images/UI/BuyButtonDisabled.png'),
+                            image: AssetImage(enoughCurrency
+                                ? 'assets/images/UI/BuyButton.png'
+                                : 'assets/images/UI/BuyButtonDisabled.png'),
                             fit: BoxFit.fitWidth,
                           ),
                         ),
                       ),
                     ),
-                  ]
-              )
+                  ])
             ],
           );
         });

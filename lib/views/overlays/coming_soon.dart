@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// Modal for to notify user for coming soon features
 class ComingSoonPage {
-  // Pop up window for coming soon page
-  static Future<void> showPage(BuildContext context, String comingSoonText) async {
+  static Future<void> showPage(
+      BuildContext context, String comingSoonText) async {
     await showDialog(
         context: context,
         builder: (BuildContext context) {

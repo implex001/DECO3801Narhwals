@@ -2,7 +2,7 @@ import 'package:flame/widgets.dart';
 import 'package:flutter/material.dart';
 
 class TextBubble extends StatelessWidget {
-  final text;
+  final String text;
   double? width;
   double? height;
   EdgeInsetsGeometry? padding;

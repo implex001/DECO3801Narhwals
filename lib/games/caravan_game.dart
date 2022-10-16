@@ -10,6 +10,7 @@ import 'package:caravaneering/model/step_tracker.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/skills.dart';
 import 'package:caravaneering/model/story.dart';
+import 'package:caravaneering/model/play_sound.dart';
 import 'package:caravaneering/views/coin_collect_animation.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
@@ -20,6 +21,7 @@ import 'package:flame/parallax.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// Primary flame game instance for caravan
 class CaravanGame extends FlameGame
     with VerticalDragDetector, MultiTouchDragDetector, MultiTouchTapDetector {
   static const String description = '''
@@ -59,8 +61,9 @@ class CaravanGame extends FlameGame
 
   WorkQueue renderQueue = WorkQueue();
 
+  /// Adds all caravan components. If there are existing components, they
+  /// are removed
   Future<void> renderAll() async {
-
     if (save!.hasUpdatedBiome) {
       await renderParallax();
     }
@@ -71,30 +74,26 @@ class CaravanGame extends FlameGame
       equippedCarts = List.from(save!.get(SaveKeysV1.equippedCarts));
       equippedPets = List.from(save!.get(SaveKeysV1.equippedPets));
 
-      equippedHorses.addAll(save
-      !.getOwnedItems("horses")
-          .map((e) => e["key"]));
-      equippedCarts.addAll(save
-      !.getOwnedItems("cart")
-          .map((e) => e["key"]));
+      equippedHorses.addAll(save!.getOwnedItems("horses").map((e) => e["key"]));
+      equippedCarts.addAll(save!.getOwnedItems("cart").map((e) => e["key"]));
 
       final lastPos = parallaxComponent?.parallax?.layers[3].currentOffset();
       await renderEquipped();
       await renderForegroundParallax();
-      parallaxComponentForeground?.parallax?.layers[0].currentOffset().setFrom(lastPos!);
+      parallaxComponentForeground?.parallax?.layers[0]
+          .currentOffset()
+          .setFrom(lastPos!);
       save!.hasUpdatedBiome = false;
     }
-
   }
 
+  /// Adds components relating to the main caravan moving on the path
   Future<void> renderEquipped() async {
     updateOwnedItems();
     if (currentActors.isNotEmpty) {
-      // Changed this from removalAll, because it gave me an error
-      // saying cannot remove if not child of parent - Nhu
-      currentActors.forEach((actor) {
+      for (var actor in currentActors) {
         actor.removeFromParent();
-      });
+      }
       currentActors.clear();
     }
 
@@ -138,8 +137,8 @@ class CaravanGame extends FlameGame
     // Dungeoneer Horse
     horseCoords = Vector2(xPosition, parallaxRatio * 90);
     await images.load("items/VeteranHorse_animation-animation.png");
-    var dungeoneerHorse = HorseComponent("VeteranHorse_animation",
-        Vector2(xPosition, parallaxRatio * 90));
+    var dungeoneerHorse = HorseComponent(
+        "VeteranHorse_animation", Vector2(xPosition, parallaxRatio * 90));
     currentActors.add(dungeoneerHorse);
 
     for (int i = 1; i <= save!.get(SaveKeysV1.personalUpgrades); i++) {
@@ -148,8 +147,8 @@ class CaravanGame extends FlameGame
       // Horse
       final horseIndex = (i - 1) % equippedHorses.length;
       await images.load("items/${equippedHorses[horseIndex]}-animation.png");
-      var horseComponent = HorseComponent(equippedHorses[horseIndex],
-          Vector2(xPosition, parallaxRatio * 90));
+      var horseComponent = HorseComponent(
+          equippedHorses[horseIndex], Vector2(xPosition, parallaxRatio * 90));
       currentActors.add(horseComponent);
 
       // Horse Lead
@@ -165,9 +164,11 @@ class CaravanGame extends FlameGame
       final cartIndex = (i - 1) % equippedCarts.length;
       String cartPath;
       bool cartAnimated = true;
-      if (ItemDetails.items[equippedCarts[cartIndex]]!["locationAnimated"] != null) {
+      if (ItemDetails.items[equippedCarts[cartIndex]]!["locationAnimated"] !=
+          null) {
         xPosition -= 40;
-        cartPath = ItemDetails.items[equippedCarts[cartIndex]]!["locationAnimated"];
+        cartPath =
+            ItemDetails.items[equippedCarts[cartIndex]]!["locationAnimated"];
       } else {
         // Fallback to static image
         cartAnimated = false;
@@ -177,7 +178,8 @@ class CaravanGame extends FlameGame
       cartPath = flutterToFlamePath(cartPath);
       await images.load(cartPath);
       var cartComponent = (cartAnimated)
-          ? CartComponentAnimated(cartPath, Vector2(xPosition, parallaxRatio * 90))
+          ? CartComponentAnimated(
+              cartPath, Vector2(xPosition, parallaxRatio * 90))
           : CartComponent(cartPath, Vector2(xPosition, parallaxRatio * 90));
 
       currentActors.add(cartComponent);
@@ -313,6 +315,7 @@ class CaravanGame extends FlameGame
               endScale: 0.05,
             );
             showCoins();
+            PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
           }
         });
 

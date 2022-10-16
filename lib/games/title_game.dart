@@ -7,9 +7,8 @@ import 'package:flame/parallax.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-/* 
-Renders the animation for the title screen (parallax background, character, horse, cart)
-*/
+/// Renders the animation for the title screen
+/// (parallax background, character, horse, cart)
 class TitleScreenAnimation extends FlameGame {
   List<Component> currentActors = [];
   late ParallaxComponent<FlameGame> sky;

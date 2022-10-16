@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 
+/// Specifications of pet animations
 class PetAnimationDetails{
   static Map<String, Map<String, dynamic>> pets = {
     "cat-white": {

@@ -6,18 +6,12 @@ import 'package:caravaneering/model/save_keys.dart';
 import 'package:caravaneering/model/items_details.dart';
 import 'package:caravaneering/model/shop/shop.dart';
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
-import 'package:caravaneering/views/overlays/coming_soon.dart';
 import 'package:caravaneering/views/shop/shop_shelf.dart';
 import 'package:caravaneering/views/shop/shop_nav.dart';
 import 'package:caravaneering/views/shop/shop_description_panel.dart';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
-import '../skills/flicker.dart';
 
-
-
-/*
- * Creates the shop page
- */
+/// View of the item shop
 class ShopView extends StatefulWidget {
   const ShopView({Key? key}) : super(key: key);
 
@@ -26,15 +20,16 @@ class ShopView extends StatefulWidget {
 }
 
 class _ShopState extends State<ShopView> {
-
   // Used in indexing lists for code readability
   static const int x1 = 0;
   static const int y1 = 1;
   static const int x2 = 2;
   static const int y2 = 3;
   static const String shopKeeperImage = "assets/images/shop/bg-shop-person.png";
-  static const String blankPanelImage = "assets/images/shop/bg-item-descript.png";
-  static const double navImageRatio = (72/41);
+  static const String blankPanelImage =
+      "assets/images/shop/bg-item-descript.png";
+  static const double navImageRatio = (72 / 41);
+
   // The different menu icon hotspots on the right side of the shop
   Map<String, List<double>> menuItems = {};
 
@@ -59,7 +54,7 @@ class _ShopState extends State<ShopView> {
     super.didChangeDependencies();
     // Set the navigation image dimensions
     if (navImageHeight == 0) {
-      navImageHeight = 2 * (MediaQuery.of(context).size.height/5);
+      navImageHeight = 2 * (MediaQuery.of(context).size.height / 5);
       navImageWidth = navImageHeight * navImageRatio;
 
       calculateHotspots();
@@ -80,17 +75,25 @@ class _ShopState extends State<ShopView> {
     menuItems = {
       // List elements are: X coord1, Y coord1, X coord2, Y coord2
       ItemDetails.horseKey: [
-        navImageWidth/5.04 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/5.04 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
+        navImageWidth / 5.04 - largeShieldBufferX,
+        navImageHeight / 2.05 - largeShieldBufferY,
+        navImageWidth / 5.04 + largeShieldBufferX,
+        navImageHeight / 2.05 + largeShieldBufferY
       ],
       ItemDetails.cartKey: [
-        navImageWidth/1.87 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/1.87 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
+        navImageWidth / 1.87 - largeShieldBufferX,
+        navImageHeight / 2.05 - largeShieldBufferY,
+        navImageWidth / 1.87 + largeShieldBufferX,
+        navImageHeight / 2.05 + largeShieldBufferY
       ],
       ItemDetails.petKey: [
-        navImageWidth/1.16 - largeShieldBufferX, navImageHeight/2.05 - largeShieldBufferY, navImageWidth/1.16 + largeShieldBufferX, navImageHeight/2.05 + largeShieldBufferY
+        navImageWidth / 1.16 - largeShieldBufferX,
+        navImageHeight / 2.05 - largeShieldBufferY,
+        navImageWidth / 1.16 + largeShieldBufferX,
+        navImageHeight / 2.05 + largeShieldBufferY
       ],
     };
   }
-
 
   // Check what coordinates were clicked on. If clicked on a shop icon then switch
   // to that shop type
@@ -108,8 +111,10 @@ class _ShopState extends State<ShopView> {
       print(coordBounds);
       // If the click was within the coordinate boundaries then switch to that
       // shop type
-      if (x > coordBounds[x1] && x < coordBounds[x2] &&
-          y > coordBounds[y1] && y < coordBounds[y2]) {
+      if (x > coordBounds[x1] &&
+          x < coordBounds[x2] &&
+          y > coordBounds[y1] &&
+          y < coordBounds[y2]) {
         print("Shop tab $type selected!");
 
         // Setup the items for the new shop type
@@ -120,7 +125,6 @@ class _ShopState extends State<ShopView> {
           topRightPanelImage = shopKeeperImage;
           shop!.setUpItems();
         });
-
       }
     }
   }
@@ -145,7 +149,7 @@ class _ShopState extends State<ShopView> {
       }
     });
   }
-  
+
   // Attempts to purchase an item
   void purchaseItem() {
     if (shop == null) {
@@ -179,9 +183,9 @@ class _ShopState extends State<ShopView> {
       }
     }
 
-    PurchaseConfirmationPage.showPage(context, enoughCurrency, itemShowing, purchaseItem);
+    PurchaseConfirmationPage.showPage(
+        context, enoughCurrency, itemShowing, purchaseItem);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +195,7 @@ class _ShopState extends State<ShopView> {
       shop!.save.hasErasedData = false;
     }
 
-    return Stack(
-      children: <Widget> [
+    return Stack(children: <Widget>[
       Padding(
         padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
         child: Center(
@@ -201,85 +204,89 @@ class _ShopState extends State<ShopView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                child: Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
+                  child: Container(
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
                         image: AssetImage('assets/images/shop/bg-curtain.png'),
                         fit: BoxFit.cover,
-                      )
-                    ),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/shop/bg-rack-top-bar.png'),
-                      Expanded(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/shop/bg-rack-ropes.png'),
-                              fit: BoxFit.fitWidth,
+                      )),
+                      child: Column(
+                        children: [
+                          Image.asset('assets/images/shop/bg-rack-top-bar.png'),
+                          Expanded(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/shop/bg-rack-ropes.png'),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 0, 40),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      (shop == null)
+                                          ? Container()
+                                          : ShopShelf(
+                                              items: shop!.getShopItems(1, 3),
+                                              shopingItem: itemShowing,
+                                              itemClickFunction: itemClicked,
+                                            ),
+                                      (shop == null)
+                                          ? Container()
+                                          : ShopShelf(
+                                              items: shop!.getShopItems(4, 6),
+                                              shopingItem: itemShowing,
+                                              itemClickFunction: itemClicked,
+                                            ),
+                                      (shop == null)
+                                          ? Container()
+                                          : ShopShelf(
+                                              items: shop!.getShopItems(7, 9),
+                                              shopingItem: itemShowing,
+                                              itemClickFunction: itemClicked,
+                                            ),
+                                    ]),
+                              ),
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 40),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                (shop == null) ? Container() : ShopShelf(
-                                  items: shop!.getShopItems(1, 3),
-                                  shopingItem: itemShowing,
-                                  itemClickFunction: itemClicked,
-                                ),
-                                (shop == null) ? Container() : ShopShelf(
-                                  items: shop!.getShopItems(4, 6),
-                                  shopingItem: itemShowing,
-                                  itemClickFunction: itemClicked,
-                                ),
-                                (shop == null) ? Container() : ShopShelf(
-                                  items: shop!.getShopItems(7, 9),
-                                  shopingItem: itemShowing,
-                                  itemClickFunction: itemClicked,
-                                ),
-                              ]
-                            ),
+                        ],
+                      ))),
+              Column(children: [
+                Expanded(
+                  child: Container(
+                    width: navImageWidth,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                      image: AssetImage(topRightPanelImage),
+                      fit: BoxFit.cover,
+                    )),
+                    child: (!showItemDescription)
+                        ? null
+                        : ShopDescriptionPanel(
+                            item: itemShowing,
+                            purchase: confirmPurchase,
                           ),
-                        ),
-                      ),
-                    ],
-                  )
-                )
-              ),
-              Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      width: navImageWidth,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(topRightPanelImage),
-                            fit: BoxFit.cover,
-                          )
-                      ),
-                      child: (!showItemDescription) ? null : ShopDescriptionPanel(
-                        item: itemShowing,
-                        purchase: confirmPurchase,
-                      ),
-                    ),
                   ),
-                  ShopNav(
-                    navImageHeight: navImageHeight,
-                    navImageWidth: navImageWidth,
-                    onTapFunction: onTapShopMenuItem,
-                    shopType: (shop == null) ? ItemDetails.horseKey : shop!.activeShop,
-                  ),
-                ]
-              )
+                ),
+                ShopNav(
+                  navImageHeight: navImageHeight,
+                  navImageWidth: navImageWidth,
+                  onTapFunction: onTapShopMenuItem,
+                  shopType:
+                      (shop == null) ? ItemDetails.horseKey : shop!.activeShop,
+                ),
+              ])
             ],
           ),
         ),
       ),
       const NavBar(),
-    ]
-    );
+    ]);
   }
 }

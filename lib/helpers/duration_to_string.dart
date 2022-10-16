@@ -1,5 +1,4 @@
-
-
+/// Convets a [Duration] to a string in the format of "mm:ss"
 String minSecDurationToString(Duration duration) {
   num microseconds = duration.inMicroseconds;
 

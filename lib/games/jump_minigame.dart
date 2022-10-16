@@ -7,6 +7,7 @@ import 'package:caravaneering/model/jump_tracker.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 
+/// Model and underlying logic for the jump minigame
 class JumpMiniGame extends MiniGame {
   final JumpTracker _tracker;
   late StreamSubscription jumpStream;
@@ -69,9 +70,8 @@ class JumpMiniGame extends MiniGame {
       if (hasVibrator!) {
         Vibration.vibrate(duration: 50);
       }
-      // Check if jump is correct
-      // Uncomment to enable jump type checking
-      if (/*currentPrompt.value?.requiredType == event.type &&*/ !promptCompleted) {
+
+      if (!promptCompleted) {
         score.value++;
         promptCompleted = true;
       }

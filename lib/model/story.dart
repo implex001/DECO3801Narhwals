@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 
+/// Biomes are the different environments that the player can explore
 enum BiomeType {
   none,
   desert,
@@ -21,9 +22,13 @@ mixin Coordinates {
 
 mixin Sequence<T> {
   int get currentSequence;
+
   T? next();
+
   T previous();
+
   bool hasNext();
+
   void reset();
 }
 
@@ -47,8 +52,8 @@ class Episode with Sequence<EpisodeChunk>, Coordinates, Biome {
   @override
   int get currentSequence => _currentSequence;
 
-  Episode(this.id, this._story, {Vector2? position, this.requiredSteps = 0,
-    biomeType = BiomeType.none}) {
+  Episode(this.id, this._story,
+      {Vector2? position, this.requiredSteps = 0, biomeType = BiomeType.none}) {
     this.position = position ?? Vector2.zero();
     this.biomeType = biomeType;
   }
@@ -83,6 +88,7 @@ class Episode with Sequence<EpisodeChunk>, Coordinates, Biome {
   }
 }
 
+/// A world is a collection of [Episode]s
 class World {
   final List<Episode> _episodes;
   final backgroundImagePath;

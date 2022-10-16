@@ -1,7 +1,8 @@
 import 'package:caravaneering/model/save_keys.dart';
 import 'package:global_configuration/global_configuration.dart';
 
-class ItemDetails{
+/// Shop item specifics
+class ItemDetails {
   static const String horseKey = SaveKeysV1.horses;
   static const String cartKey = SaveKeysV1.carts;
   static const String petKey = SaveKeysV1.pets;
@@ -12,9 +13,14 @@ class ItemDetails{
   static const String coinImagePath = "assets/images/UI/CoinIcon.png";
   static const String gemImagePath = "assets/images/UI/GemIcon.png";
 
-  static List<dynamic> startingHorses = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedHorses];
-  static List<dynamic> startingCarts = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedCarts];
-  static List<dynamic> startingPets = Map.from(GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedPets];
+  static List<dynamic> startingHorses =
+      Map.from(GlobalConfiguration().getValue("stateDefaults"))[
+          SaveKeysV1.equippedHorses];
+  static List<dynamic> startingCarts =
+      Map.from(GlobalConfiguration().getValue("stateDefaults"))[
+          SaveKeysV1.equippedCarts];
+  static List<dynamic> startingPets = Map.from(
+      GlobalConfiguration().getValue("stateDefaults"))[SaveKeysV1.equippedPets];
 
   static const Map<String, Map<String, dynamic>> items = {
     "horse-brown": {

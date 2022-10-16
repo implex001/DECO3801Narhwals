@@ -7,8 +7,9 @@ import 'package:caravaneering/model/story.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:caravaneering/play_sound.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
+/// View for the world map
 class WorldView extends StatefulWidget {
   const WorldView({Key? key}) : super(key: key);
 
@@ -68,7 +69,8 @@ class _WorldViewState extends State<WorldView> {
                     return Container(
                       padding: const EdgeInsets.only(left: 10, top: 2),
                       child: Text(
-                        "${_episode!.id}: ${lifetimeSteps} / ${_episode!.requiredSteps} steps (${(progress * 100).toStringAsFixed(0)}%)",
+                        "${_episode!.id}: ${lifetimeSteps} / ${_episode!.requiredSteps} "
+                        "steps (${(progress * 100).toStringAsFixed(0)}%)",
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,

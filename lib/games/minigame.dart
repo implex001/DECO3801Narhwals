@@ -1,5 +1,5 @@
+/// Interface for minigames
 abstract class MiniGame {
-
   // Starts the game
   void start();
 
