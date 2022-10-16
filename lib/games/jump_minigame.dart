@@ -7,6 +7,7 @@ import 'package:caravaneering/model/jump_tracker.dart';
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 
+/// Model and underlying logic for the jump minigame
 class JumpMiniGame extends MiniGame {
   final JumpTracker _tracker;
   late StreamSubscription jumpStream;

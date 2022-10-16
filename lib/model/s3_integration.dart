@@ -49,8 +49,7 @@ class S3Integration {
           key: filename,
           onProgress: (progress) {
             print('Progress: ${progress.getFractionCompleted()}');
-          }
-      );
+          });
       print('Successfully uploaded file: ${result.key}');
     } on StorageException catch (e) {
       print('Error uploading file: $e');
@@ -85,7 +84,6 @@ class S3Integration {
       final result = await Amplify.Storage.list();
       listItems = result.items;
       print('Got items: $listItems');
-
     } on StorageException catch (e) {
       print('Error listing items: $e');
     }

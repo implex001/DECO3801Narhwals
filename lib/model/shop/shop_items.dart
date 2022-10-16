@@ -1,7 +1,6 @@
 import 'package:caravaneering/model/items_details.dart';
 
-class ShopItems{
-
+class ShopItems {
   // A key name for each shop type used to access different dictionaries. This
   // text should not be displayed anywhere on the app
 
@@ -29,23 +28,37 @@ class ShopItems{
   // The current items in the shop for each shop type
   static Map<String, List<Map<String, dynamic>>> shopItemsDefaults = {
     ItemDetails.horseKey: [
-      ItemDetails.items["horse-tan"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-black"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-grey"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-cream"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-red"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-white"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-green"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-blue"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
-      ItemDetails.items["horse-purple"] ?? shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-tan"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-black"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-grey"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-cream"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-red"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-white"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-green"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-blue"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
+      ItemDetails.items["horse-purple"] ??
+          shopSoldOutVisual[ItemDetails.horseKey]!,
     ],
     ItemDetails.cartKey: [
-      ItemDetails.items["cart_sticks"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
-      ItemDetails.items["cart_sticks_pine"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
-      ItemDetails.items["cart_plank"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
-      ItemDetails.items["cart_planks_pine"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart_sticks"] ??
+          shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart_sticks_pine"] ??
+          shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart_plank"] ??
+          shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart_planks_pine"] ??
+          shopSoldOutVisual[ItemDetails.cartKey]!,
       ItemDetails.items["cart-tarp"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
-      ItemDetails.items["cart-purple"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
+      ItemDetails.items["cart-purple"] ??
+          shopSoldOutVisual[ItemDetails.cartKey]!,
       ItemDetails.items["cart-blue"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
       ItemDetails.items["cart-red"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
       ItemDetails.items["cart-aqua"] ?? shopSoldOutVisual[ItemDetails.cartKey]!,
@@ -62,6 +75,4 @@ class ShopItems{
       ItemDetails.items["dragon"] ?? shopSoldOutVisual[ItemDetails.petKey]!,
     ],
   };
-
-
 }

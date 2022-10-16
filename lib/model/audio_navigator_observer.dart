@@ -1,9 +1,8 @@
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
+/// Controls states of background audio players based on current navigation
 class AudioNavigatorObserver extends NavigatorObserver {
-
   final backgroundPlayer = AudioPlayer();
   final ambiancePlayer = AudioPlayer();
 
@@ -45,6 +44,5 @@ class AudioNavigatorObserver extends NavigatorObserver {
         ambiancePlayer.play(AssetSource("audio/mainscreen-ambiance.mp3"));
         break;
     }
-
   }
 }

@@ -1,6 +1,7 @@
 import 'package:caravaneering/model/story.dart';
 import 'package:flame/components.dart';
 
+/// Factory class to to define and build defined stories
 class EpisodeFactory {
   static const Map<String, List<EpisodeChunk>> _episodes = {
     'W1E1': [
@@ -64,6 +65,7 @@ class EpisodeFactory {
     'W1E5': BiomeType.mountain,
   };
 
+  /// Create an episode from the given episode id
   static Episode createEpisode(String episodeName) {
     try {
       return Episode(episodeName, _episodes[episodeName]!,
@@ -76,6 +78,7 @@ class EpisodeFactory {
   }
 }
 
+/// Factory to create worlds
 class WorldFactory {
   static final Map<String, World> _worlds = {
     'W1': World('background/StoryMap.png', [
@@ -87,6 +90,7 @@ class WorldFactory {
     ])
   };
 
+  /// Creates a world from the given world id
   static World createWorld(String worldName) {
     try {
       return _worlds[worldName]!;

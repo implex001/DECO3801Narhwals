@@ -12,6 +12,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:provider/provider.dart';
 
+/// Flame game instance for the world map
 class WorldGame extends FlameGame
     with HorizontalDragDetector, HasTappableComponents {
   // Hard coded world for test

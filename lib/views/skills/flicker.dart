@@ -5,11 +5,11 @@ class FlickerAnimation extends StatefulWidget {
   final double t_width;
   final double t_height;
 
-  const FlickerAnimation({required this.iconPath,required this.t_width,required this.t_height});
+  const FlickerAnimation(
+      {required this.iconPath, required this.t_width, required this.t_height});
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _FlickerAnimation();
   }
 }
@@ -21,11 +21,10 @@ class _FlickerAnimation extends State<FlickerAnimation>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
-    popcontroller =  AnimationController(
-        duration:const Duration(milliseconds: 250), vsync: this);
+    popcontroller = AnimationController(
+        duration: const Duration(milliseconds: 250), vsync: this);
 
     scenesize = Tween<double>(
       begin: 0.85,
@@ -33,7 +32,7 @@ class _FlickerAnimation extends State<FlickerAnimation>
     ).animate(
       CurvedAnimation(
         parent: popcontroller.view,
-        curve:const Interval(
+        curve: const Interval(
           0,
           1,
           curve: Curves.easeOutBack,
@@ -66,22 +65,24 @@ class _FlickerAnimation extends State<FlickerAnimation>
 
   onActivityCreate(BuildContext context) {
     // TODO: implement onActivityCreate
-    return AnimatedBuilder(
-        builder: _buildAnimation, animation: popcontroller);
+    return AnimatedBuilder(builder: _buildAnimation, animation: popcontroller);
   }
 
   Widget _buildAnimation(BuildContext context, Widget? child) {
-    return
-      AnimatedBuilder(
-          animation: popcontroller,
-          builder: ((BuildContext context, Widget? child) {
-            return Stack(alignment: Alignment.center, children: [
-              ScaleTransition(
-                  scale: scenesize,
-                  child: Image.asset("assets/images/UI/qrscanner.png",width: widget.t_width,height: widget.t_height,fit: BoxFit.cover,)
-              ),
-              widget.iconPath
-            ]);
-          }));
+    return AnimatedBuilder(
+        animation: popcontroller,
+        builder: ((BuildContext context, Widget? child) {
+          return Stack(alignment: Alignment.center, children: [
+            ScaleTransition(
+                scale: scenesize,
+                child: Image.asset(
+                  "assets/images/UI/qrscanner.png",
+                  width: widget.t_width,
+                  height: widget.t_height,
+                  fit: BoxFit.cover,
+                )),
+            widget.iconPath
+          ]);
+        }));
   }
 }

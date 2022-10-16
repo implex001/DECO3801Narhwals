@@ -8,6 +8,7 @@ Widget coinOverlay(BuildContext buildContext, CaravanGame game) {
   return game.coinCollectAnimation;
 }
 
+/// An animation of coins flying
 class CoinCollectAnimation extends StatefulWidget {
   const CoinCollectAnimation(
       {Key? key,
@@ -59,6 +60,7 @@ class _CoinCollectAnimationState extends State<CoinCollectAnimation> {
     );
   }
 
+  /// Plays the animation
   void play() {
     for (int i = 0; i < widget.numCoins; i++) {
       _animateCoin(i);

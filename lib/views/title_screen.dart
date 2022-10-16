@@ -1,21 +1,11 @@
-import 'package:caravaneering/views/caravan_view.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import '../games/title_game.dart';
-import 'package:caravaneering/main.dart';
 import 'package:caravaneering/play_sound.dart';
 
+/// View for the title screen
 class TitleScreen extends StatelessWidget {
   const TitleScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return _TitleScreen();
-  }
-}
-
-class _TitleScreen extends StatelessWidget {
-  final game = TitleScreenAnimation();
 
   @override
   Widget build(BuildContext context) {

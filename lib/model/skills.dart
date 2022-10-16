@@ -2,9 +2,12 @@ import 'dart:math';
 
 import 'package:caravaneering/model/save_model.dart';
 
+/// Skills definitions
 class Skill {
   SaveModel save;
+
   Skill(this.save);
+
   List<Map<String, dynamic>> skillList = [];
   static const treeHeight = 12;
 
@@ -58,6 +61,7 @@ class Skill {
     }
   }
 
+  /// Adds a skill
   void addSkill(int index) {
     skillList[index]["buyState"] = true;
     if (index % 2 != 0) {
@@ -67,6 +71,7 @@ class Skill {
     }
   }
 
+  /// Deducts coin balance if possible
   bool purchase(int cost) {
     if (cost <= save.get("coins")) {
       save.removeCoins(cost);

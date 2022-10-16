@@ -14,7 +14,8 @@ import 'package:global_configuration/global_configuration.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  // Fixes an issue where the bindings don't initiate successfully before running app
+  // Fixes an issue where the bindings don't initiate successfully before
+  // running app
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
   // Loads the global config file
@@ -57,8 +58,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// Create a custom page transition that does nothing. This removes the default
-// page transition behaviour
+/// Create a custom page transition that does nothing. This removes the default
+/// page transition behaviour
 class CustomPageTransitionsBuilder extends PageTransitionsBuilder {
   const CustomPageTransitionsBuilder();
 

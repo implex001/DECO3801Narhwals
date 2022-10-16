@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Pop up window for the tips
+/// Pop up window for the tips
 class TipPopUp {
   static Future<void> showTips(
       BuildContext context, String currency, String tipText) async {

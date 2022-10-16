@@ -29,8 +29,11 @@ class ChatBubbleTriangle extends CustomPainter {
   }
 }
 
+/// Minigame outro to show rewards and statistics of played minigame
+/// Currently hardcoded to [JumpMinigame]
 class MinigameOutro extends StatefulWidget {
   MinigameOutro({Key? key, required this.miniGame});
+
   final JumpMiniGame miniGame;
 
   @override
@@ -40,6 +43,7 @@ class MinigameOutro extends StatefulWidget {
 class _MinigameOutro extends State<MinigameOutro> {
   late JumpMiniGame miniGame;
   late CoinCollectAnimation coinCollectAnimation;
+
   @override
   void initState() {
     super.initState();
@@ -114,8 +118,10 @@ class _MinigameOutro extends State<MinigameOutro> {
   }
 }
 
+/// Shows statistics of [JumpMiniGame]
 class MiniGameStats extends StatefulWidget {
   const MiniGameStats({super.key, required this.miniGame});
+
   final JumpMiniGame miniGame;
 
   @override
@@ -124,6 +130,7 @@ class MiniGameStats extends StatefulWidget {
 
 class StatsView extends State<MiniGameStats> {
   StatsView({Key? key, required this.miniGame});
+
   final JumpMiniGame miniGame;
   late ValueNotifier<int> score = miniGame.score;
   late Duration time = miniGame.currentTime.value;

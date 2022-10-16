@@ -14,6 +14,7 @@ Widget flameNavbarOverlay(BuildContext buildContext, CaravanGame game) {
   return const NavBar();
 }
 
+/// Coin and Gem Display
 class CoinDisplayBar extends StatelessWidget {
   const CoinDisplayBar({super.key});
 
@@ -23,6 +24,7 @@ class CoinDisplayBar extends StatelessWidget {
   }
 }
 
+/// Complete navigation including top and bottom bars
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
 
@@ -52,6 +54,7 @@ class NavBar extends StatelessWidget {
   }
 }
 
+/// Left menu buttons
 class NavbarLeftOverlay extends StatefulWidget {
   NavbarLeftOverlay({Key? key});
 
@@ -73,7 +76,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     super.didChangeDependencies();
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
-          PlaySoundUtil.instance().play("audio/button_click.mp3");
+      PlaySoundUtil.instance().play("audio/button_click.mp3");
       route = ModalRoute.of(context)!.settings.name!;
       switch (route) {
         case "/menu":
@@ -152,7 +155,9 @@ class NavbarRightOverlay extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            TipPopUp.showTips(context, "Coins",
+            TipPopUp.showTips(
+                context,
+                "Coins",
                 "This is your basic currency. You can earn coins by taking "
                     "physical steps or through the minigames.");
           },
@@ -178,8 +183,11 @@ class NavbarRightOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            TipPopUp.showTips(context, "Gems", "This is your special currency. "
-                "You can earn gems through special or time-gated activities.");
+            TipPopUp.showTips(
+                context,
+                "Gems",
+                "This is your special currency. "
+                    "You can earn gems through special or time-gated activities.");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
@@ -206,6 +214,7 @@ class NavbarRightOverlay extends StatelessWidget {
   }
 }
 
+/// Bottom buttons for navigation
 class NavbarBottomOverlay extends StatefulWidget {
   NavbarBottomOverlay({Key? key});
 

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:caravaneering/games/caravan_game.dart';
 import 'package:caravaneering/games/jump_minigame.dart';
 import 'package:caravaneering/model/jump_tracker.dart';
 import 'package:caravaneering/helpers/duration_to_string.dart';
@@ -8,14 +7,12 @@ import 'package:caravaneering/views/game_stats_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-/*
-Widget jumpMiniGame(BuildContext buildContext, CaravanGame game) {
-  return JumpMiniGameView();
-}
-*/
-
+/// View to display the jump minigame
+///
+/// Can specify time difficulty
 class JumpMiniGameView extends StatefulWidget {
   final int? selectedTime;
+
   const JumpMiniGameView({Key? key, this.selectedTime}) : super(key: key);
 
   @override
