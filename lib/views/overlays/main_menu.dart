@@ -26,6 +26,7 @@ class MainMenuPage {
               ],
             ),
             children: <Widget>[
+
               Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <
                   Widget>[
                 GestureDetector(
@@ -47,6 +48,30 @@ class MainMenuPage {
                         fit: BoxFit.fitWidth,
                       ),
                     ))),
+
+            //  Column(
+                //  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //  children: <Widget>[
+                 //   GestureDetector(
+                      //  onTap: () {
+                       //   Provider.of<SaveModel>(context, listen: false)
+                       //       .addCoins(1000);
+                       //   Provider.of<SaveModel>(context, listen: false)
+                       //       .addGems(1000);
+                      //    Provider.of<SaveModel>(context, listen: false)
+                      //        .saveState();
+                      //  },
+                       // child: Container(
+                         //   margin: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                         //   height: 40,
+                           // width: 140,
+                           // decoration: const BoxDecoration(
+                           //   image: DecorationImage(
+                           //     image: AssetImage(
+                           //         'assets/images/UI/CheatButton.png'),
+                            //    fit: BoxFit.fitWidth,
+                             // ),
+                           // ))),
                     const SizedBox(
                       height: 20,
                     ),

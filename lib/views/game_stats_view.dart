@@ -72,11 +72,11 @@ class _MinigameOutro extends State<MinigameOutro> {
             ),
           ),
           Positioned(
-              top: 160,
-              right: 50,
+              top: 140,
+              right: 80,
               child: Image.asset(
-                  'assets/images/characters/MainCharacterFinalFlipped.png',
-                  width: 200)),
+                  'assets/images/characters/MainCharacterForward.png',
+                  width: 140)),
           Positioned(
               top: 150,
               left: 50,
@@ -150,8 +150,8 @@ class StatsView extends State<MiniGameStats> {
     modifier = Provider.of<SaveModel>(context, listen: false)
         .get(SaveKeysV1.groupUpgrades);
     modifier = (modifier == null) ? 1 : modifier;
-    obstacleCoins = score.value;
-    coinsEarned = (500 + 10 + score.value) * modifier!;
+    obstacleCoins = score.value * 50;
+    coinsEarned = (200 + obstacleCoins) * modifier!;
   }
 
   @override
@@ -167,11 +167,11 @@ class StatsView extends State<MiniGameStats> {
           ),
         ),
         Positioned(
-            top: 160,
-            right: 50,
+            top: 140,
+            right: 80,
             child: Image.asset(
-                'assets/images/characters/MainCharacterFinalFlipped.png',
-                width: 200)),
+                'assets/images/characters/MainCharacterForward.png',
+                width: 140)),
         Positioned(
             top: 150,
             left: 50,
@@ -239,7 +239,7 @@ class StatsView extends State<MiniGameStats> {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: const [
-                          Text('500',
+                          Text('200',
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
