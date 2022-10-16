@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'flicker.dart';
 import 'dart:math';
 import 'package:caravaneering/views/shop/shop_purchase_confirmation.dart';
+import 'package:caravaneering/play_sound.dart';
 
 
 class SkillsView extends StatefulWidget {
@@ -36,8 +37,32 @@ class _SkillsViewState extends State<SkillsView> {
       return;
     }
 
+    PlaySoundUtil.instance().play("audio/purchase.mp3");
     bool enoughCurrency =  skill!.save.get('coins') >= selectedSkill["cost"];
+    for (int i = 0; i < skill!.skillList.length; i ++) {
+      int selectedIndex = selectedSkill["index"];
+      bool isLeft = selectedIndex % 2 == 0;
+      if (isLeft) {
+        if (i < selectedSkill["index"] && (i % 2 == 0)) {
+          if (skill!.skillList[i]["buyState"] == false) {
+            enoughCurrency = false;
+            break;
+          }
+        }
+      } else {
+        if (i < selectedSkill["index"] && (i % 2 != 0)) {
+          if (skill!.skillList[i]["buyState"] == false) {
+            enoughCurrency = false;
+            break;
+          }
+        }
+      }
+    }
     PurchaseConfirmationPage.showPage(context, enoughCurrency, selectedSkill, purchaseItem);
+
+
+    // bool enoughCurrency =  skill!.save.get('coins') >= selectedSkill["cost"];
+    // PurchaseConfirmationPage.showPage(context, enoughCurrency, selectedSkill, purchaseItem);
   }
 
     // Attempts to purchase an item

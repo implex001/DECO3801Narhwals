@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:caravaneering/views/overlays/navbar_overlay.dart';
 import 'package:caravaneering/views/cave/creature_icon.dart';
+import 'package:caravaneering/play_sound.dart';
 
 late int selectedLevel;
 
@@ -261,6 +262,7 @@ class _CaveIntroView extends State<CaveIntroView> {
                                     children: [
                                       GestureDetector(
                                         onTap: () {
+                                          PlaySoundUtil.instance().play("audio/button_click.mp3");
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(

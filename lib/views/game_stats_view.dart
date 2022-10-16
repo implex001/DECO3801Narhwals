@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
+import 'package:caravaneering/play_sound.dart';
 
 class ChatBubbleTriangle extends CustomPainter {
   @override
@@ -53,6 +54,7 @@ class _MinigameOutro extends State<MinigameOutro> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        PlaySoundUtil.instance().play("audio/button_click.mp3");
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -305,6 +307,7 @@ class StatsView extends State<MiniGameStats> {
           bottom: 20,
           child: GestureDetector(
               onTap: () {
+                PlaySoundUtil.instance().play("audio/button_click.mp3");
                 Navigator.popUntil(context, (route) => route.isFirst);
               },
               child: Image.asset(

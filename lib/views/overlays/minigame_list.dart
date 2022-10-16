@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:caravaneering/play_sound.dart';
 
 class MinigameSelectorPage {
   // Pop up window for minigame selector page
@@ -59,6 +60,7 @@ class MinigameSelectorPage {
                 ),
                 GestureDetector(
                   onTap: () {
+                    PlaySoundUtil.instance().play("audio/button_click.mp3");
                     Navigator.pop(context);
                   },
                   child: Container(
