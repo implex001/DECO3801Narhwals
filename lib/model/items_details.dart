@@ -227,7 +227,7 @@ class ItemDetails {
       "cost": 200,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cat-white.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "A cute white kitty to join your caravan!",
     },
     "cat-black": {
       "key": "cat-black",
@@ -236,7 +236,7 @@ class ItemDetails {
       "cost": 200,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cat-black.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "A cute black kitty to join your caravan!",
     },
     "cat-orange": {
       "key": "cat-orange",
@@ -245,7 +245,7 @@ class ItemDetails {
       "cost": 400,
       "purchaseCurrency": coins,
       "location": "assets/images/items/cat-orange.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "A cute orange kitty to join your caravan!",
     },
     "dog-brown": {
       "key": "dog-brown",
@@ -254,7 +254,7 @@ class ItemDetails {
       "cost": 200,
       "purchaseCurrency": coins,
       "location": "assets/images/items/dog-brown.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "This medium sized dog is happy to lead the pack!",
     },
     "dog-yellow": {
       "key": "dog-yellow",
@@ -263,7 +263,7 @@ class ItemDetails {
       "cost": 400,
       "purchaseCurrency": coins,
       "location": "assets/images/items/dog-yellow.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "This medium sized dog just wants to be your friend!",
     },
     "dog-white": {
       "key": "dog-white",
@@ -272,7 +272,7 @@ class ItemDetails {
       "cost": 200,
       "purchaseCurrency": coins,
       "location": "assets/images/items/dog-white.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "A cute white small sized dog!",
     },
     "bird-pink": {
       "key": "bird-pink",
@@ -281,7 +281,7 @@ class ItemDetails {
       "cost": 1000,
       "purchaseCurrency": coins,
       "location": "assets/images/items/bird-pink.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "A tamed pink cockatoo! It will fly with your caravan.",
     },
     "bird-blue": {
       "key": "bird-blue",
@@ -290,7 +290,7 @@ class ItemDetails {
       "cost": 1000,
       "purchaseCurrency": coins,
       "location": "assets/images/items/bird-blue.png",
-      "description": "A brand new pet for your caravan!",
+      "description": "A tamed blue macaw! It will fly with your caravan.",
     },
     "dragon": {
       "key": "dragon",
@@ -299,7 +299,7 @@ class ItemDetails {
       "cost": 500,
       "purchaseCurrency": gems,
       "location": "assets/images/items/dragon.png",
-      "description": "A dragon!!!",
+      "description": "It's a friendly purple dragon!",
     }
   };
 }
