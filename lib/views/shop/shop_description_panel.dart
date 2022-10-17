@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/items_details.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// Shop item description panel
 class ShopDescriptionPanel extends StatelessWidget {
@@ -35,12 +36,16 @@ class ShopDescriptionPanel extends StatelessWidget {
         const SizedBox(
           height: 3,
         ),
-        Text(
-          item["description"],
-          style: TextStyle(
-            fontSize: 12.0,
-            decoration: TextDecoration.none,
-            color: Colors.grey[300],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+          child: Text(
+            item["description"],
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12.0,
+              decoration: TextDecoration.none,
+              color: Colors.grey[300],
+            ),
           ),
         ),
         const SizedBox(
@@ -77,6 +82,7 @@ class ShopDescriptionPanel extends StatelessWidget {
             ],
           ),
           onPressed: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             purchase();
           },
         )
