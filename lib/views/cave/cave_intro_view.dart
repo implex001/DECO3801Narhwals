@@ -17,7 +17,6 @@ class _CaveIntroView extends State<CaveIntroView> {
   @override
   void initState() {
     super.initState();
-    PlaySoundUtil.instance().play("audio/cave-ambiance.mp3");
   }
 
   @override

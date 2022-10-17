@@ -48,7 +48,6 @@ class _MinigameOutro extends State<MinigameOutro> {
   @override
   void initState() {
     super.initState();
-    PlaySoundUtil.instance().play("audio/cave-ambiance.mp3");
     miniGame = widget.miniGame;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -146,7 +145,6 @@ class StatsView extends State<MiniGameStats> {
   @override
   void initState() {
     super.initState();
-    PlaySoundUtil.instance().play("audio/cave-ambiance.mp3");
     showCoinAnimation = false;
 
     SystemChrome.setPreferredOrientations([

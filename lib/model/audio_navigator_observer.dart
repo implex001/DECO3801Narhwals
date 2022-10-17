@@ -19,15 +19,21 @@ class AudioNavigatorObserver extends NavigatorObserver {
 
     switch (route.settings.name) {
       case '/':
+        if (ambiancePlayer.state == PlayerState.playing ||
+            backgroundPlayer.state == PlayerState.playing) {
+          backgroundPlayer.stop();
+          ambiancePlayer.stop();
+        }
         backgroundPlayer.play(AssetSource("audio/music-main.mp3"));
         ambiancePlayer.play(AssetSource("audio/mainscreen-ambiance.mp3"));
         break;
       case '/cave-intro':
-      case '/world':
-        if (backgroundPlayer.state == PlayerState.playing) {
+        if (ambiancePlayer.state == PlayerState.playing ||
+            backgroundPlayer.state == PlayerState.playing) {
           backgroundPlayer.stop();
           ambiancePlayer.stop();
         }
+        ambiancePlayer.play(AssetSource("audio/cave-ambiance.mp3"));
         break;
     }
   }
@@ -38,8 +44,8 @@ class AudioNavigatorObserver extends NavigatorObserver {
     switch (route.settings.name) {
       //Coming back from cave intro to caravan, not a long term solution
       case '/cave-intro':
-      case '/world':
         backgroundPlayer.stop();
+        ambiancePlayer.stop();
         backgroundPlayer.play(AssetSource("audio/music-main.mp3"));
         ambiancePlayer.play(AssetSource("audio/mainscreen-ambiance.mp3"));
         break;
