@@ -322,6 +322,7 @@ class CaravanGame extends FlameGame
         // Live step tracking
         if (await stepTracker.requestPermission()) {
           stepTracker.getStepStream().listen((event) {
+            modifier = s.get(SaveKeysV1.personalUpgrades);
             s.addCoins(1 * modifier);
             s.addSteps(1);
           });
