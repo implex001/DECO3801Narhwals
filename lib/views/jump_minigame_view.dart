@@ -66,7 +66,7 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MinigameOutro(miniGame: jumpMiniGame),
+              builder: (context) => MinigameOutro(miniGame: jumpMiniGame, didComplete: true),
             ));
       }
     });
@@ -122,7 +122,7 @@ class _JumpMiniGameState extends State<JumpMiniGameView> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            MiniGameStats(miniGame: jumpMiniGame),
+                            MinigameOutro(miniGame: jumpMiniGame, didComplete: false),
                       ));
                 },
                 child: const Text("Exit")),
