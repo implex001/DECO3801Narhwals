@@ -36,12 +36,16 @@ class ShopDescriptionPanel extends StatelessWidget {
         const SizedBox(
           height: 3,
         ),
-        Text(
-          item["description"],
-          style: TextStyle(
-            fontSize: 12.0,
-            decoration: TextDecoration.none,
-            color: Colors.grey[300],
+        Padding(
+          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+          child: Text(
+            item["description"],
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 12.0,
+              decoration: TextDecoration.none,
+              color: Colors.grey[300],
+            ),
           ),
         ),
         const SizedBox(
