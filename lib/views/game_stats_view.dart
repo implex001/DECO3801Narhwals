@@ -141,6 +141,7 @@ class StatsView extends State<MiniGameStats> {
   late int completionBonus;
   late int obstacleCoins;
   late bool showCoinAnimation;
+  String coinChestImage = "coin_chest.gif";
 
   @override
   void initState() {
@@ -160,8 +161,9 @@ class StatsView extends State<MiniGameStats> {
     coinsEarned = (completionBonus + obstacleCoins) * modifier!;
 
     if (coinsEarned != 0) {
-      Future.delayed(const Duration(milliseconds: 800)).then((value) {
+      Future.delayed(const Duration(milliseconds: 1500)).then((value) {
         setState(() {
+          coinChestImage = "chest_open.png";
           showCoinAnimation = true;
           Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
           Provider.of<SaveModel>(context, listen: false).saveState();
@@ -315,7 +317,7 @@ class StatsView extends State<MiniGameStats> {
             left: 340,
             bottom: 60,
             child: Image.asset(
-              'assets/images/cave/coin_chest.gif',
+              'assets/images/cave/$coinChestImage',
               fit: BoxFit.contain,
               height: 150,
             )),
