@@ -212,10 +212,10 @@ class _SkillsViewState extends State<SkillsView> {
                                 selectedSkill["introduction"],
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    decoration: TextDecoration.none,
-                                    fontWeight: FontWeight.w500),
+                                  fontSize: 16.0,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -226,7 +226,7 @@ class _SkillsViewState extends State<SkillsView> {
                                   onPressed: confirmPurchase,
                                   child: Image.asset(
                                     "assets/images/UI/BuyButton.png",
-                                    height: 20,
+                                    height: 30,
                                   )))
                           ]))),
             ],
