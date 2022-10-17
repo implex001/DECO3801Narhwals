@@ -41,8 +41,8 @@ class CaravanGame extends FlameGame
   List<String> equippedHorses = List.from(ItemDetails.startingHorses);
   List<String> equippedCarts = List.from(ItemDetails.startingCarts);
   List<String> equippedPets = List.from(ItemDetails.startingPets);
-  List<Map<String, dynamic>> allOwnedHorses = [];
-  List<Map<String, dynamic>> allOwnedCarts = [];
+  List<Map<String, dynamic>> allOwnedHorses = [ItemDetails.items["horse-brown"]!];
+  List<Map<String, dynamic>> allOwnedCarts = [ItemDetails.items["cart_flat"]!];
   List<Component> currentActors = [];
 
   int backgroundSteps = 0;
@@ -226,16 +226,19 @@ class CaravanGame extends FlameGame
   }
 
   void updateOwnedItems() {
-    var basicHorse = ItemDetails.items["horse-brown"];
-    allOwnedHorses.add(basicHorse!);
-    var basicCart = ItemDetails.items["cart_flat"];
-    allOwnedCarts.add(basicCart!);
-
     // Gets all owned horses
-    allOwnedHorses.addAll(save!.getOwnedItems("horses"));
+    for (Map<String, dynamic> horse in save!.getOwnedItems("horses")) {
+      if (!allOwnedHorses.contains(horse)) {
+        allOwnedHorses.add(horse);
+      }
+    }
 
     // Gets all owned carts
-    allOwnedCarts.addAll(save!.getOwnedItems("cart"));
+    for (Map<String, dynamic> cart in save!.getOwnedItems("cart")) {
+      if (!allOwnedCarts.contains(cart)) {
+        allOwnedCarts.add(cart);
+      }
+    }
   }
 
   @override
