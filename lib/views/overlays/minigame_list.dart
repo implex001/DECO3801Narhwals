@@ -14,7 +14,7 @@ class MinigameSelectorPage {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Select a minigame:",
+                  "Select a Mini-Quest:",
                   style: TextStyle(
                     fontSize: 32.0,
                     color: Colors.grey[300],
@@ -47,7 +47,7 @@ class MinigameSelectorPage {
                       height: 20,
                     ),
                     Text(
-                      "More minigames coming Soon!",
+                      "More mini-quests coming Soon!",
                       style: TextStyle(
                         fontSize: 16.0,
                         color: Colors.grey[300],

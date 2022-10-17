@@ -159,7 +159,7 @@ class NavbarRightOverlay extends StatelessWidget {
                 context,
                 "Coins",
                 "This is your basic currency. You can earn coins by taking "
-                    "physical steps or through the minigames.");
+                    "physical steps or through the mini-quests.");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
@@ -224,7 +224,7 @@ class NavbarBottomOverlay extends StatefulWidget {
 
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
   String route = "";
-  String mingameButtonImage = 'assets/images/UI/Minigames.png';
+  String mingameButtonImage = 'assets/images/UI/Miniquests.png';
   bool isCaravanPage = false;
 
   @override
@@ -239,10 +239,10 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
           isCaravanPage = true;
           break;
         case "/cave-intro":
-          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          mingameButtonImage = 'assets/images/UI/MiniquestsSelected.png';
           break;
         case "/minigames/jump":
-          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          mingameButtonImage = 'assets/images/UI/MiniquestsSelected.png';
           break;
       }
     }
