@@ -14,13 +14,17 @@ class PurchaseConfirmationPage {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  (item.containsKey('name'))
-                      ? "${item["name"]} for ${item["cost"].toString()}"
-                      : "${item["cost"].toString()}",
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.grey[300],
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    (item.containsKey('name'))
+                        ? "${item["name"]} for ${item["cost"].toString()}"
+                        : "${item["cost"].toString()}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.grey[300],
+                    ),
                   ),
                 ),
                 Image(

@@ -194,7 +194,7 @@ class _SkillsViewState extends State<SkillsView> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             SizedBox(
-                              height: 24,
+                              height: 12,
                             ),
                             Image.asset(
                               selectedSkillBuyState
@@ -203,7 +203,23 @@ class _SkillsViewState extends State<SkillsView> {
                               width: 64,
                             ),
                             SizedBox(
-                              height: 24,
+                              height: 6,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: safePadding, right: safePadding),
+                              child: Text(
+                                selectedSkill["name"],
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.orange[200],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 6,
                             ),
                             Padding(
                               padding: EdgeInsets.only(
@@ -214,12 +230,12 @@ class _SkillsViewState extends State<SkillsView> {
                                 style: TextStyle(
                                   fontSize: 16.0,
                                   decoration: TextDecoration.none,
-                                  color: Colors.white,
+                                  color: Colors.grey[300],
                                 ),
                               ),
                             ),
                             SizedBox(
-                              height: 24,
+                              height: 6,
                             ),
                             if (!selectedSkillBuyState)
                               (TextButton(
