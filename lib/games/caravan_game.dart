@@ -227,18 +227,14 @@ class CaravanGame extends FlameGame
 
   void updateOwnedItems() {
     // Gets all owned horses
-    for (Map<String, dynamic> horse in save!.getOwnedItems("horses")) {
-      if (!allOwnedHorses.contains(horse)) {
-        allOwnedHorses.add(horse);
-      }
-    }
+    allOwnedHorses.addAll(
+        save!.getOwnedItems("horses")
+            .where((horse) => !allOwnedHorses.contains(horse)));
 
     // Gets all owned carts
-    for (Map<String, dynamic> cart in save!.getOwnedItems("cart")) {
-      if (!allOwnedCarts.contains(cart)) {
-        allOwnedCarts.add(cart);
-      }
-    }
+    allOwnedCarts.addAll(
+        save!.getOwnedItems("cart")
+            .where((cart) => !allOwnedCarts.contains(cart)));
   }
 
   @override
