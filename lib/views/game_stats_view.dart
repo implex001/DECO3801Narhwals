@@ -47,7 +47,7 @@ class _MinigameOutro extends State<MinigameOutro> {
   @override
   void initState() {
     super.initState();
-
+    PlaySoundUtil.instance().play("audio/cave-ambiance.mp3");
     miniGame = widget.miniGame;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -142,13 +142,14 @@ class StatsView extends State<MiniGameStats> {
   @override
   void initState() {
     super.initState();
+    PlaySoundUtil.instance().play("audio/cave-ambiance.mp3");
     showCoinAnimation = false;
     Future.delayed(const Duration(milliseconds: 800)).then((value) {
       setState(() {
         showCoinAnimation = true;
         Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
         Provider.of<SaveModel>(context, listen: false).saveState();
-        PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
+        PlaySoundUtil.instance().play("audio/coins_1sec.mp3");
       });
     });
     SystemChrome.setPreferredOrientations([
@@ -236,7 +237,7 @@ class StatsView extends State<MiniGameStats> {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          Text('Completion Coins',
+                          Text('Completion',
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,

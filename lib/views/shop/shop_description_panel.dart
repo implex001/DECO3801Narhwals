@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:caravaneering/model/items_details.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 /// Shop item description panel
 class ShopDescriptionPanel extends StatelessWidget {
@@ -77,6 +78,7 @@ class ShopDescriptionPanel extends StatelessWidget {
             ],
           ),
           onPressed: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             purchase();
           },
         )

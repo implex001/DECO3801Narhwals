@@ -6,7 +6,6 @@ import 'package:caravaneering/model/play_sound.dart';
 class MainMenuPage {
   // Pop up window for main menu page
   static Future<void> showPage(BuildContext context) async {
-    PlaySoundUtil.instance().play("audio/button_click.mp3");
     await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -30,8 +29,6 @@ class MainMenuPage {
                   children: <Widget>[
                     GestureDetector(
                         onTap: () {
-                          PlaySoundUtil.instance()
-                              .play("audio/button_click.mp3");
                           Provider.of<SaveModel>(context, listen: false)
                               .addCoins(1000);
                           Provider.of<SaveModel>(context, listen: false)
@@ -79,6 +76,7 @@ class MainMenuPage {
                     ),
                     GestureDetector(
                       onTap: () {
+                        PlaySoundUtil.instance().play("audio/button_click.mp3");
                         Provider.of<SaveModel>(context, listen: false)
                             .eraseSave();
                       },

@@ -28,6 +28,7 @@ class MinigameSelectorPage {
                   children: <Widget>[
                     GestureDetector(
                       onTap: () {
+                        PlaySoundUtil.instance().play("audio/button_click.mp3");
                         Navigator.pop(context);
                         Navigator.pushNamed(context, "/cave-intro");
                       },

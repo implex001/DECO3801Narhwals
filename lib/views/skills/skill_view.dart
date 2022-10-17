@@ -37,7 +37,6 @@ class _SkillsViewState extends State<SkillsView> {
       return;
     }
 
-    PlaySoundUtil.instance().play("audio/purchase.mp3");
     bool enoughCurrency = skill!.save.get('coins') >= selectedSkill["cost"];
     for (int i = 0; i < skill!.skillList.length; i++) {
       int selectedIndex = selectedSkill["index"];
@@ -70,6 +69,7 @@ class _SkillsViewState extends State<SkillsView> {
 
     setState(() {
       if (skill!.purchase(selectedSkill["cost"])) {
+        PlaySoundUtil.instance().play("audio/purchase.mp3");
         skill!.addSkill(selectedSkill["index"]);
       }
     });
@@ -239,11 +239,13 @@ class _SkillsViewState extends State<SkillsView> {
                             ),
                             if (!selectedSkillBuyState)
                               (TextButton(
-                                  onPressed: confirmPurchase,
-                                  child: Image.asset(
-                                    "assets/images/UI/BuyButton.png",
-                                    height: 30,
-                                  )))
+                                  onPressed: () {
+                                      PlaySoundUtil.instance().play("audio/button_click.mp3");
+                                      confirmPurchase();
+                                    },
+                                    child: Image.asset("assets/images/UI/BuyButton.png", height: 30)
+                                )
+                              )
                           ]))),
             ],
           ),

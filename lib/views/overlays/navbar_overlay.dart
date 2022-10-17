@@ -76,7 +76,6 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     super.didChangeDependencies();
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
-      PlaySoundUtil.instance().play("audio/button_click.mp3");
       route = ModalRoute.of(context)!.settings.name!;
       switch (route) {
         case "/menu":
@@ -101,6 +100,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     if (!isCaravanPage) {
       return GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             if (route != "/caravan") {
               Navigator.pop(context);
             }
@@ -114,6 +114,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             MainMenuPage.showPage(context);
           },
           child: Image.asset(
@@ -123,6 +124,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             if (route != "/shop") {
               Navigator.pushNamed(context, "/shop");
             }
@@ -134,6 +136,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             Navigator.pushNamed(context, "/skills");
           },
           child: Image.asset(
@@ -233,7 +236,6 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
       route = ModalRoute.of(context)!.settings.name!;
-      PlaySoundUtil.instance().play("audio/button_click.mp3");
       switch (route) {
         case "/caravan":
           isCaravanPage = true;

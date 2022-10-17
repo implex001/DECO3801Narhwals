@@ -315,7 +315,7 @@ class CaravanGame extends FlameGame
               endScale: 0.05,
             );
             showCoins();
-            PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
+            PlaySoundUtil.instance().play("audio/coins_1sec.mp3");
           }
         });
 
