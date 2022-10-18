@@ -56,7 +56,8 @@ class JumpMiniGame extends MiniGame {
     //Play background music
     backgroundPlayer.setPlayerMode(PlayerMode.mediaPlayer);
     backgroundPlayer.setReleaseMode(ReleaseMode.loop);
-    backgroundPlayer.play(AssetSource("audio/music.mp3"));
+    backgroundPlayer.play(AssetSource("audio/music-minigame.mp3"));
+    
 
     // Set initial jump prompt
     _promptTimerCallback();

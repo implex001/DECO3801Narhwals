@@ -2,6 +2,7 @@ import 'package:caravaneering/views/jump_minigame_view.dart';
 import 'package:caravaneering/views/text_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:caravaneering/views/cave/creature_icon.dart';
+import 'package:caravaneering/model/play_sound.dart';
 
 class CaveIntroView extends StatefulWidget {
   const CaveIntroView({super.key});
@@ -226,6 +227,7 @@ class _CaveIntroView extends State<CaveIntroView> {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      PlaySoundUtil.instance().play("audio/button_click.mp3");
                       Navigator.popUntil(context, (route) => route.isFirst);
                     },
                     child: Container(
@@ -241,6 +243,7 @@ class _CaveIntroView extends State<CaveIntroView> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      PlaySoundUtil.instance().play("audio/button_click.mp3");
                       Navigator.push(
                           context,
                           MaterialPageRoute(

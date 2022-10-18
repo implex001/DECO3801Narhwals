@@ -91,8 +91,11 @@ class _WorldViewState extends State<WorldView> {
               return Align(
                 alignment: Alignment.bottomCenter,
                 child: GestureDetector(
-                  onTap: () => _game.playEpisode(_episode!),
-                  child: Image.asset("assets/images/UI/play.png", height: 30),
+                  onTap: () {
+                    PlaySoundUtil.instance().play("audio/button_click.mp3");
+                    _game.playEpisode(_episode!);
+                    },
+                    child: Image.asset("assets/images/UI/play.png", height: 30),
                 ),
               );
             } else {

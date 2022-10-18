@@ -76,7 +76,6 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     super.didChangeDependencies();
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
-      PlaySoundUtil.instance().play("audio/button_click.mp3");
       route = ModalRoute.of(context)!.settings.name!;
       switch (route) {
         case "/menu":
@@ -101,6 +100,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     if (!isCaravanPage) {
       return GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             if (route != "/caravan") {
               Navigator.pop(context);
             }
@@ -114,6 +114,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
     return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
       GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             MainMenuPage.showPage(context);
           },
           child: Image.asset(
@@ -123,6 +124,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             if (route != "/shop") {
               Navigator.pushNamed(context, "/shop");
             }
@@ -134,6 +136,7 @@ class _NavbarLeftOverlayState extends State<NavbarLeftOverlay> {
           )),
       GestureDetector(
           onTap: () {
+            PlaySoundUtil.instance().play("audio/button_click.mp3");
             Navigator.pushNamed(context, "/skills");
           },
           child: Image.asset(
@@ -159,7 +162,7 @@ class NavbarRightOverlay extends StatelessWidget {
                 context,
                 "Coins",
                 "This is your basic currency. You can earn coins by taking "
-                    "physical steps or through the minigames.");
+                    "physical steps or through the mini-quests.");
           },
           child: Stack(alignment: AlignmentDirectional.center, children: [
             Image.asset(
@@ -224,7 +227,7 @@ class NavbarBottomOverlay extends StatefulWidget {
 
 class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
   String route = "";
-  String mingameButtonImage = 'assets/images/UI/Minigames.png';
+  String mingameButtonImage = 'assets/images/UI/Miniquests.png';
   bool isCaravanPage = false;
 
   @override
@@ -233,16 +236,15 @@ class _NavbarBottomOverlayState extends State<NavbarBottomOverlay> {
     if (ModalRoute.of(context) != null &&
         ModalRoute.of(context)!.settings.name != null) {
       route = ModalRoute.of(context)!.settings.name!;
-      PlaySoundUtil.instance().play("audio/button_click.mp3");
       switch (route) {
         case "/caravan":
           isCaravanPage = true;
           break;
         case "/cave-intro":
-          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          mingameButtonImage = 'assets/images/UI/MiniquestsSelected.png';
           break;
         case "/minigames/jump":
-          mingameButtonImage = 'assets/images/UI/MinigamesSelected.png';
+          mingameButtonImage = 'assets/images/UI/MiniquestsSelected.png';
           break;
       }
     }

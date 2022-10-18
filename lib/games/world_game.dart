@@ -111,10 +111,10 @@ class Dot<T> extends CircleComponent with TapCallbacks {
 
   Dot(Vector2 position, this.onTap, this.data)
       : super(
-            radius: 10,
+            radius: 15,
             position: position,
             anchor: Anchor.center,
-            paint: Paint()..color = const Color(0x80FFFFFF));
+            paint: Paint()..color = const Color(0x80666666));
 
   @override
   void onTapUp(TapUpEvent event) {
@@ -126,9 +126,9 @@ class Dot<T> extends CircleComponent with TapCallbacks {
   }
 
   void showSelected() {
-    super.radius = 10;
+    super.radius = 15;
     if (unlocked) {
-      super.paint.color = Colors.green;
+      super.paint.color = Colors.green.shade900;
     } else {
       super.paint.color = Colors.white;
     }
@@ -137,12 +137,12 @@ class Dot<T> extends CircleComponent with TapCallbacks {
   }
 
   void hideSelected() {
-    super.radius = 10;
+    super.radius = 15;
 
     if (unlocked) {
       super.paint.color = Colors.lightGreen;
     } else {
-      super.paint.color = const Color(0x80FFFFFF);
+      super.paint.color = const Color(0x80666666);
     }
     selected = false;
   }
@@ -159,6 +159,6 @@ class DisabledDot extends CircleComponent {
       : super(
             radius: 5,
             position: position,
-            paint: Paint()..color = const Color(0x80FFFFFF),
+            paint: Paint()..color = const Color(0x80666666),
             anchor: Anchor.center);
 }

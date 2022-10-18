@@ -33,12 +33,13 @@ class Skill {
       if (personal > i + 1) {
         pState = true;
       }
-      int cost = pow(10, (i + 1)).round();
+      int cost = (50 * pow(i+1, 5)).round();
       skillList.add({
         "icon": "assets/images/skills/Skill-Personal.png",
         "iconLocked": "assets/images/skills/Skill-Personal-Locked.png",
-        "introduction": "Personal Upgrade, Upgrade your personal caravan to"
-            " increase the points you get from idle activites. Costs:$cost",
+        "name": "Personal Upgrade\nLevel ${i+1}",
+        "introduction": "Personal Upgrade:\nUpgrade your personal caravan to"
+            " increase the points you get from idle activities.\nCosts:$cost coins",
         "buyState": pState,
         "index": i * 2,
         "cost": cost,
@@ -50,9 +51,10 @@ class Skill {
       }
       skillList.add({
         "icon": "assets/images/skills/Skill-Group.png",
+        "name": "Group Upgrade\nLevel ${i+1}",
         "iconLocked": "assets/images/skills/Skill-Group-Locked.png",
-        "introduction": "Group Upgrade, Bring more people to your caravan to"
-            " increase the points you earn from minigames. Costs:$cost",
+        "introduction": "Group Upgrade:\nBring more people to your caravan to"
+            " increase the points you earn from mini-quests.\nCosts:$cost coins",
         "buyState": gState,
         "index": i * 2 + 1,
         "cost": cost,

@@ -22,6 +22,10 @@ class EpisodeFactory {
       EpisodeChunk(null, 'assets/images/stories/W1E1/Story 7.png'),
       EpisodeChunk(null, 'assets/images/stories/W1E1/Story 8.png'),
       EpisodeChunk(null, 'assets/images/stories/W1E1/Story 9.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Tutorial_1.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Tutorial_2.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Tutorial_3.png'),
+      EpisodeChunk(null, 'assets/images/stories/W1E1/Tutorial_4.png'),
     ],
     'W1E2': [
       EpisodeChunk('Tester 1', 'assets/images/placeholders/E1.1.png'),

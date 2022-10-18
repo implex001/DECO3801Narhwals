@@ -32,9 +32,10 @@ class ChatBubbleTriangle extends CustomPainter {
 /// Minigame outro to show rewards and statistics of played minigame
 /// Currently hardcoded to [JumpMinigame]
 class MinigameOutro extends StatefulWidget {
-  MinigameOutro({Key? key, required this.miniGame});
+  MinigameOutro({Key? key, required this.miniGame, required this.didComplete});
 
   final JumpMiniGame miniGame;
+  final bool didComplete;
 
   @override
   State<MinigameOutro> createState() => _MinigameOutro();
@@ -47,7 +48,6 @@ class _MinigameOutro extends State<MinigameOutro> {
   @override
   void initState() {
     super.initState();
-
     miniGame = widget.miniGame;
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -62,7 +62,7 @@ class _MinigameOutro extends State<MinigameOutro> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => MiniGameStats(miniGame: miniGame),
+              builder: (context) => MiniGameStats(miniGame: miniGame, didComplete: widget.didComplete),
             ));
       },
       child: Stack(
@@ -120,9 +120,10 @@ class _MinigameOutro extends State<MinigameOutro> {
 
 /// Shows statistics of [JumpMiniGame]
 class MiniGameStats extends StatefulWidget {
-  const MiniGameStats({super.key, required this.miniGame});
+  const MiniGameStats({super.key, required this.miniGame, required this.didComplete});
 
   final JumpMiniGame miniGame;
+  final bool didComplete;
 
   @override
   State<MiniGameStats> createState() => StatsView();
@@ -136,29 +137,38 @@ class StatsView extends State<MiniGameStats> {
 
   late int? modifier;
   late int coinsEarned;
+  late int completionBonus;
   late int obstacleCoins;
   late bool showCoinAnimation;
+  String coinChestImage = "coin_chest.gif";
 
   @override
   void initState() {
     super.initState();
     showCoinAnimation = false;
-    Future.delayed(const Duration(milliseconds: 800)).then((value) {
-      setState(() {
-        showCoinAnimation = true;
-        Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
-        Provider.of<SaveModel>(context, listen: false).saveState();
-        PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
-      });
-    });
+
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
     ]);
+
     modifier = Provider.of<SaveModel>(context, listen: false)
         .get(SaveKeysV1.groupUpgrades);
     modifier = (modifier == null) ? 1 : modifier;
     obstacleCoins = score.value * 50;
-    coinsEarned = (200 + obstacleCoins) * modifier!;
+    completionBonus = widget.didComplete ? 200 : 0;
+    coinsEarned = (completionBonus + obstacleCoins) * modifier!;
+
+    if (coinsEarned != 0) {
+      Future.delayed(const Duration(milliseconds: 1500)).then((value) {
+        setState(() {
+          coinChestImage = "chest_open.png";
+          showCoinAnimation = true;
+          Provider.of<SaveModel>(context, listen: false).addCoins(coinsEarned);
+          Provider.of<SaveModel>(context, listen: false).saveState();
+          PlaySoundUtil.instance().play("audio/coins_1sec.mp3");
+        });
+      });
+    }
   }
 
   @override
@@ -236,7 +246,7 @@ class StatsView extends State<MiniGameStats> {
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const [
-                          Text('Completion Coins',
+                          Text('Completion',
                               style: TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
@@ -245,9 +255,9 @@ class StatsView extends State<MiniGameStats> {
                         ]),
                     Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
-                        children: const [
-                          Text('200',
-                              style: TextStyle(
+                        children: [
+                          Text('$completionBonus',
+                              style: const TextStyle(
                                   fontSize: 20.0,
                                   decoration: TextDecoration.none,
                                   color: Colors.black,
@@ -305,7 +315,7 @@ class StatsView extends State<MiniGameStats> {
             left: 340,
             bottom: 60,
             child: Image.asset(
-              'assets/images/cave/coin_chest.gif',
+              'assets/images/cave/$coinChestImage',
               fit: BoxFit.contain,
               height: 150,
             )),

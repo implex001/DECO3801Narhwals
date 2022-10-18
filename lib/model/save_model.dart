@@ -50,7 +50,7 @@ class SaveModel extends ChangeNotifier {
 
   /// Increments gems by [number]
   void addGems(int number) {
-    PlaySoundUtil.instance().play("audio/coins_1sec_consistent.mp3");
+    PlaySoundUtil.instance().play("audio/coins_1sec.mp3");
     changeMisc(SaveKeysV1.gems, get(SaveKeysV1.gems) + number);
   }
 
