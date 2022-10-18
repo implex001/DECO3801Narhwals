@@ -27,7 +27,6 @@ class _ShopNavState extends State<ShopNav> {
 
   @override
   Widget build(BuildContext context) {
-    // print("shopType are: ${widget.shopType}")
     switch (widget.shopType) {
       case ItemDetails.horseKey:
         shopNavImage = 'assets/images/shop/Shop-Right-Bottom-Horse.gif';

@@ -18,10 +18,6 @@ class ShopDescriptionPanel extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        // Image(
-        //   image: AssetImage(item["location"]),
-        //   height: 50,
-        // ),
         const SizedBox(
           height: 3,
         ),

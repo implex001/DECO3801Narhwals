@@ -104,18 +104,15 @@ class _ShopState extends State<ShopView> {
     double x = details.localPosition.dx;
     double y = details.localPosition.dy;
 
-    print("Tap coordinates are: $x, $y");
     // Check through all the menu coordinates
     for (String type in menuItems.keys) {
       List<double> coordBounds = menuItems[type]!;
-      print(coordBounds);
       // If the click was within the coordinate boundaries then switch to that
       // shop type
       if (x > coordBounds[x1] &&
           x < coordBounds[x2] &&
           y > coordBounds[y1] &&
           y < coordBounds[y2]) {
-        print("Shop tab $type selected!");
 
         // Setup the items for the new shop type
         shop!.activeShop = type;

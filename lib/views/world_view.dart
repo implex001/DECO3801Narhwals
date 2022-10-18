@@ -34,7 +34,6 @@ class _WorldViewState extends State<WorldView> {
         GameWidget(game: _game),
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
           GestureDetector(
-            // onTap: () => Navigator.pop(context),
             onTap: () {
               PlaySoundUtil.instance().play("audio/button_click.mp3");
               Navigator.pop(context);

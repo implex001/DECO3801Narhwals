@@ -48,7 +48,6 @@ class PurchaseConfirmationPage {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     GestureDetector(
-                      // onTap: () {Navigator.pop(context);},
                       onTap: () {
                         PlaySoundUtil.instance().play("audio/button_click.mp3");
                         Navigator.pop(context);
