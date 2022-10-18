@@ -134,26 +134,15 @@ class _SkillsViewState extends State<SkillsView> {
                           ),
                         ],
                       ),
-                      /*
-                      Image.asset(
-                        "assets/images/skills/Skills-Lines.png",
-                        height: height,
-                        width: width,
-                        fit: BoxFit.fill,
-                      ),
-                      */
-                      // ***** 调节点 *****
                       SingleChildScrollView(
                           child: GridView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 每行三列
-                          childAspectRatio: 2.5, // 显示区域宽高相等
-                          // 上下左右的内边距
+                          crossAxisCount: 2,
+                          childAspectRatio: 2.5,
                           mainAxisSpacing: 5.0,
-                          // 主轴元素间距
                           crossAxisSpacing: 5.0,
                         ),
                         itemCount: skill!.skillList.length,
