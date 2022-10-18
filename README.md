@@ -1,6 +1,6 @@
-# Caravaneering
+# Step Quest
 
-An exercise game
+An exercise game. See README_DETAILED.txt for full build instructions.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ samples, guidance on mobile development, and a full API reference.
 
 [Download the nightly main builds](https://github.com/implex001/DECO3801Narhwals/actions/workflows/dart.yml)
 
-## Setting up for Android Development
+## Setting up for Android Development (For Digital Narhwals Team)
 Ensure when setting up, use API 30 (Android 11) as SDK. Recommend using Android 
 Studio as it guides you through the SDK installation
 If you are getting weird errors in the gradle files [this](https://stackoverflow.com/questions/56938436/first-flutter-app-error-cannot-resolve-symbol-properties)
