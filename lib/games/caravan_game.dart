@@ -358,6 +358,7 @@ class CaravanGame extends FlameGame
   }
 
   void updateParallaxPosition(double dt) {
+    // Code below is modified from https://stackoverflow.com/questions/71131480/flutter-flame-how-to-use-parallax-with-camera-followcomponent
     final currentCameraPosition = camera.position;
     final delta = dt > deltaThresholdToUpdateParralax
         ? 1.0 / (dt * framesPerSecond)
